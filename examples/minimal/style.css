@@ -13,11 +13,11 @@ html, body {
 }
 
 body {
-  background: -webkit-linear-gradient(-30deg, #ebeff8, #F9CDAD);
-  background: -moz-linear-gradient(-30deg, #ebeff8, #F9CDAD);
-  background: -ms-linear-gradient(-30deg, #ebeff8, #F9CDAD);
-  background: -o-linear-gradient(-30deg, #ebeff8, #F9CDAD);
-  background: linear-gradient(-30deg, #ebeff8, #F9CDAD);
+  background: -webkit-linear-gradient(-30deg, #e1e3e6, #ebeff8);
+  background: -moz-linear-gradient(-30deg, #e1e3e6, #ebeff8);
+  background: -ms-linear-gradient(-30deg, #e1e3e6, #ebeff8);
+  background: -o-linear-gradient(-30deg, #e1e3e6, #ebeff8);
+  background: linear-gradient(-30deg, #e1e3e6, #ebeff8);
   font-family: 'Open Sans', Helvetica, sans-serif;
   text-align: center;
 }
@@ -39,7 +39,7 @@ label {
   text-align: left;
   width: 100%;
   margin: 0 0 0.2rem;
-  color: #b9a291;
+  color: #2c0730;
   font-size: 0.8rem;
   font-weight: bold;
   text-transform: uppercase;
@@ -49,7 +49,7 @@ label {
 input {
   position: relative;
   width: 100%;
-  border: 2px solid #b9a291;
+  border: 2px solid #c2c2c2;
   background: transparent;
   padding: 0.5rem;
   margin: 0 0 1rem;
@@ -60,12 +60,12 @@ input {
   box-shadow: none;
   -webkit-appearance: none;
   border-radius: 0;
-  color: #a58872;
+  color: #c2c2c2;
 }
 
 input:focus {
-  border-color: #cd3886;
-  color: #cd3886;
+  border-color: #2c0730;
+  color: #2c0730;
   z-index: 10;
 }
 
@@ -89,7 +89,7 @@ div.date input {
 button {
   border: none;
   width: 100%;
-  background: #cd3886;
+  background: #2c0730;
   outline: none;
   padding: 1rem;
   font-family: 'Open Sans', Helvetica, sans-serif;
@@ -127,7 +127,7 @@ figure.logo {
   line-height: 9rem;
   letter-spacing: 0.1rem;
   font-size: 1.5rem;
-  color: #cd3886;
+  color: #2c0730;
   -webkit-transition: border-radius 0.5s, width 0.5s, height 0.5s, margin 0.5s, line-height 0.5s;
   -moz-transition: border-radius 0.5s, width 0.5s, height 0.5s, margin 0.5s, line-height 0.5s;
   -ms-transition: border-radius 0.5s, width 0.5s, height 0.5s, margin 0.5s, line-height 0.5s;
