@@ -165,11 +165,6 @@ figure.success {
   transition: opacity 0.5s 0.25s, top 1s;
 }
 
-.show figure.success {
-  opacity: 0.9;
-  top: 0;
-}
-
 @media screen and (max-height: 599px) {
   figure.logo {
     width: 100%;

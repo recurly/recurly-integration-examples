@@ -1,21 +1,24 @@
 recurly.js examples
 ===================
 
-This repo contains a set of example implementations of [recurly.js][recurly-js-repo]
-using html, css, and JavaScript.
+This repository contains a set of example implementations of
+[recurly.js][recurly-js] using html, css, and JavaScript.
 
 Also included are a set of API backend script examples to demonstrate a few
 common use-cases for collecting and using recurly.js tokens.
 
+**Note:** These examples are not meant to be set onto a web server and forgotten.
+They are intended to act as a suggestion, wherein your custom needs may fill
+in any implementaiton gaps.
+
 ### Frontend examples
-- [Minimal][example-minimal] ([Demo][example-minimal-demo])
+- [Minimal]([example-minimal]) ([Demo][demo-minimal])
 
 ### API examples
-- **New Subscription:** [PHP][api-new-sub-php]
+- [Ruby](api/ruby)
+- [PHP](api/php)
 
-[recurly-js-repo]: https://github.com/recurly/recurly-js
+[recurly-js]: https://github.com/recurly/recurly-js
 
 [example-minimal]: examples/minimal
-[example-minimal-demo]: http://docs.recurly.com/js/examples/minimal
-
-[api-new-sub-php]: api/new-subscription/index.php
+[demo-minimal]: http://docs.recurly.com/js/examples/minimal

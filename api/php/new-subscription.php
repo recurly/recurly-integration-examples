@@ -40,5 +40,10 @@ if (!empty($_POST)) {
 
   // Now we may wish to redirect to a confirmation
   // or back to the form to fix errors.
+  if ($error) {
+    Header("Location: ERROR_URL?error=$error");
+  } else {
+    Header("Location: SUCCESS_URL");
+  }
 
 }
