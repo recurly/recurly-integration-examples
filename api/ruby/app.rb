@@ -25,7 +25,7 @@ post '/subscriptions/new' do
     # The subscription has been created and we can redirect
     # to a confirmation page
     redirect 'SUCCESS_URL'
-  rescue Recurly::API::ResponseError => e
+  rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
 
     # Here we may wish to log the API error and send the
     # customer to an appropriate URL, perhaps including
@@ -40,7 +40,7 @@ post '/accounts/new' do
     Recurly::Account.create! account_code: SecureRandom.uuid,
       billing_info: { token_id: params['recurly-token'] }
     redirect 'SUCCESS_URL'
-  rescue Recurly::API::ResponseError => e
+  rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
     redirect 'ERROR_URL'
   end
 end
@@ -52,7 +52,7 @@ put '/accounts/:account_code' do
     account.billing_info = { token_id: params['recurly-token'] }
     account.save!
     redirect 'SUCCESS_URL'
-  rescue Recurly::API::ResponseError => e
+  rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
     redirect 'ERROR_URL'
   end
 end
