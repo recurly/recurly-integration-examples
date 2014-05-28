@@ -4,17 +4,18 @@ recurly.js examples
 This repository contains a set of example implementations of
 [recurly.js][recurly-js] using html, css, and JavaScript.
 
-Also included are a set of API backend script examples to demonstrate a few
-common use-cases for collecting and using recurly.js tokens.
-
-**Note:** These examples are not meant to be set onto a web server and forgotten.
-They are intended to act as a suggestion, wherein your custom needs may fill
-in any implementaiton gaps.
+Please note that these examples are not meant to be set onto a web server and
+forgotten. They are intended to act as a suggestion, wherein your custom needs
+may fill in any implementaiton gaps.
 
 ### Frontend examples
-- [Minimal]([example-minimal]) ([Demo][demo-minimal])
+- [Minimal Billing information][example-minimal] ([Demo][demo-minimal])
 
-### API examples
+### API token usage examples
+
+Also included are a set of API backend script and application examples to
+demonstrate a few common use-cases for collecting and using recurly.js tokens.
+
 - [Ruby](api/ruby)
 - [PHP](api/php)
 
