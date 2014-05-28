@@ -7,9 +7,9 @@ information without having to handle credit card data.
 
 ### Routes
 
-- POST `/subscriptions/new` [code](app.rb#L12-38)
-- POST `/accounts/new` [code](app.rb#L41-49)
-- PUT `/accounts/:account_code` [code](app.rb#L52-61)
+- `POST` [/subscriptions/new](app.rb#L12-38)
+- `POST` [/accounts/new](app.rb#L41-49)
+- `PUT` [/accounts/:account_code](app.rb#L52-61)
 
 ### Use
 

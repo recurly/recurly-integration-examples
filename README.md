@@ -1,4 +1,4 @@
-recurly.js examples
+Recurly.js examples
 ===================
 
 This repository contains a set of example implementations of
