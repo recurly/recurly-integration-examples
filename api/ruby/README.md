@@ -15,5 +15,5 @@ information without having to handle credit card data.
 
 ```bash
 $ bundle
-$ rackup
+$ ruby app.rb
 ```
