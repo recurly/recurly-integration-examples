@@ -6,6 +6,10 @@ require 'recurly'
 # Used to create unique account_codes
 require 'securerandom'
 
+# Configure the Recurly gem with your subdomain and API key
+Recurly.subdomain = 'RECURLY_SUBDOMAIN'
+Recurly.api_key = 'RECURLY_API_KEY'
+
 # POST route to handle a new subscription form
 post '/subscriptions/new' do
 

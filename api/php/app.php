@@ -3,8 +3,8 @@
 require 'vendor/autoload.php';
 
 // Configure the client with your subdomain and API Key
-Recurly_Client::$subdomain = 'subdomain';
-Recurly_Client::$apiKey = 'API_KEY';
+Recurly_Client::$subdomain = 'RECURLY_SUBDOMAIN';
+Recurly_Client::$apiKey = 'RECURLY_API_KEY';
 
 $app = new \Slim\Slim();
 
