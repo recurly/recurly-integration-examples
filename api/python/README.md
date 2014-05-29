@@ -14,8 +14,7 @@ information without having to handle credit card data.
 ### Use
 
 ```bash
-$ pip install Flask
-$ pip install Recurly
+$ pip install -r requirements.txt
 $ python app.py
 ```
 
