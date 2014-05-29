@@ -1,0 +1,6 @@
+{
+  "require": {
+    "slim/slim": "2.*",
+    "recurly/recurly-client": "2.3.*"
+  }
+}
