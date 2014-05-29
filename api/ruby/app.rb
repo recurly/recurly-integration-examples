@@ -48,7 +48,7 @@ end
 # PUT route to handle an account update form
 put '/accounts/:account_code' do
   begin
-    account = Recurly::Account.find params['account_code']
+    account = Recurly::Account.find params[:account_code]
     account.billing_info = { token_id: params['recurly-token'] }
     account.save!
     redirect 'SUCCESS_URL'
