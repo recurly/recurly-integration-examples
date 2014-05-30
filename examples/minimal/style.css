@@ -58,15 +58,24 @@ input {
   font-size: 1rem;
   font-weight: bold;
   box-shadow: none;
-  -webkit-appearance: none;
   border-radius: 0;
   color: #c2c2c2;
+  -webkit-appearance: none;
+  -webkit-transition: border-color 0.3s;
+  -moz-transition: border-color 0.3s;
+  -ms-transition: border-color 0.3s;
+  -o-transition: border-color 0.3s;
+  transition: border-color 0.3s;
 }
 
 input:focus {
   border-color: #2c0730;
   color: #2c0730;
   z-index: 10;
+}
+
+input.error {
+  border-color: #e43c29;
 }
 
 div.date {
