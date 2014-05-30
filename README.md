@@ -10,6 +10,7 @@ may fill in any implementaiton gaps.
 
 ### Frontend examples
 - [Minimal Billing information][example-minimal] ([Demo][demo-minimal])
+- [PayPal Button][example-paypal]
 
 ### API token usage examples
 
@@ -24,4 +25,6 @@ demonstrate a few common use-cases for collecting and using recurly.js tokens.
 [recurly-js]: https://github.com/recurly/recurly-js
 
 [example-minimal]: examples/minimal
+[example-paypal]: examples/paypal
+
 [demo-minimal]: http://docs.recurly.com/js/examples/minimal
