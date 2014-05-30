@@ -17,6 +17,8 @@ Also included are a set of API backend script and application examples to
 demonstrate a few common use-cases for collecting and using recurly.js tokens.
 
 - [Ruby](api/ruby)
+- [Node](api/node)
+- [Python](api/python)
 - [PHP](api/php)
 
 [recurly-js]: https://github.com/recurly/recurly-js
