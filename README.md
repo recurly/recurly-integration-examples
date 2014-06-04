@@ -8,7 +8,7 @@ Please note that these examples are not meant to be set onto a web server and
 forgotten. They are intended to act as a suggestion, wherein your custom needs
 may fill in any implementaiton gaps.
 
-### Frontend examples
+### Payment form examples
 - [Minimal Billing information][example-minimal] ([Demo][demo-minimal])
 - [PayPal Button][example-paypal]
 
