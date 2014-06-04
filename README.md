@@ -22,6 +22,14 @@ demonstrate a few common use-cases for collecting and using recurly.js tokens.
 - [Python](api/python)
 - [PHP](api/php)
 
+### Running locally
+
+These examples are meant to be run locally, allowing you to easily experiment with
+modifications and get running quickly.
+
+Simply clone this repository, and follow the instructions in one of the [API
+token usage examples](api) above.
+
 [recurly-js]: https://github.com/recurly/recurly-js
 
 [example-minimal]: examples/minimal
