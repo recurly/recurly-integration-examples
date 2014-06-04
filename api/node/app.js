@@ -18,7 +18,7 @@ var recurly = new Recurly({
 });
 
 // POST route to handle a new subscription form
-app.post('/subscriptions/new', function (req, res) {
+app.post('/api/subscriptions/new', function (req, res) {
 
   // Create the scubscription using minimal
   // information: plan_code, currency, account_code, and
@@ -48,7 +48,7 @@ app.post('/subscriptions/new', function (req, res) {
 });
 
 // POST route to handle a new account form
-app.post('/accounts/new', function (req, res) {
+app.post('/api/accounts/new', function (req, res) {
   recurly.accounts.create({
     account_code: uuid.v1(),
     billing_info: {
@@ -58,7 +58,7 @@ app.post('/accounts/new', function (req, res) {
 });
 
 // PUT route to handle an account update form
-app.put('/accounts/:account_code', function (req, res) {
+app.put('/api/accounts/:account_code', function (req, res) {
   recurly.accounts.update(req.params.account_code, {
     billing_info: {
       token_id: req.body['recurly-token']
@@ -67,7 +67,7 @@ app.put('/accounts/:account_code', function (req, res) {
 });
 
 // Mounts express.static to render example forms
-app.use('/examples', express.static(__dirname + '/../../examples'));
+app.use(express.static(__dirname + '/../../examples'));
 
 // Start the server
 app.listen(9000, function () {
