@@ -60,8 +60,7 @@ app.post('/accounts/new', function (req, res) {
 
 // PUT route to handle an account update form
 app.put('/accounts/:account_code', function (req, res) {
-  recurly.accounts.create({
-    account_code: req.params.account_code,
+  recurly.accounts.update(req.params.account_code, {
     billing_info: {
       token_id: req.body['recurly-token']
     }
