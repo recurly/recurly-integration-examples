@@ -13,9 +13,12 @@ information without having to handle credit card data.
 
 ### Use
 
-```bash
-$ pip install -r requirements.txt
-$ python app.py
-```
+1. Start the server
+
+  ```bash
+  $ pip install -r requirements.txt
+  $ python app.py
+  ```
+2. Open [http://localhost:9000](http://localhost:9000)
 
 [flask]: http://flask.pocoo.org/

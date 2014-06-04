@@ -13,9 +13,12 @@ information without having to handle credit card data.
 
 ### Use
 
-```bash
-$ bundle
-$ ruby app.rb
-```
+1. Start the server
+
+  ```bash
+  $ bundle
+  $ ruby app.rb
+  ```
+2. Open [http://localhost:9000](http://localhost:9000)
 
 [sinatra]: http://sinatrarb.com/

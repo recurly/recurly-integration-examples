@@ -10,18 +10,19 @@ unofficial node client library for Recurly's v2 API.
 
 ### Routes
 
-- `GET` [/examples/*](../../examples)
 - `POST` [/subscriptions/new](app.js#L18-46)
 - `POST` [/accounts/new](app.js#L49-59)
 - `PUT` [/accounts/:account_code](app.js#L62-72)
 
 ### Use
 
-```bash
-$ npm i
-$ node app
-```
-[http://localhost:9000](http://localhost:9000)
+1. Start the server
+
+  ```bash
+  $ npm i
+  $ node app
+  ```
+2. Open [http://localhost:9000](http://localhost:9000)
 
 [express]: http://expressjs.com/
 [node-recurly]: https://github.com/robrighter/node-recurly

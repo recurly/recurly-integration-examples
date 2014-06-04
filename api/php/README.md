@@ -13,9 +13,12 @@ information without having to handle credit card data.
 
 ### Use
 
-```bash
-$ curl -sS https://getcomposer.org/installer | php
-$ php composer.phar install
-```
+1. Install dependencies
+
+  ```bash
+  $ curl -sS https://getcomposer.org/installer | php
+  $ php composer.phar install
+  ```
+2. You'll need to serve the directory with a server like nginx or Apache
 
 [slim]: http://www.slimframework.com/

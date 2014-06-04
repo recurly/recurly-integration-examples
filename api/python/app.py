@@ -11,7 +11,7 @@ import uuid
 recurly.SUBDOMAIN = 'RECURLY_SUBDOMAIN'
 recurly.API_KEY = 'RECURLY_API_KEY'
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../../examples', static_url_path='')
 
 # POST route to handle a new subscription form
 @app.route("/subscriptions/new", methods=['POST'])
@@ -76,6 +76,7 @@ def update_account(account_code):
   except recurly.ValidationError, errors:
     error_redirect(compose_errors(errors))
 
+# A few utility functions for error handling
 def error_redirect(message):
   redirect('ERROR_URL?errors=' + message)
 
@@ -83,4 +84,4 @@ def compose_errors(errors):
   ', '.join(e.message for e in errors)
 
 if __name__ == "__main__":
-  app.run()
+  app.run('127.0.0.1', 9000)

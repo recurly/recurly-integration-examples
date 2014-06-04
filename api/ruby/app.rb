@@ -10,6 +10,9 @@ require 'securerandom'
 Recurly.subdomain = 'RECURLY_SUBDOMAIN'
 Recurly.api_key = 'RECURLY_API_KEY'
 
+set :port, 9000
+set :public_folder, '../../examples'
+
 # POST route to handle a new subscription form
 post '/subscriptions/new' do
 
@@ -59,4 +62,9 @@ put '/accounts/:account_code' do
   rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
     redirect 'ERROR_URL'
   end
+end
+
+# All other routes will be treated as static requests
+get '*' do
+  send_file File.join(settings.public_folder, request.path, 'index.html')
 end
