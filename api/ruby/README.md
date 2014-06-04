@@ -19,6 +19,6 @@ information without having to handle credit card data.
   $ bundle
   $ ruby app.rb
   ```
-2. Open [http://localhost:9000](http://localhost:9000)
+2. Open [http://localhost:9001](http://localhost:9001)
 
 [sinatra]: http://sinatrarb.com/

@@ -22,7 +22,7 @@ unofficial node client library for Recurly's v2 API.
   $ npm i
   $ node app
   ```
-2. Open [http://localhost:9000](http://localhost:9000)
+2. Open [http://localhost:9001](http://localhost:9001)
 
 [express]: http://expressjs.com/
 [node-recurly]: https://github.com/robrighter/node-recurly

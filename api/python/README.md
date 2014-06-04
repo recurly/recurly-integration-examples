@@ -19,6 +19,6 @@ information without having to handle credit card data.
   $ pip install -r requirements.txt
   $ python app.py
   ```
-2. Open [http://localhost:9000](http://localhost:9000)
+2. Open [http://localhost:9001](http://localhost:9001)
 
 [flask]: http://flask.pocoo.org/

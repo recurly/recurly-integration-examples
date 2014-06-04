@@ -70,8 +70,8 @@ app.put('/api/accounts/:account_code', function (req, res) {
 app.use(express.static(__dirname + '/../../examples'));
 
 // Start the server
-app.listen(9000, function () {
-  console.log('Listening on port 9000');
+app.listen(9001, function () {
+  console.log('Listening on port 9001');
 });
 
 // A set of utility functions for redirecting and parsing API errors
