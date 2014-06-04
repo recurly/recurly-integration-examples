@@ -18,7 +18,7 @@ unofficial node client library for Recurly's v2 API.
 
 ```bash
 $ npm i
-$ node app.js
+$ node app
 ```
 
 [express]: http://expressjs.com/

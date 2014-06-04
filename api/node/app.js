@@ -1,8 +1,10 @@
 
-// Dependencies
+// API usage Dependencies
 var Recurly = require('node-recurly');
 var express = require('express');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+
+// We'll use uuids to generate account_code values
 var uuid = require('node-uuid');
 
 // Set up express
@@ -30,7 +32,7 @@ app.post('/subscriptions/new', function (req, res) {
         token_id: req.body['recurly-token']
       }
     }
-  }, return function (err, response) {
+  }, function (err, response) {
     // If an API error occurs, parse the error message
     // and redirect to an error page
     if (err) {
@@ -52,10 +54,7 @@ app.post('/accounts/new', function (req, res) {
     billing_info: {
       token_id: req.body['recurly-token']
     }
-  }, return function (err, response) {
-    if (err) return res.redirect('ERROR_URL?error=' + parseErrors(err.data));
-    res.redirect('SUCCESS_URL');
-  });
+  }, redirect);
 });
 
 // PUT route to handle an account update form
@@ -64,18 +63,23 @@ app.put('/accounts/:account_code', function (req, res) {
     billing_info: {
       token_id: req.body['recurly-token']
     }
-  }, return function (err, response) {
-    if (err) return res.redirect('ERROR_URL?error=' + parseErrors(err.data));
-    res.redirect('SUCCESS_URL');
-  });
+  }, redirect);
 });
+
+// Mounts express.static to render example forms
+app.use('/examples', express.static(__dirname + '/../../examples'));
 
 // Start the server
 app.listen(9000, function () {
   console.log('Listening on port 9000');
 });
 
-// A set of utility functions for parsing API errors
+// A set of utility functions for redirecting and parsing API errors
+function redirect (err, response) {
+  if (err) return res.redirect('ERROR_URL?error=' + parseErrors(err.data));
+  res.redirect('SUCCESS_URL');
+}
+
 function parseErrors (data) {
   return data.errors
     ? data.errors.error.map(parseValidationErrors).join(', ')
