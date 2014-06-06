@@ -8,7 +8,7 @@ Recurly_Client::$apiKey = 'RECURLY_API_KEY';
 
 $app = new \Slim\Slim();
 
-$app->post('/subscriptions/new', function () {
+$app->post('/api/subscriptions/new', function () {
 
   // We wrap this is a try-catch to handle any errors
   try {
@@ -46,7 +46,7 @@ $app->post('/subscriptions/new', function () {
   }
 });
 
-$app->post('/accounts/new', function () {
+$app->post('/api/accounts/new', function () {
   try {
     $account = new Recurly_Account(uniqid());
     $account->billing_info = new Recurly_BillingInfo();
@@ -62,7 +62,7 @@ $app->post('/accounts/new', function () {
   }
 });
 
-$app->put('/accounts/:account_code', function ($account_code) {
+$app->put('/api/accounts/:account_code', function ($account_code) {
   try {
     $account = Recurly_Account::get($account_code);
     $account->first_name = $app->request->params('first-name');

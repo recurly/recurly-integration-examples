@@ -14,7 +14,7 @@ recurly.API_KEY = 'RECURLY_API_KEY'
 app = Flask(__name__, static_folder='../../examples', static_url_path='')
 
 # POST route to handle a new subscription form
-@app.route("/subscriptions/new", methods=['POST'])
+@app.route("/api/subscriptions/new", methods=['POST'])
 def new_subscription():
 
   # We'll wrap this in a try to catch any API
@@ -47,7 +47,7 @@ def new_subscription():
     error_redirect(compose_errors(errors))
 
 # POST route to handle a new account form
-@app.route("/accounts/new", methods=['POST'])
+@app.route("/api/accounts/new", methods=['POST'])
 def new_account():
   try:
     account = recurly.Account(
@@ -62,7 +62,7 @@ def new_account():
     error_redirect(compose_errors(errors))
 
 # PUT route to handle an account update form
-@app.route("/accounts/<account_code>", methods=['PUT'])
+@app.route("/api/accounts/<account_code>", methods=['PUT'])
 def update_account(account_code):
   try:
     account = recurly.Account.get(account_code)

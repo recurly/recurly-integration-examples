@@ -10,9 +10,9 @@ for API v2.
 
 ### Routes
 
-- `POST` [/subscriptions/new](app.rb#L10-35)
-- `POST` [/accounts/new](app.rb#L38-46)
-- `PUT` [/accounts/:account_code](app.rb#L49-58)
+- `POST` [/api/subscriptions/new](app.rb#L10-35)
+- `POST` [/api/accounts/new](app.rb#L38-46)
+- `PUT` [/api/accounts/:account_code](app.rb#L49-58)
 
 ### Use
 

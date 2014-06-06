@@ -14,7 +14,7 @@ set :port, 9001
 set :public_folder, '../../examples'
 
 # POST route to handle a new subscription form
-post '/subscriptions/new' do
+post '/api/subscriptions/new' do
 
   # We'll wrap this in a begin-rescue to catch any API
   # errors that may occur
@@ -42,7 +42,7 @@ post '/subscriptions/new' do
 end
 
 # POST route to handle a new account form
-post '/accounts/new' do
+post '/api/accounts/new' do
   begin
     Recurly::Account.create! account_code: SecureRandom.uuid,
       billing_info: { token_id: params['recurly-token'] }
@@ -53,7 +53,7 @@ post '/accounts/new' do
 end
 
 # PUT route to handle an account update form
-put '/accounts/:account_code' do
+put '/api/accounts/:account_code' do
   begin
     account = Recurly::Account.find params[:account_code]
     account.billing_info = { token_id: params['recurly-token'] }

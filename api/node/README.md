@@ -10,9 +10,9 @@ unofficial node client library for Recurly's v2 API.
 
 ### Routes
 
-- `POST` [/subscriptions/new](app.js#L18-46)
-- `POST` [/accounts/new](app.js#L49-59)
-- `PUT` [/accounts/:account_code](app.js#L62-72)
+- `POST` [/api/subscriptions/new](app.js#L18-46)
+- `POST` [/api/accounts/new](app.js#L49-59)
+- `PUT` [/api/accounts/:account_code](app.js#L62-72)
 
 ### Use
 

@@ -10,9 +10,9 @@ for API v2.
 
 ### Routes
 
-- `POST` [/subscriptions/new](app.php#L11-L47)
-- `POST` [/accounts/new](app.php#L49-63)
-- `PUT` [/accounts/:account_code](app.php#L65-81)
+- `POST` [/api/subscriptions/new](app.php#L11-L47)
+- `POST` [/api/accounts/new](app.php#L49-63)
+- `PUT` [/api/accounts/:account_code](app.php#L65-81)
 
 ### Use
 

@@ -10,9 +10,9 @@ for API v2.
 
 ### Routes
 
-- `POST` [/subscriptions/new](app.py#L17-47)
-- `POST` [/accounts/new](app.py#L50-62)
-- `PUT` [/accounts/:account_code](app.py#L65-77)
+- `POST` [/api/subscriptions/new](app.py#L17-47)
+- `POST` [/api/accounts/new](app.py#L50-62)
+- `PUT` [/api/accounts/:account_code](app.py#L65-77)
 
 ### Use
 
