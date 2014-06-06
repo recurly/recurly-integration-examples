@@ -2,7 +2,9 @@ Recurly.js examples
 ===================
 
 This repository contains a set of example implementations of
-[recurly.js][recurly-js] using html, css, and JavaScript.
+[recurly.js][recurly-js] using html, css, and JavaScript, and a set of API usage
+examples to demonstrate a few common use-cases for collecting and using
+recurly.js tokens.
 
 Please note that these examples are not meant to be set onto a web server and
 forgotten. They are intended to act as a suggestion, wherein your custom needs
@@ -14,9 +16,6 @@ may fill in any implementaiton gaps.
 
 ### API token usage examples
 
-Also included are a set of API backend script and application examples to
-demonstrate a few common use-cases for collecting and using recurly.js tokens.
-
 - [Ruby](api/ruby)
 - [Node](api/node)
 - [Python](api/python)
@@ -27,8 +26,13 @@ demonstrate a few common use-cases for collecting and using recurly.js tokens.
 These examples are meant to be run locally, allowing you to easily experiment with
 modifications and get running quickly.
 
-Simply clone this repository, and follow the instructions in one of the [API
+Simply clone this repository, read through the simple application code to
+familiarize yourself, and follow the startup instructions in one of the [API
 token usage examples](api) above.
+
+You'll want to adjust the code to fit your specific redirection and error
+handling needs, but the example applications are designed to perform essential
+API functions on first boot.
 
 [recurly-js]: https://github.com/recurly/recurly-js
 
