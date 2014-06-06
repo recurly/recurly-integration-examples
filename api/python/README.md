@@ -5,6 +5,9 @@ using Python and [Flask][flask] with RESTful routes to accept your Recurly.js
 form submissions and use the tokens to create and update customer billing
 information without having to handle credit card data.
 
+This example makes use of the official Recurly [Python client library][client]
+for API v2.
+
 ### Routes
 
 - `POST` [/subscriptions/new](app.py#L17-47)
@@ -22,3 +25,4 @@ information without having to handle credit card data.
 2. Open [http://localhost:9001](http://localhost:9001)
 
 [flask]: http://flask.pocoo.org/
+[client]: http://github.com/recurly/recurly-client-python

@@ -5,6 +5,9 @@ using PHP and [Slim][slim] with RESTful routes to accept your Recurly.js
 form submissions and use the tokens to create and update customer billing
 information without having to handle credit card data.
 
+This example makes use of the official Recurly [PHP client library][client]
+for API v2.
+
 ### Routes
 
 - `POST` [/subscriptions/new](app.php#L11-L47)
@@ -22,3 +25,4 @@ information without having to handle credit card data.
 2. You'll need to serve the directory with a server like nginx or Apache
 
 [slim]: http://www.slimframework.com/
+[client]: http://github.com/recurly/recurly-client-php

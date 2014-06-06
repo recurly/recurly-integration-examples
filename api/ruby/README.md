@@ -5,6 +5,9 @@ using Ruby and [Sinatra][sinatra] with RESTful routes to accept your Recurly.js
 form submissions and use the tokens to create and update customer billing
 information without having to handle credit card data.
 
+This example makes use of the official Recurly [Ruby client library][client]
+for API v2.
+
 ### Routes
 
 - `POST` [/subscriptions/new](app.rb#L10-35)
@@ -22,3 +25,4 @@ information without having to handle credit card data.
 2. Open [http://localhost:9001](http://localhost:9001)
 
 [sinatra]: http://sinatrarb.com/
+[client]: http://github.com/recurly/recurly-client-ruby
