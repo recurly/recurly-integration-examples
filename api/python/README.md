@@ -8,6 +8,11 @@ information without having to handle credit card data.
 This example makes use of the official Recurly [Python client library][client]
 for API v2.
 
+Note that it is not necessary to use the Flask framework. In this example it is
+used to organize various API actions into distinct application routes, but one
+could just as easily implement these API actions within another application
+framework.
+
 ### Routes
 
 - `POST` [/api/subscriptions/new](app.py#L17-47)

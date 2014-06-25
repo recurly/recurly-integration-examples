@@ -8,6 +8,11 @@ information without having to handle credit card data.
 This example makes use of the [node-recurly][node-recurly] module, an
 unofficial node client library for Recurly's v2 API.
 
+Note that it is not necessary to use the Express framework. In this example it is
+used to organize various API actions into distinct application routes, but one
+could just as easily implement these API actions within another application
+framework.
+
 ### Routes
 
 - `POST` [/api/subscriptions/new](app.js#L18-46)

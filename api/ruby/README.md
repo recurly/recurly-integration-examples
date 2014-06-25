@@ -8,6 +8,11 @@ information without having to handle credit card data.
 This example makes use of the official Recurly [Ruby client library][client]
 for API v2.
 
+Note that it is not necessary to use the Sinatra framework. In this example it is
+used to organize various API actions into distinct application routes, but one
+could just as easily implement these API actions within Rails or any other
+application framework.
+
 ### Routes
 
 - `POST` [/api/subscriptions/new](app.rb#L10-35)

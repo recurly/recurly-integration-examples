@@ -8,6 +8,11 @@ information without having to handle credit card data.
 This example makes use of the official Recurly [PHP client library][client]
 for API v2.
 
+Note that it is not necessary to use the Slim framework. In this example it is
+used to organize various API actions into distinct application routes, but one
+could just as easily implement these API actions in separate PHP scripts or
+within another application framework altogehter.
+
 ### Routes
 
 - `POST` [/api/subscriptions/new](app.php#L11-L47)
