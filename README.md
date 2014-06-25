@@ -36,7 +36,7 @@ API functions on first boot.
 
 [recurly-js]: https://github.com/recurly/recurly-js
 
-[example-minimal]: examples/minimal
-[example-paypal]: examples/paypal
+[example-minimal]: public/minimal
+[example-paypal]: public/paypal
 
 [demo-minimal]: http://docs.recurly.com/js/examples/minimal

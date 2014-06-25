@@ -67,7 +67,7 @@ app.put('/api/accounts/:account_code', function (req, res) {
 });
 
 // Mounts express.static to render example forms
-app.use(express.static(__dirname + '/../../examples'));
+app.use(express.static(__dirname + '/../../public'));
 
 // Start the server
 app.listen(9001, function () {

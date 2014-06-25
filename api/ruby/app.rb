@@ -11,7 +11,7 @@ Recurly.subdomain = 'RECURLY_SUBDOMAIN'
 Recurly.api_key = 'RECURLY_API_KEY'
 
 set :port, 9001
-set :public_folder, '../../examples'
+set :public_folder, '../../public'
 
 # POST route to handle a new subscription form
 post '/api/subscriptions/new' do

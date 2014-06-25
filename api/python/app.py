@@ -11,7 +11,7 @@ import uuid
 recurly.SUBDOMAIN = 'RECURLY_SUBDOMAIN'
 recurly.API_KEY = 'RECURLY_API_KEY'
 
-app = Flask(__name__, static_folder='../../examples', static_url_path='')
+app = Flask(__name__, static_folder='../../public', static_url_path='')
 
 # POST route to handle a new subscription form
 @app.route("/api/subscriptions/new", methods=['POST'])
