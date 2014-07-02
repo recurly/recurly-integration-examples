@@ -1,5 +1,8 @@
 Recurly.js examples
 ===================
+<p align="center">
+  <img src="http://i.imgur.com/hu8hAqs.png" align="center">
+</p>
 
 This repository contains a set of example implementations of
 [recurly.js][recurly-js] using html, css, and JavaScript, and a set of API usage
