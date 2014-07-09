@@ -23,7 +23,7 @@ post '/api/subscriptions/new' do
     # Create the scubscription using minimal
     # information: plan_code, account_code, and
     # the token we generated on the frontend
-    subscription = Recurly::Subscription.create plan_code: :basic,
+    subscription = Recurly::Subscription.create! plan_code: :basic,
       account: {
         account_code: SecureRandom.uuid,
         billing_info: { token_id: params['recurly-token'] }
