@@ -2,7 +2,7 @@
 
 ### Contributing to this project
 
-This project is structured in a way that makes it quite easy to
+We love contributors! This project is structured in a way that makes it quite easy to
 expand both frontend and language-specific backends. Each backend example serves
 the same set of frontend examples; thus, any new frontend example will work
 with any of the backend servers immediately.
@@ -37,9 +37,8 @@ All other GET requests should serve files directly from the [public directory](p
 
 ### External examples
 
-We love contributors! If you have a site that implements Recurly.js
-in a novel or cool way, please [create an issue][new-issue] with a link and we'll
-link to it in the readme.
+If you have a site that implements Recurly.js in a novel or cool way, please [create an issue][new-issue]
+with a link and we'll link to it in the readme.
 
 [new-issue]: https://github.com/recurly/recurly-js-examples/issues/new
 [new-pr]: https://github.com/recurly/recurly-js-examples/pulls/new
