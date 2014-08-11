@@ -14,8 +14,8 @@ jump in and help.
 #### Creating new frontend examples
 
 1. Create a new directory to contain your example in the [public folder](public). Keep all of your HTML, CSS, and JS within this directory.
-2. Depending on what action you want your form to take, submit to to the relevant endpoint in the [API server specifications](#api-server-specifications).
-3. Update [the index file](public/index.html) to link to your new example.
+2. Depending on what action you want your form to take, submit it to the relevant endpoint in the [API server specifications](#api-server-specifications).
+3. Update [index.html](public/index.html) to link to your new example.
 4. Update the [README](README.md) to link to the code directory of your new example.
 
 #### Creating new backend examples
@@ -33,7 +33,7 @@ jump in and help.
 | POST `/api/accounts/new` | New accounts |
 | PUT `/api/accounts/:account_code` | Account updates |
 
-All other GET requests should serve files directly from the [public folder](public).
+All other GET requests should serve files directly from the [public directory](public).
 
 ### External examples
 
