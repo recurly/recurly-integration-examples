@@ -37,6 +37,10 @@ You'll want to adjust the code to fit your specific redirection and error
 handling needs, but the example applications are designed to perform essential
 API functions on first boot.
 
+### Contributing
+
+[See CONTRIBUTING file](CONTRIBUTING.md).
+
 [recurly-js]: https://github.com/recurly/recurly-js
 
 [example-minimal]: public/minimal
