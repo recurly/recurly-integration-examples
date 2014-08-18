@@ -8,21 +8,24 @@ Recurly_Client::$apiKey = 'RECURLY_API_KEY';
 
 $app = new \Slim\Slim();
 
-$app->post('/api/subscriptions/new', function () {
+
+// Create a new account, subscription, and billing information
+$app->post('/api/subscriptions/new', function () use ($app) {
 
   // We wrap this is a try-catch to handle any errors
   try {
 
-    // Specify the minimum subscription attributes: plan_code
+    // Specify the minimum subscription attributes: plan_code, account, and currency
     $subscription = new Recurly_Subscription();
     $subscription->plan_code = 'basic';
+    $subscription->currency = 'USD';
 
     // Create an account with a uniqid and the customer's first and last name
     $subscription->account = new Recurly_Account(uniqid());
     $subscription->account->first_name = $_POST['first-name'];
     $subscription->account->last_name = $_POST['last-name'];
 
-    // Now we create a bare BillingInfo
+    // Now we create a bare BillingInfo with a token
     $subscription->account->billing_info = new Recurly_BillingInfo();
     $subscription->account->billing_info->token_id = $_POST['recurly-token'];
 
@@ -46,7 +49,8 @@ $app->post('/api/subscriptions/new', function () {
   }
 });
 
-$app->post('/api/accounts/new', function () {
+// Create a new account and billing information
+$app->post('/api/accounts/new', function () use ($app) {
   try {
     $account = new Recurly_Account(uniqid());
     $account->billing_info = new Recurly_BillingInfo();
@@ -62,7 +66,7 @@ $app->post('/api/accounts/new', function () {
   }
 });
 
-$app->put('/api/accounts/:account_code', function ($account_code) {
+$app->put('/api/accounts/:account_code', function ($account_code) use ($app) {
   try {
     $account = Recurly_Account::get($account_code);
     $account->first_name = $app->request->params('first-name');
