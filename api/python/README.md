@@ -27,7 +27,7 @@ framework.
   $ pip install -r requirements.txt
   $ python app.py
   ```
-2. Open [http://localhost:9001](http://localhost:9001)
+2. Open [http://localhost:9001/index.html](http://localhost:9001/index.html)
 
 [flask]: http://flask.pocoo.org/
 [client]: http://github.com/recurly/recurly-client-python
