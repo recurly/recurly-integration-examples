@@ -2,6 +2,7 @@
 # Import Flask and recurly client library
 from flask import Flask
 from flask import request
+from flask import redirect
 import recurly
 
 # We'll use uuid to generate unique account codes
@@ -22,10 +23,11 @@ def new_subscription():
   try:
 
     # Create the scubscription using minimal
-    # information: plan_code, account_code, and
+    # information: plan_code, account_code, currency and
     # the token we generated on the frontend
     subscription = recurly.Subscription(
       plan_code = 'basic',
+      currency = 'USD',
       account = recurly.Account(
         account_code = uuid.uuid1(),
         billing_info = recurly.BillingInfo(
@@ -36,8 +38,8 @@ def new_subscription():
 
     # The subscription has been created and we can redirect
     # to a confirmation page
-    subscription.save
-    redirect('SUCCESS_URL')
+    subscription.save()
+    return redirect('SUCCESS_URL')
   except recurly.ValidationError, errors:
 
     # Here we may wish to log the API error and send the
@@ -56,8 +58,8 @@ def new_account():
         token_id = request.form['recurly-token']
       )
     )
-    account.save
-    redirect('SUCCESS_URL')
+    account.save()
+    return redirect('SUCCESS_URL')
   except recurly.ValidationError, errors:
     error_redirect(compose_errors(errors))
 
@@ -69,8 +71,8 @@ def update_account(account_code):
     account.billing_info = recurly.BillingInfo(
       token_id = request.form['recurly-token']
     )
-    account.save
-    redirect('SUCCESS_URL')
+    account.save()
+    return redirect('SUCCESS_URL')
   except recurly.NotFoundError, error:
     error_redirect(error.message)
   except recurly.ValidationError, errors:
