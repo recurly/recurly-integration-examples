@@ -14,7 +14,8 @@ forgotten. They are intended to act as a suggestion, wherein your custom needs
 may fill in any implementaiton gaps.
 
 ### Payment form examples
-- [Minimal Billing information][example-minimal] ([Demo][demo-minimal])
+- [Minimal billing information][example-minimal] ([Demo][demo-minimal])
+- [Advanced pricing features][example-advanced]
 - [PayPal Button][example-paypal]
 
 ### API token usage examples
@@ -44,6 +45,7 @@ API functions on first boot.
 [recurly-js]: https://github.com/recurly/recurly-js
 
 [example-minimal]: public/minimal
+[example-advanced]: public/advanced-pricing
 [example-paypal]: public/paypal
 
 [demo-minimal]: http://docs.recurly.com/js/examples/minimal
