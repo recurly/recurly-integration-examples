@@ -2,8 +2,8 @@
 <html>
   <head>
     <title>Recurly.js Example: Minimal Billing Information</title>
-    <script src="https://js.recurly.com/v3/recurly.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/recurly.js"></script>
     <link href="/js/favicon.png" rel="shortcut icon" type="image/png">
     <link href="//fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
     <link href="/paypal/style.css" rel="stylesheet">
@@ -18,47 +18,47 @@
         <input type="hidden" id="recurly-token" name="recurly-token">
       </form>
     </section>
-  </body>
-  <script>
-    // Configure recurly.js
-    recurly.configure('PUBLIC_KEY');
+    <script>
+      // Configure recurly.js
+      recurly.configure({ publicKey: 'dev-tB5b6dlDbF1wvssDcyCCcT', api: 'http://api.lvh.me:3000/js/v1' });
 
-    // On form submit, we stop submission to go get the token
-    $('form').on('submit', function (event) {
-      event.preventDefault();
+      // On form submit, we stop submission to go get the token
+      $('form').on('submit', function (event) {
+        event.preventDefault();
 
-      // Reset the errors display
-      $('#errors').text('');
-      $('input').removeClass('error');
+        // Reset the errors display
+        $('#errors').text('');
+        $('input').removeClass('error');
 
-      // Disable the submit button
-      $('button').prop('disabled', true);
+        // Disable the submit button
+        $('button').prop('disabled', true);
 
-      var form = this;
+        var form = this;
 
-      // Now we call recurly.paypal with an object containing a 'description' property. 
-      // This will open a new window, beginning the PayPal billing agreement flow. 
-      // to tokenize the credit card information, then injects the token into the
-      // data-recurly="token" field above
-      recurly.paypal({ description: 'test' }, function (err, token) {
-        if (err) {
-          // Let's handle any errors using the function below
-          error(err);
-        } else {
-          // set the hidden field above to the token we get back from Recurly
-          $('#recurly-token').val(token.id);
+        // Now we call recurly.paypal with an object containing a 'description' property. 
+        // This will open a new window, beginning the PayPal billing agreement flow. 
+        // to tokenize the credit card information, then injects the token into the
+        // data-recurly="token" field above
+        recurly.paypal({ description: 'test' }, function (err, token) {
+          if (err) {
+            // Let's handle any errors using the function below
+            error(err);
+          } else {
+            // set the hidden field above to the token we get back from Recurly
+            $('#recurly-token').val(token.id);
 
-          // Now we submit the form!
-          form.submit();
-        }
+            // Now we submit the form!
+            form.submit();
+          }
+        });
       });
-    });
 
-    // A simple error handling function to expose errors to the customer
-    function error (err) {
-      console && console.error(err);
-      $('#errors').text('There was a problem intializing the PayPal transaction! Please try again in a few moments.');
-      $('button').prop('disabled', false);
-    }
-  </script>
+      // A simple error handling function to expose errors to the customer
+      function error (err) {
+        console && console.error(err);
+        $('#errors').text('There was a problem intializing the PayPal transaction! Please try again in a few moments.');
+        $('button').prop('disabled', false);
+      }
+    </script>
+  </body>
 </html>
