@@ -62,17 +62,17 @@
       </p>
       <ul>
         <li>
-          Discount: 
+          Discount:
           <span data-recurly="currency_symbol"></span>
           <span data-recurly="discount_now"></span>
         </li>
         <li>
-          Subtotal: 
+          Subtotal:
           <span data-recurly="currency_symbol"></span>
           <span data-recurly="subtotal_now"></span>
         </li>
         <li>
-          Tax: 
+          Tax:
           <span data-recurly="currency_symbol"></span>
           <span data-recurly="tax_now"></span>
         </li>
@@ -88,17 +88,17 @@
       </p>
       <ul>
         <li>
-          Discount: 
+          Discount:
           <span data-recurly="currency_symbol"></span>
           <span data-recurly="discount_next"></span>
         </li>
         <li>
-          Subtotal: 
+          Subtotal:
           <span data-recurly="currency_symbol"></span>
           <span data-recurly="subtotal_next"></span>
         </li>
         <li>
-          Tax: 
+          Tax:
           <span data-recurly="currency_symbol"></span>
           <span data-recurly="tax_next"></span>
         </li>
@@ -152,8 +152,8 @@
       // For debugging: when pricing changes or emits an error, we'll just send it to the console
       // This should be disabled or removed for your production environment
       if (console) {
-        pricing.on('change', console.info.bind(console));
-        pricing.on('error', console.error.bind(console));        
+        pricing.on('change', function () { console.info.apply(console, arguments); });
+        pricing.on('error', function () { console.error.apply(console, arguments); });
       }
 
       // Calling .attach will bind the pricing module to the form.
@@ -180,6 +180,8 @@
         // Populate the addon list and show/hide the addon label accordingly
         $('#addons').html(buffer);
         $('#addons-title')[buffer ? 'show' : 'hide']();
+
+        pricing.attach(form);
       });
 
       // This shows and hides the VAT number field based on being in an EU country
@@ -197,7 +199,7 @@
       // A simple error handling function to expose errors to the customer
       function error (err) {
         console && console.error(err);
-        $('#errors').text('There was a problem intializing the PayPal transaction! Please try again in a few moments.');
+        $('#errors').text(err.message);
         $('button').prop('disabled', false);
       }
     </script>
