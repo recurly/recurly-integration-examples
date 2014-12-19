@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Recurly.js Example: Advanced Pricing</title>
+    <title>Recurly.js Example: Advanced VAT 2015 taxation</title>
     <script src="https://js.recurly.com/v3/recurly.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <link href="/js/favicon.png" rel="shortcut icon" type="image/png">
@@ -16,8 +16,8 @@
     <form method="post" action="/api/subscriptions/new">
       <label for="plan">Plan</label>
       <select id="plan" data-recurly="plan">
-        <option value="simpleplan" selected>Simple Plan</option>
-        <option value="complexplan">Complex Plan</option>
+        <option value="basic" selected>Simple Plan</option>
+        <option value="notbasic">Complex Plan</option>
       </select>
 
       <label for="plan-quantity">Quantity</label>
@@ -36,23 +36,27 @@
 
       <label for="country">Country</label>
       <select id="country" data-recurly="country">
-        <option value="US">United States</option>
+        <option value="FR">France</option>
+        <option value="DE">Germany</option>
         <option value="GB">Great Britain</option>
+        <option value="US">United States</option>
       </select>
       <label for="postal_code">Postal Code</label>
       <input type="text" data-recurly="postal_code" id="postal_code">
 
-      <p id="addons-title">Add-ons</p>
-      <p id="addons"></p>
-
-      <p>Coupon</p>
-      <input type="text" data-recurly="coupon" value="test">
+      <div id="vat-number">
+        <p>VAT Number</p>
+        <input type="text" data-recurly="vat_number">
+      </div>
 
       <input type="radio" value="USD" name="currency" data-recurly="currency" id="currency-USD" checked>
       <label for="currency-USD">USD</label>
       <input type="radio" value="GBP" name="currency" data-recurly="currency" id="currency-GBP">
       <label for="currency-GBP">GBP</label>
+      <input type="radio" value="EUR" name="currency" data-recurly="currency" id="currency-EUR">
+      <label for="currency-EUR">EUR</label>
 
+      <input type="hidden" data-recurly="tax_code" value="digital">
       <input type="hidden" data-recurly="token" name="recurly-token">
 
       <p>
@@ -144,43 +148,39 @@
       });
 
       // Now we set up the pricing module
-      var pricing = recurly.Pricing();
-      var form = $('form');
+      (function () {
+        var pricing = recurly.Pricing();
+        var form = $('form');
 
-      // For debugging: when pricing changes or emits an error, we'll just send it to the console
-      // This should be disabled or removed for your production environment
-      if (console) {
-        pricing.on('change', function (price) { console.info(price); });
-        pricing.on('error', function (e) { console.error(e); });
-      }
-
-      // Calling .attach will bind the pricing module to the form.
-      pricing.attach(form);
-
-      // Now for dynamic addon selection. Depending on the plan selected, we
-      // want to switch out which addons the customer can select.
-
-      // This listens for the plan being set on the pricing module, then loops
-      // over its addons to change which are displayed
-      pricing.on('set.plan', function (plan) {
-        var buffer = '';
-
-        if (plan.addons) {
-          buffer = $.map(plan.addons, function (addon) {
-            return '<label for="addon-' + addon.code + '">' + addon.name + ' ('
-                 + '<span data-recurly="currency_symbol"></span>'
-                 + '<span data-recurly="addon_price" data-recurly-addon="' + addon.code + '"></span>'
-                 + ')</label>'
-                 + '<input type="text" data-recurly="addon" data-recurly-addon="' + addon.code + '" value="0" id="addon-' + addon.code + '">';
-          }).join('');
+        // For debugging: when pricing changes or emits an error, we'll just send it to the console
+        // This should be disabled or removed for your production environment
+        if (console) {
+          pricing.on('change', function (price) { console.info(price); });
+          pricing.on('error', function (e) { console.error(e); });
         }
 
-        // Populate the addon list and show/hide the addon label accordingly
-        $('#addons').html(buffer);
-        $('#addons-title')[buffer ? 'show' : 'hide']();
-
+        // Calling .attach will bind the pricing module to the form.
         pricing.attach(form);
-      });
+      })();
+
+      // This shows and hides the VAT number field based on being in an EU country
+      (function () {
+        var country = $('#country');
+        var vatNumber = $('#vat-number');
+        var euCountries = [
+          'AT', 'BE', 'BG', 'CY', 'CZ', 'DK', 'EE', 'ES', 'FI', 'FR',
+          'DE', 'GB', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT',
+          'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK', 'HR'
+        ];
+
+        country.on('change init', function (event) {
+          if (~euCountries.indexOf(this.value)) {
+            vatNumber.show();
+          } else {
+            vatNumber.hide();
+          }
+        }).triggerHandler('init');
+      })();
 
       // A simple error handling function to expose errors to the customer
       function error (err) {
