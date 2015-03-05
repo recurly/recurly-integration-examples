@@ -20,7 +20,7 @@ post '/api/subscriptions/new' do
   # errors that may occur
   begin
 
-    # Create the scubscription using minimal
+    # Create the subscription using minimal
     # information: plan_code, account_code, and
     # the token we generated on the frontend
     subscription = Recurly::Subscription.create! plan_code: :basic,
