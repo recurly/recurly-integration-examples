@@ -42,7 +42,7 @@ post '/api/subscriptions/new' do
     # Here we may wish to log the API error and send the
     # customer to an appropriate URL, perhaps including
     # and error message
-    logger.info e
+    logger.error e
     redirect 'ERROR_URL'
   end
 end
