@@ -12,6 +12,7 @@ Recurly.api_key = 'RECURLY_API_KEY'
 
 set :port, 9001
 set :public_folder, '../../public'
+enable :logging
 
 # POST route to handle a new subscription form
 post '/api/subscriptions/new' do
@@ -19,6 +20,10 @@ post '/api/subscriptions/new' do
   # We'll wrap this in a begin-rescue to catch any API
   # errors that may occur
   begin
+
+    # This is not a good idea in production but helpful for debugging
+    # These params may contain sensitive information you don't want logged
+    logger.info params
 
     # Create the subscription using minimal
     # information: plan_code, account_code, and
@@ -37,7 +42,7 @@ post '/api/subscriptions/new' do
     # Here we may wish to log the API error and send the
     # customer to an appropriate URL, perhaps including
     # and error message
-    puts e
+    logger.error e
     redirect 'ERROR_URL'
   end
 end
