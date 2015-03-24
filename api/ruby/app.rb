@@ -14,6 +14,9 @@ set :port, 9001
 set :public_folder, '../../public'
 enable :logging
 
+success_url = 'SUCCESS_URL'
+error_url = 'ERROR_URL'
+
 # POST route to handle a new subscription form
 post '/api/subscriptions/new' do
 
@@ -36,14 +39,14 @@ post '/api/subscriptions/new' do
 
     # The subscription has been created and we can redirect
     # to a confirmation page
-    redirect 'SUCCESS_URL'
+    redirect success_url
   rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
 
     # Here we may wish to log the API error and send the
     # customer to an appropriate URL, perhaps including
     # and error message
     logger.error e
-    redirect 'ERROR_URL'
+    redirect error_url
   end
 end
 
@@ -52,9 +55,9 @@ post '/api/accounts/new' do
   begin
     Recurly::Account.create! account_code: SecureRandom.uuid,
       billing_info: { token_id: params['recurly-token'] }
-    redirect 'SUCCESS_URL'
+    redirect success_url
   rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
-    redirect 'ERROR_URL'
+    redirect error_url
   end
 end
 
@@ -64,9 +67,9 @@ put '/api/accounts/:account_code' do
     account = Recurly::Account.find params[:account_code]
     account.billing_info = { token_id: params['recurly-token'] }
     account.save!
-    redirect 'SUCCESS_URL'
+    redirect success_url
   rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
-    redirect 'ERROR_URL'
+    redirect error_url
   end
 end
 
