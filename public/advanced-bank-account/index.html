@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Recurly.js Example: Advanced Pricing</title>
+    <script src="https://js.recurly.com/v3/recurly.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link href="/js/favicon.png" rel="shortcut icon" type="image/png">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <style>
+      body {width:25em; margin:2em auto;}
+      label, select, input { display: inline-block; }
+      input[type=radio] { display: inline; }
+      ul {list-style: none; padding-left: 0;}
+      li {padding-bottom: 0.5em;}
+      ul ul {list-style: disc; padding-left: 1em;}
+      ul ul li {padding-bottom: 0;}
+      label {width: 10em; padding-right: 1em}
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <form method="post" action="/api/subscriptions/new">
+      <input type="hidden" value="USD" name="currency" data-recurly="currency" id="currency-USD">
+      <ul>
+        <li>
+          <label for="plan">Plan</label>
+          <select id="plan" data-recurly="plan">
+            <option value="simpleplan" selected>Simple Plan</option>
+            <option value="complexplan">Complex Plan</option>
+          </select>
+        </li>
+        <li>
+          <label for="plan-quantity">Quantity</label>
+          <input type="text" data-recurly="plan_quantity" id="plan-quantity" value="2">
+        </li>
+        <li>
+          <label for="routing_number">Routing Number</label>
+          <input type="text" data-recurly="routing_number" id="routing_number">
+        </li>
+        <li>
+          <label for="account_number">Account Number</label>
+          <input type="text" data-recurly="account_number" id="account_number">
+        </li>
+        <li>
+          <label for="account_number_confirmation">Confirm Account Number</label>
+          <input type="text" data-recurly="account_number_confirmation" id="account_number_confirmation">
+        </li>
+        <li>
+          <label for="name_on_account">Name On Account</label>
+          <input type="text" data-recurly="name_on_account" id="name_on_account">
+        </li>
+        <li>
+          <input type="radio" value="checking" name="account_type" data-recurly="account_type" id="account_type_checking" checked>
+          <label for="account_type_checking">Checking</label>
+          <input type="radio" value="savings" name="account_type" data-recurly="account_type" id="account_type_savings">
+          <label for="account_type_savings">Savings</label>
+        </li>
+        <li>
+          <label for="country">Country</label>
+          <select id="country" data-recurly="country">
+            <option value="US">United States</option>
+            <option value="GB">Great Britain</option>
+          </select>
+        </li>
+        <li>
+          <label for="postal_code">Postal Code</label>
+          <input type="text" data-recurly="postal_code" id="postal_code">
+        </li>
+        <li>
+          <p id="addons-title">Add-ons</p>
+          <p id="addons"></p>
+        </li>
+        <li>
+          <label for="coupon">Coupon</label>
+          <input type="text" data-recurly="coupon">
+        </li>
+        <li>
+          <p>
+            Due now
+          </p>
+          <ul>
+            <li>
+              Discount:
+              <span data-recurly="currency_symbol"></span>
+              <span data-recurly="discount_now"></span>
+            </li>
+            <li>
+              Subtotal:
+              <span data-recurly="currency_symbol"></span>
+              <span data-recurly="subtotal_now"></span>
+            </li>
+            <li>
+              Tax:
+              <span data-recurly="currency_symbol"></span>
+              <span data-recurly="tax_now"></span>
+            </li>
+            <li>----</li>
+            <li>
+              Total:
+              <span data-recurly="currency_symbol"></span>
+              <span data-recurly="total_now"></span>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <p>
+            Due later
+          </p>
+          <ul>
+            <li>
+              Discount:
+              <span data-recurly="currency_symbol"></span>
+              <span data-recurly="discount_next"></span>
+            </li>
+            <li>
+              Subtotal:
+              <span data-recurly="currency_symbol"></span>
+              <span data-recurly="subtotal_next"></span>
+            </li>
+            <li>
+              Tax:
+              <span data-recurly="currency_symbol"></span>
+              <span data-recurly="tax_next"></span>
+            </li>
+            <li>----</li>
+            <li>
+              Total:
+              <span data-recurly="currency_symbol"></span>
+              <span data-recurly="total_next"></span>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <button id="subscribe">Subscribe</button>
+        </li>
+      </ul>
+      <div id="errors"></div>
+    </form>
+    <script>
+      // Configure recurly.js
+      recurly.configure('PUBLIC_KEY');
+
+      // On form submit, we stop submission to go get the token
+      $('form').on('submit', function (event) {
+
+        // Prevent the form from submitting while we retrieve the token from Recurly
+        event.preventDefault();
+
+        // Reset the errors display
+        $('#errors').text('');
+        $('input').removeClass('error');
+
+        // Disable the submit button
+        $('button').prop('disabled', true);
+
+        var form = this;
+
+        // Now we call recurly.token with the form. It goes to Recurly servers
+        // to tokenize the credit card information, then injects the token into the
+        // data-recurly="token" field above
+        recurly.bankAccount.token(this, function (err, token) {
+
+          // send any errors to the error function below
+          if (err) error(err);
+
+          // Otherwise we continue with the form submission
+          else form.submit();
+
+        });
+      });
+
+      // Now we set up the pricing module
+      var pricing = recurly.Pricing();
+      var form = $('form');
+
+      // For debugging: when pricing changes or emits an error, we'll just send it to the console
+      // This should be disabled or removed for your production environment
+      if (console) {
+        pricing.on('change', function (price) { console.info(price); });
+        pricing.on('error', function (e) { console.error(e); });
+      }
+
+      // Calling .attach will bind the pricing module to the form.
+      pricing.attach(form);
+
+      // Now for dynamic addon selection. Depending on the plan selected, we
+      // want to switch out which addons the customer can select.
+
+      // This listens for the plan being set on the pricing module, then loops
+      // over its addons to change which are displayed
+      pricing.on('set.plan', function (plan) {
+        var buffer = '';
+
+        if (plan.addons) {
+          buffer = $.map(plan.addons, function (addon) {
+            return '<label for="addon-' + addon.code + '">' + addon.name + ' ('
+                 + '<span data-recurly="currency_symbol"></span>'
+                 + '<span data-recurly="addon_price" data-recurly-addon="' + addon.code + '"></span>'
+                 + ')</label>'
+                 + '<input type="text" data-recurly="addon" data-recurly-addon="' + addon.code + '" value="0" id="addon-' + addon.code + '">';
+          }).join('');
+        }
+
+        // Populate the addon list and show/hide the addon label accordingly
+        $('#addons').html(buffer);
+        $('#addons-title')[buffer ? 'show' : 'hide']();
+
+        pricing.attach(form);
+      });
+
+      // A simple error handling function to expose errors to the customer
+      function error (err) {
+        console && console.error(err);
+        $('#errors').text(err.message);
+        $('button').prop('disabled', false);
+      }
+    </script>
+  </body>
+</html>
