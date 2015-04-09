@@ -1,7 +1,7 @@
 ## API example: Node + Express
 
 This small application demonstrates how you might set up a web server
-using Ruby and [Express][express] with RESTful routes to accept your Recurly.js
+using Node.js and [Express][express] with RESTful routes to accept your Recurly.js
 form submissions and use the tokens to create and update customer billing
 information without having to handle credit card data.
 
@@ -30,4 +30,4 @@ framework.
 2. Open [http://localhost:9001](http://localhost:9001)
 
 [express]: http://expressjs.com/
-[node-recurly]: https://github.com/robrighter/node-recurly
+[node-recurly]: https://github.com/cgerrior/node-recurly
