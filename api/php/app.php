@@ -42,7 +42,7 @@ $app->post('/api/subscriptions/new', function () use ($app) {
 
   // Now we may wish to redirect to a confirmation
   // or back to the form to fix errors.
-  if ($error) {
+  if (isset($error)) {
     $app->redirect("ERROR_URL?error=$error");
   } else {
     $app->redirect("SUCCESS_URL");
