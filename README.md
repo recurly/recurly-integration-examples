@@ -24,6 +24,7 @@ may fill in any implementaiton gaps.
 - [Node](api/node)
 - [Python](api/python)
 - [PHP](api/php)
+- [Java](api/java)
 
 ### Running locally
 
