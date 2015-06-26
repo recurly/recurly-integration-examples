@@ -48,4 +48,4 @@ API functions on first boot.
 [example-advanced]: public/advanced-pricing
 [example-paypal]: public/paypal
 
-[demo-minimal]: http://docs.recurly.com/js/examples/minimal
+[demo-minimal]: https://kale-krate.herokuapp.com/subscribe-minimal
