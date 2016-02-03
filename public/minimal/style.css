@@ -183,3 +183,32 @@ figure.success {
     line-height: 3rem;
   }
 }
+
+.recurly-hosted-field {
+  position: relative;
+  width: 100%;
+  height: 42px;
+  border: 2px solid #c2c2c2;
+  background: transparent;
+  padding: 0.5rem;
+  margin: 0 0 1rem;
+  outline: none;
+  font-family: 'Open Sans', Helvetica, sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: none;
+  border-radius: 0;
+  color: #c2c2c2;
+  -webkit-appearance: none;
+  -webkit-transition: border-color 0.3s;
+  -moz-transition: border-color 0.3s;
+  -ms-transition: border-color 0.3s;
+  -o-transition: border-color 0.3s;
+  transition: border-color 0.3s;
+}
+
+.recurly-hosted-field-focus {
+  border-color: #2c0730;
+  color: #2c0730;
+  z-index: 10;
+}

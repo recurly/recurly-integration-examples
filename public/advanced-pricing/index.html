@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Recurly.js Example: Advanced Pricing</title>
-    <script src="https://js.recurly.com/v3/recurly.js"></script>
+    <script src="https://js.recurly.com/v4/recurly.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <link href="/js/favicon.png" rel="shortcut icon" type="image/png">
     <link href="//fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
@@ -24,11 +24,11 @@
       <input type="text" data-recurly="plan_quantity" id="plan-quantity" value="2">
 
       <label for="number">Card Number</label>
-      <input type="text" data-recurly="number" id="number">
+      <div data-recurly="number" id="number"></div>
       <label for="month">Month</label>
-      <input type="text" data-recurly="month" id="month" maxlength="2">
+      <div data-recurly="month" id="month"></div>
       <label for="year">Year</label>
-      <input type="text" data-recurly="year" id="year" maxlength="4">
+      <div data-recurly="year" id="year"></div>
       <label for="first_name">First Name</label>
       <input type="text" data-recurly="first_name" id="first_name">
       <label for="last_name">Last Name</label>
@@ -112,7 +112,31 @@
     </form>
     <script>
       // Configure recurly.js
-      recurly.configure('PUBLIC_KEY');
+      recurly.configure({
+        publicKey: 'PUBLIC_KEY',
+        style: {
+          all: {
+            fontFamily: 'Open Sans',
+            fontSize: '1rem',
+            fontWeight: 'bold',
+            fontColor: '#2c0730'
+          },
+          number: {
+            placeholder: ''
+          },
+          month: {
+            placeholder: 'mm'
+          },
+          year: {
+            placeholder: 'yy'
+          }
+        }
+      });
+      
+      // When a customer hits their 'enter' key while in a field
+      recurly.on('field:submit', function (event) {
+        $('form').submit();
+      });
 
       // On form submit, we stop submission to go get the token
       $('form').on('submit', function (event) {
@@ -181,6 +205,27 @@
 
         pricing.attach(form);
       });
+      
+      // Reconfigure font size based on window size
+      $(window).on('resize init', function (event) {
+        if ($(this).width() < 600) {
+          recurly.configure({
+            style: {
+              all: {
+                fontSize: '0.9rem'
+              }
+            }
+          });
+        } else {
+          recurly.configure({
+            style: {
+              all: {
+                fontSize: '1rem'
+              }
+            }
+          });
+        }
+      }).triggerHandler('init');
 
       // A simple error handling function to expose errors to the customer
       function error (err) {

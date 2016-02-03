@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Recurly.js Example: Minimal Billing Information</title>
-    <script src="https://js.recurly.com/v3/recurly.js"></script>
+    <script src="https://js.recurly.com/v4/recurly.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
     <link href="/minimal/style.css" rel="stylesheet">
@@ -22,17 +22,17 @@
       <form method="post" action="/api/subscriptions/new">
         <div>
           <label for="number">Card Number</label>
-          <input type="text" data-recurly="number" id="number">
+          <div data-recurly="number" id="number"></div>
         </div>
 
         <div class="date">
           <label for="month">Month</label>
-          <input type="text" data-recurly="month" id="month" maxlength="2">
+          <div data-recurly="month" id="month"></div>
         </div>
 
         <div class="date">
           <label for="year">Year</label>
-          <input type="text" data-recurly="year" id="year" maxlength="4">
+          <div data-recurly="year" id="year"></div>
         </div>
 
         <div>
@@ -52,8 +52,32 @@
     </section>
     <script>
       // Configure recurly.js
-      recurly.configure('PUBLIC_KEY');
+      recurly.configure({
+        publicKey: 'PUBLIC_KEY',
+        style: {
+          all: {
+            fontFamily: 'Open Sans',
+            fontSize: '1rem',
+            fontWeight: 'bold',
+            fontColor: '#2c0730'
+          },
+          number: {
+            placeholder: ''
+          },
+          month: {
+            placeholder: 'mm'
+          },
+          year: {
+            placeholder: 'yy'
+          }
+        }
+      });
 
+      // When a customer hits their 'enter' key while in a field
+      recurly.on('field:submit', function (event) {
+        $('form').submit();
+      });
+      
       // On form submit, we stop submission to go get the token
       $('form').on('submit', function (event) {
 
@@ -82,6 +106,27 @@
 
         });
       });
+      
+      // Reconfigure font size based on window size
+      $(window).on('resize init', function (event) {
+        if ($(this).width() < 600) {
+          recurly.configure({
+            style: {
+              all: {
+                fontSize: '0.9rem'
+              }
+            }
+          });
+        } else {
+          recurly.configure({
+            style: {
+              all: {
+                fontSize: '1rem'
+              }
+            }
+          });
+        }
+      }).triggerHandler('init');
 
       // A simple error handling function to expose errors to the customer
       function error (err) {
