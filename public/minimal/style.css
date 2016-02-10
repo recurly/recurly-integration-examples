@@ -78,6 +78,10 @@ input.error {
   border-color: #e43c29;
 }
 
+div.error .recurly-hosted-field {
+  border: 2px solid #e43c29;
+}
+
 div.date {
   display: inline-block;
   width: 4.5rem;
