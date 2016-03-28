@@ -118,6 +118,9 @@
       // Configure recurly.js
       recurly.configure({
         publicKey: 'PUBLIC_KEY',
+        fraud: {
+          kount: { dataCollector: false }
+        },
         style: {
           all: {
             fontFamily: 'Open Sans',
@@ -136,7 +139,7 @@
           }
         }
       });
-      
+
       // When a customer hits their 'enter' key while in a field
       recurly.on('field:submit', function (event) {
         $('form').submit();
@@ -191,7 +194,7 @@
           });
         }
       }).triggerHandler('init');
-      
+
       // Now we set up the pricing module
       (function () {
         var pricing = recurly.Pricing();
