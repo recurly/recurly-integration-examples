@@ -114,6 +114,9 @@
       // Configure recurly.js
       recurly.configure({
         publicKey: 'PUBLIC_KEY',
+        fraud: {
+          kount: { dataCollector: false }
+        },
         style: {
           all: {
             fontFamily: 'Open Sans',
@@ -132,7 +135,7 @@
           }
         }
       });
-      
+
       // When a customer hits their 'enter' key while in a field
       recurly.on('field:submit', function (event) {
         $('form').submit();
@@ -205,7 +208,7 @@
 
         pricing.attach(form);
       });
-      
+
       // Reconfigure font size based on window size
       $(window).on('resize init', function (event) {
         if ($(this).width() < 600) {
