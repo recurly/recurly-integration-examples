@@ -194,6 +194,8 @@
 
         if (plan.addons) {
           buffer = $.map(plan.addons, function (addon) {
+            // usage add-ons need to be displayed separately
+            if (addon.add_on_type === 'usage') return;
             return '<label for="addon-' + addon.code + '">' + addon.name + ' ('
                  + '<span data-recurly="currency_symbol"></span>'
                  + '<span data-recurly="addon_price" data-recurly-addon="' + addon.code + '"></span>'
