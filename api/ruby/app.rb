@@ -62,7 +62,7 @@ post '/api/accounts/new' do
 end
 
 # PUT route to handle an account update form
-put '/api/accounts/:account_code' do
+post '/api/accounts/:account_code' do
   begin
     account = Recurly::Account.find params[:account_code]
     account.billing_info = { token_id: params['recurly-token'] }
