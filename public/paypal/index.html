@@ -19,11 +19,29 @@
       </form>
     </section>
     <script>
+      var form = $('form');
+
       // Configure recurly.js
       recurly.configure({ publicKey: 'dev-tB5b6dlDbF1wvssDcyCCcT', api: 'http://api.lvh.me:3000/js/v1' });
+      
+      // Create a recurly.PayPal instance. The `displayName` is displayed to the customer in the PayPal flow window
+      var paypal = recurly.PayPal({
+        display: { displayName: 'My product' }
+      });
+      
+      // Handle any errors that occur during the paypal checkout
+      paypal.on('error', error);
+      // Handle token generation. This event fires once the customer has finished the PayPal flow
+      paypal.on('token', function (token) {
+        // Update the token hidden field
+        $('#recurly-token').val(token.id);
+
+        // Now we submit the form directly, bypassing the jQuery listener below
+        form[0].submit();
+      });
 
       // On form submit, we stop submission to go get the token
-      $('form').on('submit', function (event) {
+      form.on('submit', function (event) {
         event.preventDefault();
 
         // Reset the errors display
@@ -33,24 +51,8 @@
         // Disable the submit button
         $('button').prop('disabled', true);
 
-        var form = this;
-
-        // Now we call recurly.paypal with an object containing a 'description' property. 
-        // This will open a new window, beginning the PayPal billing agreement flow. 
-        // to tokenize the credit card information, then injects the token into the
-        // data-recurly="token" field above
-        recurly.paypal({ description: 'test' }, function (err, token) {
-          if (err) {
-            // Let's handle any errors using the function below
-            error(err);
-          } else {
-            // set the hidden field above to the token we get back from Recurly
-            $('#recurly-token').val(token.id);
-
-            // Now we submit the form!
-            form.submit();
-          }
-        });
+        // Start the paypal checkout flow
+        paypal.start();
       });
 
       // A simple error handling function to expose errors to the customer
