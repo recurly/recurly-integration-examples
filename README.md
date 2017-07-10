@@ -52,4 +52,4 @@ API functions on first boot.
 
 ### License
 
-[license]: LICENSE.md
+[MIT][license]
