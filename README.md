@@ -49,3 +49,7 @@ API functions on first boot.
 [example-paypal]: public/paypal
 
 [demo-minimal]: https://kale-krate.herokuapp.com/subscribe-minimal
+
+### License
+
+[license]: LICENSE.md
