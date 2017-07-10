@@ -52,4 +52,4 @@ API functions on first boot.
 
 ### License
 
-[MIT][license]
+[MIT](license)
