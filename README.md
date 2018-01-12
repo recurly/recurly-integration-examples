@@ -22,9 +22,8 @@ If you choose to do this, feel free to delete the other language backends from y
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 ### Payment form examples
-- [Minimal billing information][example-minimal] ([Demo][demo-minimal])
-- [Advanced pricing features][example-advanced]
-- [PayPal Button][example-paypal]
+
+- [Payment form examples][examples]
 
 ### API token usage examples
 
@@ -51,14 +50,9 @@ API functions on first boot.
 
 [See CONTRIBUTING file](CONTRIBUTING.md).
 
-[recurly-js]: https://github.com/recurly/recurly-js
-
-[example-minimal]: public/minimal
-[example-advanced]: public/advanced-pricing
-[example-paypal]: public/paypal
-
-[demo-minimal]: https://kale-krate.herokuapp.com/subscribe-minimal
-
 ### License
 
 [MIT](license.md)
+
+[recurly-js]: https://github.com/recurly/recurly-js
+[examples]: public
