@@ -1,3 +1,4 @@
+<a href="https://heroku.com/deploy"><img align="right" src="https://www.herokucdn.com/deploy/button.png"></a>
 Recurly.js examples
 ===================
 <p align="center">
