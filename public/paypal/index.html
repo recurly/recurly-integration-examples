@@ -5,6 +5,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://js.recurly.com/v4/recurly.js"></script>
     <link href="/js/favicon.png" rel="shortcut icon" type="image/png">
+    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
     <link href="/paypal/style.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,12 +24,12 @@
 
       // Configure recurly.js
       recurly.configure({ publicKey: 'dev-tB5b6dlDbF1wvssDcyCCcT', api: 'http://api.lvh.me:3000/js/v1' });
-      
+
       // Create a recurly.PayPal instance. The `displayName` is displayed to the customer in the PayPal flow window
       var paypal = recurly.PayPal({
         display: { displayName: 'My product' }
       });
-      
+
       // Handle any errors that occur during the paypal checkout
       paypal.on('error', error);
       // Handle token generation. This event fires once the customer has finished the PayPal flow
