@@ -21,18 +21,7 @@
     <section>
       <form method="post" action="/api/subscriptions/new">
         <div>
-          <label for="number">Card Number</label>
-          <div data-recurly="number" id="number"></div>
-        </div>
-
-        <div class="date">
-          <label for="month">Month</label>
-          <div data-recurly="month" id="month"></div>
-        </div>
-
-        <div class="date">
-          <label for="year">Year</label>
-          <div data-recurly="year" id="year"></div>
+          <div data-recurly="card" id="number"></div>
         </div>
 
         <div>
@@ -77,7 +66,7 @@
       recurly.on('field:submit', function (event) {
         $('form').submit();
       });
-      
+
       // On form submit, we stop submission to go get the token
       $('form').on('submit', function (event) {
 
@@ -106,7 +95,7 @@
 
         });
       });
-      
+
       // Reconfigure font size based on window size
       $(window).on('resize init', function (event) {
         if ($(this).width() < 600) {
