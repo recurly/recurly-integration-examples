@@ -6,8 +6,10 @@ require 'vendor/autoload.php';
 Recurly_Client::$subdomain = 'RECURLY_SUBDOMAIN';
 Recurly_Client::$apiKey = 'RECURLY_API_KEY';
 
-$app = new \Slim\Slim();
+// Configure your Recurly public key
+$recurly_public_key = 'RECURLY_PUBLIC_KEY';
 
+$app = new \Slim\Slim();
 
 // Create a new account, subscription, and billing information
 $app->post('/api/subscriptions/new', function () use ($app) {
@@ -82,6 +84,12 @@ $app->put('/api/accounts/:account_code', function ($account_code) use ($app) {
   } else {
     $app->redirect("SUCCESS_URL");
   }
+});
+
+# This endpoint provides configuration to recurly.js
+$app->get('/config.js', function () use ($app) {
+  content_type :js
+  $response->getBody()->write("window.recurlyConfig = { publicKey: '$recurly_public_key' }");
 });
 
 $app->run();

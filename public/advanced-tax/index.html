@@ -4,6 +4,7 @@
     <title>Recurly.js Example: Advanced VAT 2015 taxation</title>
     <script src="https://js.recurly.com/v4/recurly.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/config.js"></script>
     <link href="/js/favicon.png" rel="shortcut icon" type="image/png">
     <link href="//fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
     <style>
@@ -117,7 +118,7 @@
     <script>
       // Configure recurly.js
       recurly.configure({
-        publicKey: 'PUBLIC_KEY',
+        publicKey: window.recurlyConfig.publicKey, // Set this to your own public key
         fraud: {
           kount: { dataCollector: false }
         },

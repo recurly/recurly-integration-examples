@@ -4,6 +4,7 @@
     <title>Recurly.js Example: Advanced Pricing</title>
     <script src="https://js.recurly.com/v4/recurly.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/config.js"></script>
     <link href="/js/favicon.png" rel="shortcut icon" type="image/png">
     <link href="//fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
     <style>
@@ -113,7 +114,7 @@
     <script>
       // Configure recurly.js
       recurly.configure({
-        publicKey: 'PUBLIC_KEY',
+        publicKey: window.recurlyConfig.publicKey, // Set this to your own public key
         fraud: {
           kount: { dataCollector: false }
         },
@@ -171,7 +172,7 @@
       });
 
       // Now we set up the pricing module
-      var pricing = recurly.Pricing();
+      var pricing = recurly.Pricing.Checkout();
       var form = $('form');
 
       // For debugging: when pricing changes or emits an error, we'll just send it to the console

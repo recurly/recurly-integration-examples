@@ -17,6 +17,9 @@ var recurly = new Recurly({
   API_KEY: 'RECURLY_API_KEY'
 });
 
+// Set your Recurly public key
+RECURLY_PUBLIC_KEY = 'RECURLY_PUBLIC_KEY';
+
 // POST route to handle a new subscription form
 app.post('/api/subscriptions/new', function (req, res) {
 
@@ -64,6 +67,12 @@ app.put('/api/accounts/:account_code', function (req, res) {
       token_id: req.body['recurly-token']
     }
   }, redirect);
+});
+
+// This endpoint provides configuration to recurly.js
+app.get('/config.js', function (req, res) {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.send("window.recurlyConfig = { publicKey: '" + RECURLY_PUBLIC_KEY + "' }");
 });
 
 // Mounts express.static to render example forms

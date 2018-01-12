@@ -73,6 +73,12 @@ post '/api/accounts/:account_code' do
   end
 end
 
+# This endpoint provides configuration to recurly.js
+get '/config.js' do
+  content_type :js
+  "window.recurlyConfig = { publicKey: '#{ENV['RECURLY_PUBLIC_KEY']}' }"
+end
+
 # All other routes will be treated as static requests
 get '*' do
   send_file File.join(settings.public_folder, request.path, 'index.html')

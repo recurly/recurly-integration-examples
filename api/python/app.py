@@ -12,6 +12,9 @@ import uuid
 recurly.SUBDOMAIN = 'RECURLY_SUBDOMAIN'
 recurly.API_KEY = 'RECURLY_API_KEY'
 
+# Set your Recurly public key
+RECURLY_PUBLIC_KEY = 'RECURLY_PUBLIC_KEY'
+
 app = Flask(__name__, static_folder='../../public', static_url_path='')
 
 # POST route to handle a new subscription form
@@ -77,6 +80,13 @@ def update_account(account_code):
     error_redirect(error.message)
   except recurly.ValidationError, errors:
     error_redirect(compose_errors(errors))
+
+
+# This endpoint provides configuration to recurly.js
+@app.route("/config.js", methods=['GET'])
+def config_js(account_code):
+  content_type :js
+  return Response(f"window.recurlyConfig = {{ publicKey: '{RECURLY_PUBLIC_KEY}' }}", mimetype='application/javascript')
 
 # A few utility functions for error handling
 def error_redirect(message):
