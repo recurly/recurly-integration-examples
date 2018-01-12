@@ -173,27 +173,6 @@
         });
       });
 
-      // Reconfigure font size based on window size
-      $(window).on('resize init', function (event) {
-        if ($(this).width() < 600) {
-          recurly.configure({
-            style: {
-              all: {
-                fontSize: '0.9rem'
-              }
-            }
-          });
-        } else {
-          recurly.configure({
-            style: {
-              all: {
-                fontSize: '1rem'
-              }
-            }
-          });
-        }
-      }).triggerHandler('init');
-
       // Now we set up the pricing module
       (function () {
         var pricing = recurly.Pricing();

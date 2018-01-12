@@ -212,27 +212,6 @@
         pricing.attach(form);
       });
 
-      // Reconfigure font size based on window size
-      $(window).on('resize init', function (event) {
-        if ($(this).width() < 600) {
-          recurly.configure({
-            style: {
-              all: {
-                fontSize: '0.9rem'
-              }
-            }
-          });
-        } else {
-          recurly.configure({
-            style: {
-              all: {
-                fontSize: '1rem'
-              }
-            }
-          });
-        }
-      }).triggerHandler('init');
-
       // A simple error handling function to expose errors to the customer
       function error (err) {
         console && console.error(err);
