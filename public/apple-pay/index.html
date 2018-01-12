@@ -54,6 +54,10 @@
           border: .5px solid black;
         }
       }
+
+      .apple-pay-button-hidden {
+        display: none;
+      }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -69,7 +73,7 @@
 
     <section>
       <form method="post" action="/api/subscriptions/new">
-        <div id="apple-pay" class="apple-pay-button apple-pay-button-white"></div>
+        <div id="apple-pay" class="apple-pay-button apple-pay-button-white apple-pay-button-hidden"></div>
         <input type="hidden" data-recurly="token" name="recurly-token">
       </form>
     </section>
@@ -78,6 +82,8 @@
       recurly.configure(window.recurlyConfig.publicKey); // Set this to your own public key
 
       recurly.ready(function () {
+        var button = document.querySelector('#apple-pay')
+
         // Check if the device is compatible with Apple Pay
         if (!window.ApplePaySession) {
           $('#errors').text('Your device or browser is not compatible with Apple Pay');
@@ -92,7 +98,8 @@
         });
 
         applePay.ready(function () {
-          var button = document.querySelector('#apple-pay')
+          // Show the Apple Pay button
+          button.className = button.className.replace('apple-pay-button-hidden', '');
 
           button.addEventListener('click', initListener);
           button.addEventListener('touch', initListener);
