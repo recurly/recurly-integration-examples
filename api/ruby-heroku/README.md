@@ -1,9 +1,7 @@
-## API example: Ruby + Sinatra
+## API example: Ruby + Sinatra on Heroku
 
-This small application demonstrates how you might set up a web server
-using Ruby and [Sinatra][sinatra] with RESTful routes to accept your Recurly.js
-form submissions and use the tokens to create and update customer billing
-information without having to handle credit card data.
+This small application mirrors the [standard Ruby example][ruby-api] with special considerations
+to allow it to run on Heroku easily.
 
 This example makes use of the official Recurly [Ruby client library][client]
 for API v2.
@@ -12,6 +10,13 @@ Note that it is not necessary to use the Sinatra framework. In this example it i
 used to organize various API actions into distinct application routes, but one
 could just as easily implement these API actions within Rails or any other
 application framework.
+
+### Deploy to Heroku
+
+You may immediately deploy this repository to Heroku to get started. Once you have your own clone,
+feel free to delete the other language API examples.
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 ### Routes
 

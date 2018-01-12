@@ -13,6 +13,13 @@ Please note that these examples are not meant to be set onto a web server and
 forgotten. They are intended to act as a suggestion, wherein your custom needs
 may fill in any implementaiton gaps.
 
+### Deploy to Heroku
+
+This repository can be deployed immediately to Heroku using the included [Ruby Heroku API backend](api/ruby-heroku).
+If you choose to do this, feel free to delete the other language backends from your clone.
+
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+
 ### Payment form examples
 - [Minimal billing information][example-minimal] ([Demo][demo-minimal])
 - [Advanced pricing features][example-advanced]
@@ -21,6 +28,7 @@ may fill in any implementaiton gaps.
 ### API token usage examples
 
 - [Ruby](api/ruby)
+- [Ruby on Heroku](api/ruby-heroku)
 - [Node](api/node)
 - [Python](api/python)
 - [PHP](api/php)
