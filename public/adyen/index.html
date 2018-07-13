@@ -3,7 +3,7 @@
   <head>
     <title>Recurly.js Example: Minimal Billing Information</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://localhost:8020/build/recurly.js"></script>
+    <script src="https://js.recurly.com/v4/recurly.js"></script>
     <link href="/js/favicon.png" rel="shortcut icon" type="image/png">
     <link href="//fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
     <link href="/paypal/style.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 
       $("#adyen-subscribe").on('click', function (event) {
         var form = $('#rig-payment-form');
-        even.preventDefault();
+        event.preventDefault();
         // Start the adyen checkout flow;
         // These values can come from a checkout form, or can be hard-coded
         // Depending on the use case. 
