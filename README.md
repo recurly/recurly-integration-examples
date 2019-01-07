@@ -32,6 +32,7 @@ If you choose to do this, feel free to delete the other language backends from y
 - [Node](api/node)
 - [Python](api/python)
 - [PHP](api/php)
+- [Java](api/java)
 
 ### Running locally
 
