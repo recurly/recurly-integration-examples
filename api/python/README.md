@@ -25,7 +25,7 @@ framework.
 
   ```bash
   $ pip install -r requirements.txt
-  $ python app.py
+  $ FLASK_APP=app.py flask run -p 9001
   ```
 2. Open [http://localhost:9001/index.html](http://localhost:9001/index.html)
 

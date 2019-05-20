@@ -17,6 +17,11 @@ RECURLY_PUBLIC_KEY = 'RECURLY_PUBLIC_KEY'
 
 app = Flask(__name__, static_folder='../../public', static_url_path='')
 
+# GET route to show the list of options
+@app.route("/", methods=['GET'])
+def index():
+  return redirect('index.html')
+
 # POST route to handle a new subscription form
 @app.route("/api/subscriptions/new", methods=['POST'])
 def new_subscription():
@@ -43,7 +48,7 @@ def new_subscription():
     # to a confirmation page
     subscription.save()
     return redirect('SUCCESS_URL')
-  except recurly.ValidationError, errors:
+  except recurly.ValidationError as errors:
 
     # Here we may wish to log the API error and send the
     # customer to an appropriate URL, perhaps including
@@ -63,7 +68,7 @@ def new_account():
     )
     account.save()
     return redirect('SUCCESS_URL')
-  except recurly.ValidationError, errors:
+  except recurly.ValidationError as errors:
     error_redirect(compose_errors(errors))
 
 # PUT route to handle an account update form
@@ -76,16 +81,15 @@ def update_account(account_code):
     )
     account.save()
     return redirect('SUCCESS_URL')
-  except recurly.NotFoundError, error:
+  except recurly.NotFoundError as error:
     error_redirect(error.message)
-  except recurly.ValidationError, errors:
+  except recurly.ValidationError as errors:
     error_redirect(compose_errors(errors))
 
 
 # This endpoint provides configuration to recurly.js
 @app.route("/config.js", methods=['GET'])
 def config_js(account_code):
-  content_type :js
   return Response(f"window.recurlyConfig = {{ publicKey: '{RECURLY_PUBLIC_KEY}' }}", mimetype='application/javascript')
 
 # A few utility functions for error handling
@@ -94,6 +98,3 @@ def error_redirect(message):
 
 def compose_errors(errors):
   ', '.join(e.message for e in errors)
-
-if __name__ == "__main__":
-  app.run('127.0.0.1', 9001)
