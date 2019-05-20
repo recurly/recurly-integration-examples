@@ -88,7 +88,6 @@ $app->put('/api/accounts/:account_code', function ($account_code) use ($app) {
 
 # This endpoint provides configuration to recurly.js
 $app->get('/config.js', function () use ($app) {
-  content_type :js
   $response->getBody()->write("window.recurlyConfig = { publicKey: '$recurly_public_key' }");
 });
 
