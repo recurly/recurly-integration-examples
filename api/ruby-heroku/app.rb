@@ -1,6 +1,8 @@
 # Require sinatra and the recurly gem
 require 'sinatra'
+require 'json'
 require 'recurly'
+
 # Used to parse URIs
 require 'uri'
 # Used to create unique account_codes
@@ -48,6 +50,35 @@ post '/api/subscriptions/new' do
     redirect success_url
   rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
     error e
+  end
+end
+
+# POST route to handle a new subscription with 3-D Secure support
+post '/api/subscriptions/new-3ds' do
+  content_type :json
+  logger.info params
+
+  begin
+    billing_info = { token_id: params['recurly-token'] }
+    unless params['three-d-secure-token'].empty?
+      billing_info['three_d_secure_action_result_token_id'] = params['three-d-secure-token']
+    end
+    subscription = Recurly::Subscription.create! plan_code: :basic,
+      account: {
+        account_code: SecureRandom.uuid,
+        billing_info: billing_info
+      }
+
+    { success: true }.to_json
+  rescue Recurly::Transaction::ThreeDSecureError => e
+    {
+      error: {
+        code: '3ds-required', message: e.message, action_token_id: e.three_d_secure_action_token_id
+      }
+    }.to_json
+  rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
+    logger.error e
+    { error: { message: e.message } }.to_json
   end
 end
 

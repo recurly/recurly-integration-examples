@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Recurly.js Example: 3-D Secure</title>
+    <script src="https://js.recurly.com/v4/recurly.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/config.js"></script>
+    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="/minimal/style.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+      .three-d-secure-auth-container {
+        display: none;
+        height: 400px;
+        width: 100%;
+      }
+      .three-d-secure-auth-container div {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <figure class="logo">
+        <span class="price">$10</span>
+        <span class="term">monthly</span>
+      </figure>
+    </section>
+
+    <section id="errors"></section>
+
+    <section>
+      <form method="post" action="/api/subscriptions/new-3ds">
+        <div>
+          <div data-recurly="card"></div>
+        </div>
+        <div>
+          <label for="first_name">First Name</label>
+          <input type="text" data-recurly="first_name" id="first_name" name="first-name">
+        </div>
+        <div>
+          <label for="last_name">Last Name</label>
+          <input type="text" data-recurly="last_name" id="last_name" name="last-name">
+        </div>
+
+        <div class="three-d-secure-auth-container"></div>
+
+        <button id="subscribe">Subscribe</button>
+
+        <input type="hidden" name="three-d-secure-token" id="three-d-secure-token">
+        <input type="hidden" data-recurly="token" name="recurly-token">
+      </form>
+    </section>
+    <script>
+      recurly.configure({
+        publicKey: window.recurlyConfig.publicKey,
+        style: {
+          all: {
+            fontFamily: 'Open Sans',
+            fontSize: '1rem',
+            fontWeight: 'bold',
+            fontColor: '#2c0730'
+          }
+        }
+      });
+
+      $('form').on('submit', function (event) {
+        event.preventDefault();
+
+        $('#errors').text('');
+        $('input').removeClass('error');
+        // $('button').prop('disabled', true);
+
+        var form = this;
+        recurly.token(form, function (err, token) {
+          if (err) return error(err);
+
+          // For this flow we make a fetch request to our backend, so
+          // that we can easily display the 3-D Secure flow on the checkout page
+          // when it is required. It is possible to use a form submission instead,
+          // but you may need to present a 3-D Secure challenge to your customer
+          // in an intermediary page if 3-D Secure is required for the transaction
+          fetch(form.getAttribute('action'), {
+            method: 'POST',
+            body: new FormData(form)
+          })
+          .then(function (response) { return response.json(); })
+          .catch(function (error) {
+            // Handle request errors
+            console.error('Request error:', error)
+          })
+          .then(function (response) {
+            // Handle subscription creation errors
+            if (response.error) {
+              // Handle 3-D Secure being required. This code is set on the backend
+              if (response.error.code === '3ds-required') {
+                displayThreeDSecure(response.error.action_token_id);
+              }
+              error(response.error);
+            } else {
+              // Handle successful subscription creation
+              console.log('Success:', JSON.stringify(response));
+              alert('Success!');
+            }
+          });
+        });
+      });
+
+      function displayThreeDSecure (actionTokenId) {
+        var container = document.querySelector('.three-d-secure-auth-container');
+        var risk = recurly.Risk();
+        var threeDSecure = risk.ThreeDSecure({ actionTokenId: actionTokenId });
+
+        threeDSecure.on('error', function (err) {
+          // Handle errors that occur during 3-D Secure authentication
+          console.error(err);
+        });
+        threeDSecure.on('token', function (token) {
+          // place the result token in your form so that it will be submitted
+          // when the customer re-submits
+          document.querySelector('#three-d-secure-token').value = token.id;
+
+          // Hide the container once we have a token
+          container.style.display = 'none';
+        });
+
+        threeDSecure.attach(container);
+
+        // Show the container
+        container.style.display = 'block';
+      }
+
+      // A simple error handling function to expose errors to the customer
+      function error (err) {
+        if (err.fields) {
+          $('#errors').text('The following fields appear to be invalid: ' + err.fields.join(', '));
+          $.each(err.fields, function (i, field) {
+            $('[data-recurly=' + field + ']').addClass('error');
+          });
+        } else if (err.message) {
+          $('#errors').text(err.message);
+        }
+        $('button').prop('disabled', false);
+      }
+
+      // runs some simple animations for the page
+      $('body').addClass('show');
+    </script>
+  </body>
+</html>
