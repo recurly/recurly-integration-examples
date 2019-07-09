@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
 gem 'sinatra', '>= 1.4.7', '< 1.5'
-gem 'recurly', '>= 2.7.8', '< 2.8'
+gem 'recurly', '2.17.11'

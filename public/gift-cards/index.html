@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Recurly.js Example: Minimal Billing Information</title>
+    <title>Recurly.js Example: Gift Cards</title>
     <script src="https://js.recurly.com/v4/recurly.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/config.js"></script>
@@ -60,11 +60,6 @@
         }
       });
 
-      // When a customer hits their 'enter' key while in a field
-      recurly.on('field:submit', function (event) {
-        $('form').submit();
-      });
-
       // On form submit, we stop submission to go get the token
       $('form').on('submit', function (event) {
 
@@ -93,27 +88,6 @@
 
         });
       });
-
-      // Reconfigure font size based on window size
-      $(window).on('resize init', function (event) {
-        if ($(this).width() < 600) {
-          recurly.configure({
-            style: {
-              all: {
-                fontSize: '0.9rem'
-              }
-            }
-          });
-        } else {
-          recurly.configure({
-            style: {
-              all: {
-                fontSize: '1rem'
-              }
-            }
-          });
-        }
-      }).triggerHandler('init');
 
       // A simple error handling function to expose errors to the customer
       function error (err) {
