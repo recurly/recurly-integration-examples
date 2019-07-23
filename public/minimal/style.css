@@ -23,12 +23,16 @@ body {
 }
 
 section {
-  margin: 0 auto;
+  margin: 0 auto 1em;
   max-width: 16rem;
 }
 
 section:first-child {
   overflow: auto;
+}
+
+section.errors {
+  color: #e43c29;
 }
 
 form {

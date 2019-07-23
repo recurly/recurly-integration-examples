@@ -31,10 +31,17 @@ post '/api/subscriptions/new' do
   # We'll wrap this in a begin-rescue to catch any API
   # errors that may occur
   begin
-
     # This is not a good idea in production but helpful for debugging
     # These params may contain sensitive information you don't want logged
     logger.info params
+
+    recurly_token_id = params['recurly-token']
+    billing_info = { token_id: recurly_token_id }
+
+    # Optionally add a 3D Secure token if one is present
+    unless params['three-d-secure-token'].empty?
+      billing_info['three_d_secure_action_result_token_id'] = params['three-d-secure-token']
+    end
 
     # Create the subscription using minimal
     # information: plan_code, account_code, and
@@ -42,43 +49,18 @@ post '/api/subscriptions/new' do
     subscription = Recurly::Subscription.create! plan_code: :basic,
       account: {
         account_code: SecureRandom.uuid,
-        billing_info: { token_id: params['recurly-token'] }
+        billing_info: billing_info
       }
 
     # The subscription has been created and we can redirect
     # to a confirmation page
     redirect success_url
+
+  # Handle a 3D Secure required error by redirecting to an authentication page
+  rescue Recurly::Transaction::ThreeDSecureError => e
+    redirect "/3d-secure/authenticate.html#token_id=#{recurly_token_id}&action_token_id=#{e.three_d_secure_action_token_id}"
   rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
     error e
-  end
-end
-
-# POST route to handle a new subscription with 3-D Secure support
-post '/api/subscriptions/new-3ds' do
-  content_type :json
-  logger.info params
-
-  begin
-    billing_info = { token_id: params['recurly-token'] }
-    unless params['three-d-secure-token'].empty?
-      billing_info['three_d_secure_action_result_token_id'] = params['three-d-secure-token']
-    end
-    subscription = Recurly::Subscription.create! plan_code: :basic,
-      account: {
-        account_code: SecureRandom.uuid,
-        billing_info: billing_info
-      }
-
-    { success: true }.to_json
-  rescue Recurly::Transaction::ThreeDSecureError => e
-    {
-      error: {
-        code: '3ds-required', message: e.message, action_token_id: e.three_d_secure_action_token_id
-      }
-    }.to_json
-  rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
-    logger.error e
-    { error: { message: e.message } }.to_json
   end
 end
 
