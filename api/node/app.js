@@ -1,51 +1,75 @@
-
 // API usage Dependencies
-var Recurly = require('node-recurly');
-var express = require('express');
-var bodyParser = require('body-parser');
+const Recurly = require('node-recurly');
+const express = require('express');
+const bodyParser = require('body-parser');
 
 // We'll use uuids to generate account_code values
-var uuid = require('node-uuid');
+const uuid = require('node-uuid');
 
 // Set up express
-var app = express();
+const app = express();
 app.use(bodyParser());
 
-// Instantiate a configured recurly client
-var recurly = new Recurly({
-  SUBDOMAIN: 'RECURLY_SUBDOMAIN',
-  API_KEY: 'RECURLY_API_KEY'
-});
+// These are the various configuration values used in this example. They are
+// pulled from the ENV for ease of use, but can be defined directly or stored
+// elsewhere
+const {
+  RECURLY_SUBDOMAIN,
+  RECURLY_API_KEY,
+  RECURLY_PUBLIC_KEY,
+  SUCCESS_URL,
+  ERROR_URL
+} = process.env;
 
-// Set your Recurly public key
-RECURLY_PUBLIC_KEY = 'RECURLY_PUBLIC_KEY';
+// Instantiate a configured recurly client
+const recurly = new Recurly({
+  SUBDOMAIN: RECURLY_SUBDOMAIN,
+  API_KEY: RECURLY_API_KEY,
+  API_VERSION: '2.21'
+});
 
 // POST route to handle a new subscription form
 app.post('/api/subscriptions/new', function (req, res) {
+
+  // Build our billing info hash
+  const tokenId = req.body['recurly-token'];
+  const billingInfo = { token_id: tokenId };
+
+  // Optionally add a 3D Secure token if one is present
+  if (req.body['three-d-secure-token']) {
+    billingInfo.three_d_secure_action_result_token_id = req.body['three-d-secure-token']
+  }
 
   // Create the scubscription using minimal
   // information: plan_code, currency, account_code, and
   // the token we generated on the frontend
   recurly.subscriptions.create({
-    plan_code: 'simpleplan',
+    plan_code: 'basic',
     currency: 'USD',
     account: {
       account_code: uuid.v1(),
-      billing_info: {
-        token_id: req.body['recurly-token']
-      }
+      billing_info: billingInfo
     }
   }, function (err, response) {
-    // If an API error occurs, parse the error message
-    // and redirect to an error page
     if (err) {
-      var message = parseErrors(err.data);
-      return res.redirect('ERROR_URL?error=' + message);
+      // Here we handle a 3D Secure required error by redirecting to an authentication page
+      if (err.data.errors && err.data.errors.transaction_error) {
+        const txnError = err.data.errors.transaction_error;
+        if (txnError.error_code === 'three_d_secure_action_required') {
+          const actionTokenId = txnError.three_d_secure_action_token_id;
+          return res.redirect(`/3d-secure/authenticate.html#token_id=${tokenId}&action_token_id=${actionTokenId}`);
+        }
+      }
+
+      // If any other error occurs, parse the error message
+      // and redirect to an error page
+      const message = errorMessage(err.data);
+      return res.redirect(ERROR_URL + '?error=' + message);
     }
 
     // Otherwise, we know that the request has succeeded,
     // and we can redirect to a confirmation page
-    res.redirect('SUCCESS_URL');
+    res.redirect(SUCCESS_URL);
   });
 
 });
@@ -72,7 +96,7 @@ app.put('/api/accounts/:account_code', function (req, res) {
 // This endpoint provides configuration to recurly.js
 app.get('/config.js', function (req, res) {
   res.setHeader('Content-Type', 'application/javascript');
-  res.send("window.recurlyConfig = { publicKey: '" + RECURLY_PUBLIC_KEY + "' }");
+  res.send(`window.recurlyConfig = { publicKey: '${RECURLY_PUBLIC_KEY}' }`);
 });
 
 // Mounts express.static to render example forms
@@ -85,14 +109,21 @@ app.listen(9001, function () {
 
 // A set of utility functions for redirecting and parsing API errors
 function redirect (err, response) {
-  if (err) return res.redirect('ERROR_URL?error=' + parseErrors(err.data));
-  res.redirect('SUCCESS_URL');
+  if (err) return res.redirect(`${ERROR_URL}?error=${errorMessage(err.data)}`);
+  res.redirect(SUCCESS_URL);
 }
 
-function parseErrors (data) {
-  return data.errors
-    ? data.errors.error.map(parseValidationErrors).join(', ')
-    : [data.error.symbol, data.error.description].join(': ');
+// Simple error parsing routine to construct a helpful error message
+function errorMessage (data) {
+  if (data.errors) {
+    return parseValidationErrors(data.errors.error);
+  }
+
+  console.log(data);
+
+  if (data.error.symbol) {
+    return [data.error.symbol, data.error.description].join(': ');
+  }
 }
 
 function parseValidationErrors (e) {
