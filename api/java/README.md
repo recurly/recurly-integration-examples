@@ -29,7 +29,7 @@ The Recurly Java library is distributed via [Maven Central](http://search.maven.
 <dependency>
     <groupId>com.ning.billing</groupId>
     <artifactId>recurly-java-library</artifactId>
-    <version>0.2.4</version>
+    <version>0.29.0</version>
 </dependency>
 ```
 
@@ -39,16 +39,28 @@ The Spark Web Framework is distributed via [Maven Central](http://search.maven.o
 <dependency>
     <groupId>com.sparkjava</groupId>
     <artifactId>spark-core</artifactId>
-    <version>2.1</version>
+    <version>2.9.1</version>
 </dependency>
 ```
-2.	Start the server
+
+2. Set the environment variables
 
 ```bash
-$ java App
+export RECURLY_SUBDOMAIN=myrecurlysubdomain
+export RECURLY_API_KEY=myapikey
+export RECURLY_PUBLIC_KEY=mypublickey
+export SUCCESS_URL=successurl
+export ERROR_URL=errorurl
 ```
 
-3. Open [http://localhost:9001](http://localhost:9001)
+3.	Start the server
+
+```bash
+$ mvn clean compile && mvn exec:java -Dexec.mainClass="com.recurly.examples.App"
+```
+
+4. Open [http://localhost:9001](http://localhost:9001)
+
 
 [spark]: http://sparkjava.com/
 [client]: https://github.com/killbilling/recurly-java-library
