@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Recurly.js Example: 3-D Secure</title>
+    <script src="https://js.recurly.com/v4/recurly.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/config.js"></script>
+    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="/minimal/style.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+      .three-d-secure-auth-container {
+        display: none;
+        height: 400px;
+        width: 100%;
+      }
+      .three-d-secure-auth-container div {
+        height: 100%;
+      }
+      .three-d-secure-submitting-messagge {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <figure class="logo">
+        <span class="price">$10</span>
+        <span class="term">monthly</span>
+      </figure>
+    </section>
+
+    <section id="errors" class="errors"></section>
+
+    <section class="info">
+      Your bank requires authentication using 3D Secure.
+    </section>
+
+    <section>
+      <form method="post" action="/api/subscriptions/new">
+        <div class="three-d-secure-auth-container"></div>
+        <div class="three-d-secure-submitting-messagge">
+          Authenticating your payment method...
+        </div>
+        <input type="hidden" name="three-d-secure-token" id="three-d-secure-token">
+        <input type="hidden" name="recurly-token" id="recurly-token">
+      </form>
+    </section>
+    <script>
+      // We expect this page to load with the following parameter pattern
+      // `/3d-secure.html#token_id=xxx&action_token_id`
+      // This is a simple parser for that pattern. You may use window.URLSearchParams
+      // instead if IE11 support is not needed
+      var hashParams = location.hash.substr(1).split('&').reduce(function (acc, i) {
+        var [k,v] = i.split('=');
+        acc[k]=v;
+        return acc;
+      }, {});
+
+      // Configure Recurly.js
+      recurly.configure(window.recurlyConfig.publicKey);
+
+      // In order to remain backend agnostic, this example passes the Recurly.js credit card token
+      // to this page via the URL hash. Here we add it to the form so that it will be passed
+      // to our backend
+      $('#recurly-token').val(hashParams.token_id);
+
+      // Now we construct the 3-D Secure authentication flow
+      showThreeDSecure();
+
+      // runs some simple animations for the page
+      $('body').addClass('show');
+
+      function showThreeDSecure () {
+        var container = $('.three-d-secure-auth-container');
+        var risk = recurly.Risk();
+        var threeDSecure = risk.ThreeDSecure({ actionTokenId: hashParams.action_token_id });
+
+        // Handle errors that occur during 3-D Secure authentication
+        threeDSecure.on('error', error);
+
+        // 'token' is called when your user completes the 3-D Secure authentication flow
+        threeDSecure.on('token', function (token) {
+          // place the result token in your form so that it will be submitted
+          // when the customer re-submits
+          $('#three-d-secure-token').val(token.id);
+
+          // Hide the container once we have a token
+          container.hide();
+
+          // Show the loading message
+          $('.three-d-secure-submitting-messagge').show();
+
+          // submit the form automatically
+          $('form').submit();
+        });
+
+        // Attach our 3D Secure session to the container
+        threeDSecure.attach(container[0]);
+
+        // Show the container
+        container.show();
+      }
+
+      // A simple error handling function to expose errors to the customer
+      function error (err) {
+        if (err.fields) {
+          $('#errors').text('The following fields appear to be invalid: ' + err.fields.join(', '));
+          $.each(err.fields, function (i, field) {
+            $('[data-recurly=' + field + ']').addClass('error');
+          });
+        } else if (err.message) {
+          $('#errors').text(err.message);
+        }
+        $('button').prop('disabled', false);
+      }
+    </script>
+  </body>
+</html>

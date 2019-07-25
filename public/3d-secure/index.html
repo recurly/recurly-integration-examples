@@ -9,16 +9,6 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
     <link href="/minimal/style.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style type="text/css">
-      .three-d-secure-auth-container {
-        display: none;
-        height: 400px;
-        width: 100%;
-      }
-      .three-d-secure-auth-container div {
-        height: 100%;
-      }
-    </style>
   </head>
   <body>
     <section>
@@ -28,10 +18,10 @@
       </figure>
     </section>
 
-    <section id="errors"></section>
+    <section id="errors" class="errors"></section>
 
     <section>
-      <form method="post" action="/api/subscriptions/new-3ds">
+      <form method="post" action="/api/subscriptions/new">
         <div>
           <div data-recurly="card"></div>
         </div>
@@ -43,8 +33,6 @@
           <label for="last_name">Last Name</label>
           <input type="text" data-recurly="last_name" id="last_name" name="last-name">
         </div>
-
-        <div class="three-d-secure-auth-container"></div>
 
         <button id="subscribe">Subscribe</button>
 
@@ -70,40 +58,12 @@
 
         $('#errors').text('');
         $('input').removeClass('error');
-        // $('button').prop('disabled', true);
+        $('button').prop('disabled', true);
 
         var form = this;
         recurly.token(form, function (err, token) {
-          if (err) return error(err);
-
-          // For this flow we make a fetch request to our backend, so
-          // that we can easily display the 3-D Secure flow on the checkout page
-          // when it is required. It is possible to use a form submission instead,
-          // but you may need to present a 3-D Secure challenge to your customer
-          // in an intermediary page if 3-D Secure is required for the transaction
-          fetch(form.getAttribute('action'), {
-            method: 'POST',
-            body: new FormData(form)
-          })
-          .then(function (response) { return response.json(); })
-          .catch(function (error) {
-            // Handle request errors
-            console.error('Request error:', error)
-          })
-          .then(function (response) {
-            // Handle subscription creation errors
-            if (response.error) {
-              // Handle 3-D Secure being required. This code is set on the backend
-              if (response.error.code === '3ds-required') {
-                displayThreeDSecure(response.error.action_token_id);
-              }
-              error(response.error);
-            } else {
-              // Handle successful subscription creation
-              console.log('Success:', JSON.stringify(response));
-              alert('Success!');
-            }
-          });
+          if (err) error(err);
+          else form.submit();
         });
       });
 

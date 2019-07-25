@@ -8,15 +8,15 @@ require 'recurly'
 require 'securerandom'
 
 # Configure the Recurly gem with your subdomain and API key
-Recurly.subdomain = 'RECURLY_SUBDOMAIN'
-Recurly.api_key = 'RECURLY_API_KEY'
+Recurly.subdomain = ENV['RECURLY_SUBDOMAIN']
+Recurly.api_key = ENV['RECURLY_API_KEY']
 
 set :port, 9001
 set :public_folder, '../../public'
 enable :logging
 
-success_url = 'SUCCESS_URL'
-error_url = 'ERROR_URL'
+success_url = ENV['SUCCESS_URL']
+error_url = ENV['ERROR_URL']
 
 # POST route to handle a new subscription form
 post '/api/subscriptions/new' do
@@ -29,18 +29,34 @@ post '/api/subscriptions/new' do
     # These params may contain sensitive information you don't want logged
     logger.info params
 
+    # Build our billing info hash
+    recurly_token_id = params['recurly-token']
+    billing_info = { token_id: recurly_token_id }
+
+    # Optionally add a 3D Secure token if one is present
+    unless params['three-d-secure-token'].empty?
+      billing_info['three_d_secure_action_result_token_id'] = params['three-d-secure-token']
+    end
+
     # Create the subscription using minimal
     # information: plan_code, account_code, and
     # the token we generated on the frontend
     subscription = Recurly::Subscription.create! plan_code: :basic,
       account: {
         account_code: SecureRandom.uuid,
-        billing_info: { token_id: params['recurly-token'] }
+        billing_info: billing_info
       }
 
     # The subscription has been created and we can redirect
     # to a confirmation page
     redirect success_url
+
+  rescue Recurly::Transaction::ThreeDSecureError => e
+
+    # Here we handle a 3D Secure required error by redirecting to an authentication page
+    logger.error e
+    redirect "/3d-secure/authenticate.html#token_id=#{recurly_token_id}&action_token_id=#{e.three_d_secure_action_token_id}"
+
   rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
 
     # Here we may wish to log the API error and send the
@@ -48,35 +64,6 @@ post '/api/subscriptions/new' do
     # an error message
     logger.error e
     redirect error_url
-  end
-end
-
-# POST route to handle a new subscription with 3-D Secure support
-post '/api/subscriptions/new-3ds' do
-  content_type :json
-  logger.info params
-
-  begin
-    billing_info = { token_id: params['recurly-token'] }
-    unless params['three-d-secure-token'].empty?
-      billing_info['three_d_secure_action_result_token_id'] = params['three-d-secure-token']
-    end
-    subscription = Recurly::Subscription.create! plan_code: :basic,
-      account: {
-        account_code: SecureRandom.uuid,
-        billing_info: billing_info
-      }
-
-    { success: true }.to_json
-  rescue Recurly::Transaction::ThreeDSecureError => e
-    {
-      error: {
-        code: '3ds-required', message: e.message, action_token_id: e.three_d_secure_action_token_id
-      }
-    }.to_json
-  rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
-    logger.error e
-    { error: { message: e.message } }.to_json
   end
 end
 
