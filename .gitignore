@@ -1,2 +1,3 @@
 /api/php/vendor/
 /api/node/node_modules/
+/api/php/composer.phar

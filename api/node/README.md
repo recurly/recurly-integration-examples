@@ -29,5 +29,5 @@ framework.
   ```
 2. Open [http://localhost:9001](http://localhost:9001)
 
-[express]: http://expressjs.com/
+[express]: https://expressjs.com/
 [node-recurly]: https://github.com/cgerrior/node-recurly

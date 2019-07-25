@@ -91,7 +91,7 @@ post '/api/accounts/:account_code' do
 end
 
 # This endpoint provides configuration to recurly.js
-get '/config.js' do
+get '/config' do
   content_type :js
   "window.recurlyConfig = { publicKey: '#{ENV['RECURLY_PUBLIC_KEY']}' }"
 end

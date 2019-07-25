@@ -27,24 +27,11 @@ within another application framework altogehter.
   $ curl -sS https://getcomposer.org/installer | php
   $ php composer.phar install
   ```
-2. You'll need to serve the directory with a server like nginx or Apache
+2. Run PHP's built-in server
 
-The nginx configuration file should contain this code (along with other settings you may need) in your location block:
+  ```bash
+  $ php -S localhost:9001 -t ../../public app.php
+  ```
 
-```
-location /api/ {
-        root /var/www/recurly-js-examples/api/php/;
-        index app.php;
-        try_files /app.php $uri $uri/;
-		# NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        # With php5-fpm:
-        fastcgi_pass unix:/var/run/php5-fpm.sock;
-        fastcgi_index app.php;
-        fastcgi_param $SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        include fastcgi_params;
-}
-```
-
-[slim]: http://www.slimframework.com/
-[client]: http://github.com/recurly/recurly-client-php
+[slim]: https://www.slimframework.com/
+[client]: https://github.com/recurly/recurly-client-php
