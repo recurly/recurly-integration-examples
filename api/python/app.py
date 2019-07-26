@@ -88,7 +88,7 @@ def update_account(account_code):
 
 
 # This endpoint provides configuration to recurly.js
-@app.route("/config.js", methods=['GET'])
+@app.route("/config", methods=['GET'])
 def config_js(account_code):
   return Response(f"window.recurlyConfig = {{ publicKey: '{RECURLY_PUBLIC_KEY}' }}", mimetype='application/javascript')
 

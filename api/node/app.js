@@ -94,7 +94,7 @@ app.put('/api/accounts/:account_code', function (req, res) {
 });
 
 // This endpoint provides configuration to recurly.js
-app.get('/config.js', function (req, res) {
+app.get('/config', function (req, res) {
   res.setHeader('Content-Type', 'application/javascript');
   res.send(`window.recurlyConfig = { publicKey: '${RECURLY_PUBLIC_KEY}' }`);
 });
