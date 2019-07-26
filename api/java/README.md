@@ -15,9 +15,9 @@ within another application framework altogether.
 
 ### Routes
 
-- `POST` [/api/subscriptions/new](App.java#L20-L45)
-- `POST` [/api/accounts/new](App.java#L48-63)
-- `PUT` [/api/accounts/:account_code](App.java#L66-79)
+- `POST` [/api/subscriptions/new](src/main/java/com/recurly/App.java#L33-L92)
+- `POST` [/api/accounts/new](src/main/java/com/recurly/App.java#L95-L110)
+- `PUT` [/api/accounts/:account_code](src/main/java/com/recurly/App.java#L113-L126)
 
 ### Use
 
@@ -29,7 +29,7 @@ The Recurly Java library is distributed via [Maven Central](http://search.maven.
 <dependency>
     <groupId>com.ning.billing</groupId>
     <artifactId>recurly-java-library</artifactId>
-    <version>0.2.4</version>
+    <version>0.29.0</version>
 </dependency>
 ```
 
@@ -39,16 +39,18 @@ The Spark Web Framework is distributed via [Maven Central](http://search.maven.o
 <dependency>
     <groupId>com.sparkjava</groupId>
     <artifactId>spark-core</artifactId>
-    <version>2.1</version>
+    <version>2.9.1</version>
 </dependency>
 ```
+
 2.	Start the server
 
 ```bash
-$ java App
+$ mvn clean compile && mvn exec:java -Dexec.mainClass="com.recurly.examples.App"
 ```
 
 3. Open [http://localhost:9001](http://localhost:9001)
+
 
 [spark]: http://sparkjava.com/
 [client]: https://github.com/killbilling/recurly-java-library
