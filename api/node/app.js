@@ -35,7 +35,8 @@ app.post('/api/subscriptions/new', function (req, res) {
   const tokenId = req.body['recurly-token'];
   const billingInfo = { token_id: tokenId };
 
-  // Optionally add a 3D Secure token if one is present
+  // Optionally add a 3D Secure token if one is present. You only need to do this
+  // if you are integrating with Recurly's 3D Secure support
   if (req.body['three-d-secure-token']) {
     billingInfo.three_d_secure_action_result_token_id = req.body['three-d-secure-token']
   }

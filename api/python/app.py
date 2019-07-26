@@ -1,7 +1,9 @@
+import os
 
 # Import Flask and recurly client library
 from flask import Flask
 from flask import request
+from flask import Response
 from flask import redirect
 import recurly
 
@@ -9,11 +11,14 @@ import recurly
 import uuid
 
 # Configure the recurly client with your subdomain and api key
-recurly.SUBDOMAIN = 'RECURLY_SUBDOMAIN'
-recurly.API_KEY = 'RECURLY_API_KEY'
+recurly.SUBDOMAIN = os.environ['RECURLY_SUBDOMAIN']
+recurly.API_KEY = os.environ['RECURLY_API_KEY']
 
 # Set your Recurly public key
-RECURLY_PUBLIC_KEY = 'RECURLY_PUBLIC_KEY'
+RECURLY_PUBLIC_KEY = os.environ['RECURLY_PUBLIC_KEY']
+
+SUCCESS_URL = os.environ['SUCCESS_URL']
+ERROR_URL = os.environ['ERROR_URL']
 
 app = Flask(__name__, static_folder='../../public', static_url_path='')
 
@@ -30,6 +35,18 @@ def new_subscription():
   # errors that may occur
   try:
 
+    recurly_token_id = request.form['recurly-token']
+
+    # Build our billing info object
+    billing_info = recurly.BillingInfo(
+      token_id = recurly_token_id
+    )
+
+    # Optionally add a 3D Secure token if one is present. You only need to do this
+    # if you are integrating with Recurly's 3D Secure support
+    if request.form['three-d-secure-token']:
+      billing_info.three_d_secure_action_result_token_id = request.form['three-d-secure-token']
+
     # Create the scubscription using minimal
     # information: plan_code, account_code, currency and
     # the token we generated on the frontend
@@ -38,23 +55,26 @@ def new_subscription():
       currency = 'USD',
       account = recurly.Account(
         account_code = uuid.uuid1(),
-        billing_info = recurly.BillingInfo(
-          token_id = request.form['recurly-token']
-        )
+        billing_info = billing_info
       )
     )
 
     # The subscription has been created and we can redirect
     # to a confirmation page
     subscription.save()
-    return redirect('SUCCESS_URL')
-  except recurly.ValidationError as errors:
+    return redirect(SUCCESS_URL)
+  except recurly.ValidationError as error:
+
+    # Here we handle a 3D Secure required error by redirecting to an authentication page
+    if error.transaction_error_code == 'three_d_secure_action_required':
+      action_token_id = error.transaction_error.three_d_secure_action_token_id
+      return redirect("/3d-secure/authenticate.html#token_id=" + recurly_token_id + "&action_token_id=" + action_token_id)
 
     # Here we may wish to log the API error and send the
     # customer to an appropriate URL, perhaps including
     # and error message. See the `error_redirect` and
     # `compose_errors` functions below.
-    error_redirect(compose_errors(errors))
+    error_redirect(compose_errors(error))
 
 # POST route to handle a new account form
 @app.route("/api/accounts/new", methods=['POST'])
@@ -67,7 +87,7 @@ def new_account():
       )
     )
     account.save()
-    return redirect('SUCCESS_URL')
+    return redirect(SUCCESS_URL)
   except recurly.ValidationError as errors:
     error_redirect(compose_errors(errors))
 
@@ -80,7 +100,7 @@ def update_account(account_code):
       token_id = request.form['recurly-token']
     )
     account.save()
-    return redirect('SUCCESS_URL')
+    return redirect(SUCCESS_URL)
   except recurly.NotFoundError as error:
     error_redirect(error.message)
   except recurly.ValidationError as errors:
@@ -89,12 +109,12 @@ def update_account(account_code):
 
 # This endpoint provides configuration to recurly.js
 @app.route("/config", methods=['GET'])
-def config_js(account_code):
-  return Response(f"window.recurlyConfig = {{ publicKey: '{RECURLY_PUBLIC_KEY}' }}", mimetype='application/javascript')
+def config_js():
+  return Response("window.recurlyConfig = { publicKey: '" + RECURLY_PUBLIC_KEY + "' }", mimetype='application/javascript')
 
 # A few utility functions for error handling
 def error_redirect(message):
-  redirect('ERROR_URL?errors=' + message)
+  redirect(ERROR_URL + '?errors=' + message)
 
 def compose_errors(errors):
   ', '.join(e.message for e in errors)

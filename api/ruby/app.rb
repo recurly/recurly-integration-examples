@@ -33,7 +33,8 @@ post '/api/subscriptions/new' do
     recurly_token_id = params['recurly-token']
     billing_info = { token_id: recurly_token_id }
 
-    # Optionally add a 3D Secure token if one is present
+    # Optionally add a 3D Secure token if one is present. You only need to do this
+    # if you are integrating with Recurly's 3D Secure support
     unless params['three-d-secure-token'].empty?
       billing_info['three_d_secure_action_result_token_id'] = params['three-d-secure-token']
     end
