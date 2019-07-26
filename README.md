@@ -47,6 +47,19 @@ You'll want to adjust the code to fit your specific redirection and error
 handling needs, but the example applications are designed to perform essential
 API functions on first boot.
 
+#### Configuring the examples
+
+Each API example will pull configuration values from environment variables. You may set
+them to quickly configure the example to connect to your Recurly site.
+
+| Environment variable | description |
+| -------------------- | ----------- |
+| RECURLY_SUBDOMAIN | The subdomain of your recurly site |
+| RECURLY_API_KEY | Your [private API key][api-keys] |
+| RECURLY_PUBLIC_KEY | Your [public API key][api-keys] |
+| SUCCESS_URL | A URL to redirect to when an action suceeds |
+| ERROR_URL | A URL to redirect to when an error occurs |
+
 ### Contributing
 
 [See CONTRIBUTING file](CONTRIBUTING.md).
@@ -57,3 +70,4 @@ API functions on first boot.
 
 [recurly-js]: https://github.com/recurly/recurly-js
 [examples]: public
+[api-keys]: https://app.recurly.com/go/integrations/api_keys

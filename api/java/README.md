@@ -15,9 +15,9 @@ within another application framework altogether.
 
 ### Routes
 
-- `POST` [/api/subscriptions/new](App.java#L20-L45)
-- `POST` [/api/accounts/new](App.java#L48-63)
-- `PUT` [/api/accounts/:account_code](App.java#L66-79)
+- `POST` [/api/subscriptions/new](src/main/java/com/recurly/App.java#L33-L92)
+- `POST` [/api/accounts/new](src/main/java/com/recurly/App.java#L95-L110)
+- `PUT` [/api/accounts/:account_code](src/main/java/com/recurly/App.java#L113-L126)
 
 ### Use
 
@@ -43,23 +43,13 @@ The Spark Web Framework is distributed via [Maven Central](http://search.maven.o
 </dependency>
 ```
 
-2. Set the environment variables
-
-```bash
-export RECURLY_SUBDOMAIN=myrecurlysubdomain
-export RECURLY_API_KEY=myapikey
-export RECURLY_PUBLIC_KEY=mypublickey
-export SUCCESS_URL=successurl
-export ERROR_URL=errorurl
-```
-
-3.	Start the server
+2.	Start the server
 
 ```bash
 $ mvn clean compile && mvn exec:java -Dexec.mainClass="com.recurly.examples.App"
 ```
 
-4. Open [http://localhost:9001](http://localhost:9001)
+3. Open [http://localhost:9001](http://localhost:9001)
 
 
 [spark]: http://sparkjava.com/
