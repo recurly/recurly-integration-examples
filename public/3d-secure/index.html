@@ -36,7 +36,6 @@
 
         <button id="subscribe">Subscribe</button>
 
-        <input type="hidden" name="three-d-secure-token" id="three-d-secure-token">
         <input type="hidden" data-recurly="token" name="recurly-token">
       </form>
     </section>
@@ -66,30 +65,6 @@
           else form.submit();
         });
       });
-
-      function displayThreeDSecure (actionTokenId) {
-        var container = document.querySelector('.three-d-secure-auth-container');
-        var risk = recurly.Risk();
-        var threeDSecure = risk.ThreeDSecure({ actionTokenId: actionTokenId });
-
-        threeDSecure.on('error', function (err) {
-          // Handle errors that occur during 3-D Secure authentication
-          console.error(err);
-        });
-        threeDSecure.on('token', function (token) {
-          // place the result token in your form so that it will be submitted
-          // when the customer re-submits
-          document.querySelector('#three-d-secure-token').value = token.id;
-
-          // Hide the container once we have a token
-          container.style.display = 'none';
-        });
-
-        threeDSecure.attach(container);
-
-        // Show the container
-        container.style.display = 'block';
-      }
 
       // A simple error handling function to expose errors to the customer
       function error (err) {
