@@ -2,14 +2,10 @@ GEM
   remote: https://rubygems.org/
   specs:
     dotenv (2.2.1)
-    mini_portile2 (2.1.0)
-    nokogiri (1.6.8.1)
-      mini_portile2 (~> 2.1.0)
     rack (1.6.11)
     rack-protection (1.5.5)
       rack
-    recurly (2.7.9)
-      nokogiri (~> 1.6.0)
+    recurly (2.17.11)
     sinatra (1.4.8)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -21,8 +17,8 @@ PLATFORMS
 
 DEPENDENCIES
   dotenv
-  recurly (>= 2.7.8, < 2.8)
+  recurly (~> 2.9)
   sinatra (>= 1.4.7, < 1.5)
 
 BUNDLED WITH
-   1.16.4
+   1.17.3
