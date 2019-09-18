@@ -36,6 +36,10 @@ def new_subscription():
   try:
 
     recurly_token_id = request.form['recurly-token']
+    if 'recurly-account-code' in request.form:
+      recurly_account_code = request.form['recurly-account-code']
+    else:
+      recurly_account_code = uuid.uuid1()
 
     # Build our billing info object
     billing_info = recurly.BillingInfo(
@@ -44,7 +48,7 @@ def new_subscription():
 
     # Optionally add a 3D Secure token if one is present. You only need to do this
     # if you are integrating with Recurly's 3D Secure support
-    if request.form['three-d-secure-token']:
+    if 'three-d-secure-token' in request.form:
       billing_info.three_d_secure_action_result_token_id = request.form['three-d-secure-token']
 
     # Create the scubscription using minimal
@@ -54,7 +58,7 @@ def new_subscription():
       plan_code = 'basic',
       currency = 'USD',
       account = recurly.Account(
-        account_code = uuid.uuid1(),
+        account_code = recurly_account_code,
         billing_info = billing_info
       )
     )
@@ -68,7 +72,7 @@ def new_subscription():
     # Here we handle a 3D Secure required error by redirecting to an authentication page
     if error.transaction_error_code == 'three_d_secure_action_required':
       action_token_id = error.transaction_error.three_d_secure_action_token_id
-      return redirect("/3d-secure/authenticate.html#token_id=" + recurly_token_id + "&action_token_id=" + action_token_id)
+      return redirect("/3d-secure/authenticate.html#token_id=" + recurly_token_id + "&action_token_id=" + action_token_id + "&account_code=" + str(recurly_account_code))
 
     # Here we may wish to log the API error and send the
     # customer to an appropriate URL, perhaps including
