@@ -36,6 +36,7 @@ post '/api/subscriptions/new' do
     logger.info params
 
     recurly_token_id = params['recurly-token']
+    recurly_account_code = params['recurly-account-code'] || SecureRandom.uuid
     billing_info = { token_id: recurly_token_id }
 
     # Optionally add a 3D Secure token if one is present. You only need to do this
@@ -49,7 +50,7 @@ post '/api/subscriptions/new' do
     # the token we generated on the frontend
     subscription = Recurly::Subscription.create! plan_code: :basic,
       account: {
-        account_code: SecureRandom.uuid,
+        account_code: recurly_account_code,
         billing_info: billing_info
       }
 
@@ -59,7 +60,7 @@ post '/api/subscriptions/new' do
 
   # Handle a 3D Secure required error by redirecting to an authentication page
   rescue Recurly::Transaction::ThreeDSecureError => e
-    redirect "/3d-secure/authenticate.html#token_id=#{recurly_token_id}&action_token_id=#{e.three_d_secure_action_token_id}"
+    redirect "/3d-secure/authenticate.html#token_id=#{recurly_token_id}&action_token_id=#{e.three_d_secure_action_token_id}&account_code=#{recurly_account_code}"
   rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
     error e
   end
