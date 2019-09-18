@@ -45,6 +45,7 @@
         </div>
         <input type="hidden" name="three-d-secure-token" id="three-d-secure-token">
         <input type="hidden" name="recurly-token" id="recurly-token">
+        <input type="hidden" name="recurly-account-code" id="recurly-account-code">
       </form>
     </section>
     <script>
@@ -65,6 +66,7 @@
       // to this page via the URL hash. Here we add it to the form so that it will be passed
       // to our backend
       $('#recurly-token').val(hashParams.token_id);
+      $('#recurly-account-code').val(hashParams.account_code);
 
       // Now we construct the 3-D Secure authentication flow
       showThreeDSecure();

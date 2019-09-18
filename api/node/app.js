@@ -33,6 +33,7 @@ app.post('/api/subscriptions/new', function (req, res) {
 
   // Build our billing info hash
   const tokenId = req.body['recurly-token'];
+  const accountCode = req.body['recurly-account-code'] || uuid.v1();
   const billingInfo = { token_id: tokenId };
 
   // Optionally add a 3D Secure token if one is present. You only need to do this
@@ -48,7 +49,7 @@ app.post('/api/subscriptions/new', function (req, res) {
     plan_code: 'basic',
     currency: 'USD',
     account: {
-      account_code: uuid.v1(),
+      account_code: accountCode,
       billing_info: billingInfo
     }
   }, function (err, response) {
@@ -58,7 +59,7 @@ app.post('/api/subscriptions/new', function (req, res) {
         const txnError = err.data.errors.transaction_error;
         if (txnError.error_code === 'three_d_secure_action_required') {
           const actionTokenId = txnError.three_d_secure_action_token_id;
-          return res.redirect(`/3d-secure/authenticate.html#token_id=${tokenId}&action_token_id=${actionTokenId}`);
+          return res.redirect(`/3d-secure/authenticate.html#token_id=${tokenId}&action_token_id=${actionTokenId}&account_code=${accountCode}`);
         }
       }
 
