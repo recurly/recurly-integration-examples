@@ -31,7 +31,11 @@ $app->post('/api/subscriptions/new', function (Request $request, Response $respo
     $subscription->currency = 'USD';
 
     // Create an account with a uniqid and the customer's first and last name
-    $subscription->account = new Recurly_Account(uniqid());
+    $account_code = $request->getParam('recurly-account-code');
+    if (is_null($account_code)) {
+      $account_code  = uniqid();
+    }
+    $subscription->account = new Recurly_Account($account_code);
     $subscription->account->first_name = $request->getParam('first-name');
     $subscription->account->last_name = $request->getParam('last-name');
 
@@ -52,7 +56,7 @@ $app->post('/api/subscriptions/new', function (Request $request, Response $respo
     // Here we handle a 3D Secure required error by redirecting to an authentication page
     if ($e->errors[0] && $e->errors[0]->error_code == 'three_d_secure_action_required') {
       $actionTokenId = $e->errors[0]->three_d_secure_action_token_id;
-      return $response->withRedirect("/3d-secure/authenticate.html#token_id=$tokenId&action_token_id=$actionTokenId");
+      return $response->withRedirect("/3d-secure/authenticate.html#token_id=$tokenId&action_token_id=$actionTokenId&account_code=$account_code");
     }
 
     // Assign the error message and use it to handle any customer messages or logging
