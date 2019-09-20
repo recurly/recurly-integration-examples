@@ -41,14 +41,18 @@ public class App {
       subscriptionData.setCurrency("USD");
 
       Account accountData = new Account();
-      accountData.setAccountCode(UUID.randomUUID().toString());
+      String accountCode = req.queryParams("recurly-account-code");
+      if (accountCode == null) {
+        accountCode = UUID.randomUUID().toString();
+      }
+      accountData.setAccountCode(accountCode);
 
       BillingInfo billingInfoData = new BillingInfo();
       billingInfoData.setTokenId(tokenId);
 
       /* If it exists, set the 3D Secure Action Result Token returned from Recurly.js */
       String threeDSART = req.queryParams("three-d-secure-token");
-      if(!threeDSART.isEmpty()) {
+      if (threeDSART != null && !threeDSART.isEmpty()) {
         billingInfoData.setThreeDSecureActionResultTokenId(threeDSART);
       }
       accountData.setBillingInfo(billingInfoData);
@@ -64,7 +68,7 @@ public class App {
           to a confirmation page */
         res.redirect(successUrl);
       } catch(TransactionErrorException e) {
-        /** 
+        /**
          * Note: This is not an example of extensive error handling,
          * it is scoped to handling the 3DSecure error for simplicity.
          * Please ensure you have proper error handling before going to production.
@@ -73,7 +77,7 @@ public class App {
 
         if (transactionError != null) {
           String actionTokenId = transactionError.getThreeDSecureActionTokenId();
-          res.redirect("/3d-secure/authenticate.html#token_id=" + tokenId + "&action_token_id=" + actionTokenId);
+          res.redirect("/3d-secure/authenticate.html#token_id=" + tokenId + "&action_token_id=" + actionTokenId + "&account_code=" + accountCode);
         }
       }
 
