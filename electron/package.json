@@ -1,0 +1,13 @@
+{
+  "name": "recurly-electron-example",
+  "version": "0.0.0",
+  "description": "An example app using electron with Recurly.js",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^9.0.4"
+  }
+}
