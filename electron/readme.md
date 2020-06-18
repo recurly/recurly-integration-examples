@@ -4,7 +4,10 @@ This small application demonstrates how you might set up [Electron](https://www.
 
 The Electron example app needs a separate backend remote server to send requests to Recurly's API. **We do this so we don't expose our private Recurly API key in the Electron distributable.**
 
-This app also makes use of Electron's [`loadURL`](https://www.electronjs.org/docs/api/browser-window#winloadurlurl-options) [`BrowserWindow`](https://www.electronjs.org/docs/api/browser-window) method to load a static HTML file from our remote server into our Electron app on start. Any of Electron's `BrowserWindow` methods, including [`loadFile`](https://www.electronjs.org/docs/api/browser-window#winloadfilefilepath-options), should be okay to use as well, as long as requests from the Electron app are still being made to an external server that contains the private API key as opposed to making requests directly to the Recurly API from the Electron app itself.
+This app starts by instantiating a local express server. The express server has two purposes:
+
+1. Serve a static directory of HTML files for the Electron app to render.
+2. Proxy requests to the remote server.
 
 ### Use
 

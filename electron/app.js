@@ -1,15 +1,23 @@
 const { app, BrowserWindow } = require('electron');
+const express = require('express');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const { MY_APP_URL = 'http://localhost:9001', PORT = 3005 } = process.env;
 
 function createWindow () {
-  const { MY_APP_URL } = process.env;
-  const url = MY_APP_URL || 'http://localhost:9001/';
-
   const win = new BrowserWindow({
     width: 800,
     height: 600
   });
 
-  win.loadURL(url);
+  win.loadURL(`http://localhost:${PORT}/index.html`);
 }
 
-app.whenReady().then(createWindow);
+function startServer () {
+  const app = express();
+
+  app.use(express.static('../public'));
+  app.use('*', createProxyMiddleware({ target: MY_APP_URL, changeOrigin: true }));
+  app.listen(PORT);
+}
+
+app.whenReady().then(startServer).then(createWindow);
