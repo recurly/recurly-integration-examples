@@ -8,10 +8,10 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "electron": "^9.0.4"
+    "electron": "^9.1.1"
   },
   "dependencies": {
     "express": "^4.17.1",
-    "http-proxy-middleware": "^1.0.4"
+    "http-proxy-middleware": "^1.0.5"
   }
 }
