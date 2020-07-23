@@ -47,6 +47,9 @@ You'll want to adjust the code to fit your specific redirection and error
 handling needs, but the example applications are designed to perform essential
 API functions on first boot.
 
+**Note**: These examples are purely for demonstration purposes and we do not recommend
+using them as the foundation of a production system.
+
 #### Configuring the examples
 
 Each API example will pull configuration values from environment variables. You may set
