@@ -4,11 +4,11 @@ GEM
     dotenv (2.2.1)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    rack (2.0.8)
+    rack (2.2.3)
     rack-protection (2.0.8.1)
       rack
     recurly (2.17.11)
-    ruby2_keywords (0.0.1)
+    ruby2_keywords (0.0.2)
     sinatra (2.0.8.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
