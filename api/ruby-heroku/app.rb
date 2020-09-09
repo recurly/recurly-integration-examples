@@ -75,8 +75,7 @@ post '/api/purchses/new' do
     logger.info params
 
     purchase = Recurly::Purchase.new(
-      currency: 'USD',
-      plan_code: params['plan-code'],
+      currency: params['currency'] || 'USD',
       account: {
         account_code: SecureRandom.uuid,
         billing_info: {
@@ -84,10 +83,10 @@ post '/api/purchses/new' do
         }
       },
       subscriptions: params['subscriptions'].map do |sub_param|
-        { plan_code: sub_param['code'] }
+        { plan_code: sub_param['plan-code'] }
       end,
       adjustments: params['items'].map do |item_param|
-        { item_code: sub_param['code'] }
+        { item_code: sub_param['item-code'] }
       end
     )
     redirect success_url
