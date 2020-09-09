@@ -27,7 +27,6 @@ error_url = ENV['ERROR_URL']
 
 # POST route to handle a new subscription form
 post '/api/subscriptions/new' do
-
   # We'll wrap this in a begin-rescue to catch any API
   # errors that may occur
   begin
@@ -61,6 +60,38 @@ post '/api/subscriptions/new' do
   # Handle a 3D Secure required error by redirecting to an authentication page
   rescue Recurly::Transaction::ThreeDSecureError => e
     redirect "/3d-secure/authenticate.html#token_id=#{recurly_token_id}&action_token_id=#{e.three_d_secure_action_token_id}&account_code=#{recurly_account_code}"
+  rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
+    error e
+  end
+end
+
+# POST route to handle purchases from our checkout form
+post '/api/purchses/new' do
+  # We'll wrap this in a begin-rescue to catch any API
+  # errors that may occur
+  begin
+    # This is not a good idea in production but helpful for debugging
+    # These params may contain sensitive information you don't want logged
+    logger.info params
+
+    purchase = Recurly::Purchase.new(
+      currency: 'USD',
+      plan_code: params['plan-code'],
+      account: {
+        account_code: SecureRandom.uuid,
+        billing_info: {
+          token_id: params['recurly-token']
+        }
+      },
+      subscriptions: params['subscriptions'].map do |sub_param|
+        { plan_code: sub_param['code'] }
+      end,
+      adjustments: params['items'].map do |item_param|
+        { item_code: sub_param['code'] }
+      end
+    )
+    redirect success_url
+
   rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
     error e
   end
