@@ -91,8 +91,21 @@ end
 
 # This endpoint provides configuration to recurly.js
 get '/config' do
+  config = {
+    publicKey: ENV['RECURLY_PUBLIC_KEY'],
+    items: [].tap do |items|
+      Recurly::Item.find_each do |item|
+        items.unshift({ code: item[:item_code] })
+      end
+    end,
+    plans: [].tap do |plans|
+      Recurly::Plan.find_each do |plan|
+        plans.unshift({ code: plan[:plan_code] })
+      end
+    end
+  }
   content_type :js
-  "window.recurlyConfig = { publicKey: '#{ENV['RECURLY_PUBLIC_KEY']}' }"
+  "window.recurlyConfig = #{config.to_json}"
 end
 
 # All other routes will be treated as static requests

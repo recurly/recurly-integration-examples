@@ -7,7 +7,7 @@ GEM
     rack (2.2.3)
     rack-protection (2.0.8.1)
       rack
-    recurly (2.17.11)
+    recurly (2.18.14)
     ruby2_keywords (0.0.2)
     sinatra (2.0.8.1)
       mustermann (~> 1.0)
@@ -21,7 +21,7 @@ PLATFORMS
 
 DEPENDENCIES
   dotenv
-  recurly (~> 2.9)
+  recurly (~> 2.18.14)
   sinatra (~> 2.0, >= 2.0.2)
 
 BUNDLED WITH
