@@ -50,7 +50,7 @@ label {
   clear: left;
 }
 
-input {
+input[input="text"], select {
   position: relative;
   width: 100%;
   border: 2px solid #c2c2c2;
@@ -219,4 +219,17 @@ figure.success {
   border-color: #2c0730;
   color: #2c0730;
   z-index: 10;
+}
+
+.item {
+  margin-left: 10px;
+  text-align: left;
+}
+
+.item > label {
+  display: inline;
+}
+
+.items {
+  margin-bottom: 15px;
 }

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Recurly.js Example: Minimal Billing Information</title>
+    <script src="https://js.recurly.com/v4/recurly.js"></script>
+    <script src="/config"></script>
+    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="/minimal/style.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <section>
+      <!-- <figure class="logo"> -->
+        $<span class="price">10</span>
+        <span class="term">monthly</span>
+      <!-- </figure> -->
+    </section>
+
+    <section>
+      <form method="post" action="/api/subscriptions/new">
+        <div>
+          <label for="last_name">Select a plan</label>
+          <select name="plan" id="plan" data-recurly="plan">
+            <option value="plan-a">plan-a</option>
+            <option value="plan-b">plan-b</option>
+          </select>
+        </div>
+        <div class="items">
+          <label for="item">Select items</label>
+          <div class="item">
+            <label for="item">item-a</label>
+            <input
+              type="checkbox"
+              data-recurly="adjustment"
+              data-recurly-adjustment-item-code="item-a"
+            >
+          </div>
+        </div>
+        <div>
+          <div data-recurly="card"></div>
+        </div>
+
+        <button id="subscribe">Subscribe</button>
+
+        <input type="hidden" data-recurly="token" name="recurly-token">
+      </form>
+    </section>
+    <script>
+      const { publicKey, plans, items } = window.recurlyConfig;
+
+      // Configure recurly.js
+      recurly.configure({
+        publicKey, // Set this to your own public key
+        style: {
+          all: {
+            fontFamily: 'Open Sans',
+            fontSize: '1rem',
+            fontWeight: 'bold',
+            fontColor: '#2c0730'
+          }
+        }
+      });
+
+      // Configure pricing
+      const form = document.querySelector('form');
+      const checkoutPricing = recurly.Pricing.Checkout();
+      checkoutPricing.attach(form);
+      checkoutPricing.on('change', price => {
+        const priceEl = document.querySelector('.price');
+        priceEl.textContent = price.now.subtotal;
+      });
+
+      // Render plans
+
+      // Render items
+    </script>
+  </body>
+</html>
