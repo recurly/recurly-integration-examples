@@ -17,7 +17,7 @@ Recurly.subdomain = ENV['RECURLY_SUBDOMAIN']
 Recurly.api_key = ENV['RECURLY_PRIVATE_KEY']
 
 set :port, ENV['PORT']
-set :public_folder, 'public'
+set :public_folder, ENV['RECURLY_PUBLIC'] || 'public'
 
 enable :static
 enable :logging
@@ -77,18 +77,21 @@ post '/api/purchses/new' do
     purchase = Recurly::Purchase.new(
       currency: params['currency'] || 'USD',
       account: {
+        first_name: params['first-name'],
+        last_name: params['last-name'],
         account_code: SecureRandom.uuid,
         billing_info: {
           token_id: params['recurly-token']
         }
       },
-      subscriptions: params['subscriptions'].map do |sub_param|
-        { plan_code: sub_param['plan-code'] }
-      end,
-      adjustments: params['items'].map do |item_param|
-        { item_code: sub_param['item-code'] }
+      subscriptions: [
+        { plan_code: params['plan'] }
+      ],
+      adjustments: params['items']&.map do |item_param|
+        { item_code: item_param }
       end
     )
+    collection = Recurly::Purchase.invoice!(purchase)
     redirect success_url
 
   rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
@@ -109,6 +112,7 @@ end
 
 # PUT route to handle an account update form
 post '/api/accounts/:account_code' do
+  puts params
   begin
     account = Recurly::Account.find params[:account_code]
     account.billing_info = { token_id: params['recurly-token'] }
@@ -125,12 +129,12 @@ get '/config' do
     publicKey: ENV['RECURLY_PUBLIC_KEY'],
     items: [].tap do |items|
       Recurly::Item.find_each do |item|
-        items.unshift({ code: item[:item_code] })
+        items.unshift({ code: item[:item_code], name: item[:name] })
       end
     end,
     plans: [].tap do |plans|
       Recurly::Plan.find_each do |plan|
-        plans.unshift({ code: plan[:plan_code] })
+        plans.unshift({ code: plan[:plan_code], name: plan[:name] })
       end
     end
   }

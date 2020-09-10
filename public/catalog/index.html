@@ -92,7 +92,7 @@
       // Render plans
       let plansEl = ''
       for (const plan of plans) {
-        plansEl += `<option value="${plan.code}">${plan.code}</option>`
+        plansEl += `<option value="${plan.code}">${plan.name}</option>`
       }
       plan.innerHTML = plansEl;
 
@@ -106,9 +106,10 @@
               data-recurly="adjustment"
               data-recurly-adjustment-item-code="${item.code}"
               id="${item.code}"
-              value="1"
+              name="items[]"
+              value="${item.code}"
             >
-            <label for="${item.code}">${item.code}</label>
+            <label for="${item.code}">${item.name}</label>
           </div>
         `
       }
