@@ -17,7 +17,7 @@ Recurly.subdomain = ENV['RECURLY_SUBDOMAIN']
 Recurly.api_key = ENV['RECURLY_PRIVATE_KEY']
 
 set :port, ENV['PORT']
-set :public_folder, 'public'
+set :public_folder, ENV['RECURLY_PUBLIC'] || 'public'
 
 enable :static
 enable :logging
@@ -27,7 +27,6 @@ error_url = ENV['ERROR_URL']
 
 # POST route to handle a new subscription form
 post '/api/subscriptions/new' do
-
   # We'll wrap this in a begin-rescue to catch any API
   # errors that may occur
   begin
@@ -66,6 +65,40 @@ post '/api/subscriptions/new' do
   end
 end
 
+# POST route to handle purchases from our checkout form
+post '/api/purchses/new' do
+  # We'll wrap this in a begin-rescue to catch any API
+  # errors that may occur
+  begin
+    # This is not a good idea in production but helpful for debugging
+    # These params may contain sensitive information you don't want logged
+    logger.info params
+
+    purchase = Recurly::Purchase.new(
+      currency: params['currency'] || 'USD',
+      account: {
+        first_name: params['first-name'],
+        last_name: params['last-name'],
+        account_code: SecureRandom.uuid,
+        billing_info: {
+          token_id: params['recurly-token']
+        }
+      },
+      subscriptions: [
+        { plan_code: params['plan'] }
+      ],
+      adjustments: params['items']&.map do |item_param|
+        { item_code: item_param }
+      end
+    )
+    collection = Recurly::Purchase.invoice!(purchase)
+    redirect success_url
+
+  rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
+    error e
+  end
+end
+
 # POST route to handle a new account form
 post '/api/accounts/new' do
   begin
@@ -91,8 +124,21 @@ end
 
 # This endpoint provides configuration to recurly.js
 get '/config' do
+  config = {
+    publicKey: ENV['RECURLY_PUBLIC_KEY'],
+    items: [].tap do |items|
+      Recurly::Item.find_each do |item|
+        items.unshift({ code: item[:item_code], name: item[:name] })
+      end
+    end,
+    plans: [].tap do |plans|
+      Recurly::Plan.find_each do |plan|
+        plans.unshift({ code: plan[:plan_code], name: plan[:name] })
+      end
+    end
+  }
   content_type :js
-  "window.recurlyConfig = { publicKey: '#{ENV['RECURLY_PUBLIC_KEY']}' }"
+  "window.recurlyConfig = #{config.to_json}"
 end
 
 # All other routes will be treated as static requests

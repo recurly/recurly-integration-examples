@@ -38,7 +38,7 @@ section.errors {
 form {
 }
 
-label {
+label, .label {
   display: block;
   text-align: left;
   width: 100%;
@@ -50,7 +50,7 @@ label {
   clear: left;
 }
 
-input {
+input[type="text"], select {
   position: relative;
   width: 100%;
   border: 2px solid #c2c2c2;
@@ -219,4 +219,35 @@ figure.success {
   border-color: #2c0730;
   color: #2c0730;
   z-index: 10;
+}
+
+.item {
+  text-align: left;
+}
+
+.item > label {
+  display: inline;
+  text-transform: none;
+}
+
+.items {
+  margin-bottom: 15px;
+}
+
+.float-right {
+  float: right;
+}
+
+.subtotal {
+  text-align: left;
+}
+
+.subtotal > div {
+  margin: 7px 0;
+}
+
+.text-muted {
+  color: gray;
+  font-size: 12px;
+  margin: 5px 0;
 }
