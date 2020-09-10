@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Recurly.js Example: Catalog</title>
+    <title>Recurly.js Example: Advanced Pricing Items</title>
     <script src="https://js.recurly.com/v4/recurly.js"></script>
     <script src="/config"></script>
     <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" type="text/css">
@@ -11,10 +11,11 @@
   </head>
   <body>
     <section>
-      <!-- <figure class="logo"> -->
-        $<span class="price">10</span>
-        <span class="term">monthly</span>
-      <!-- </figure> -->
+      <figure class="logo">
+        <span>
+          Subscribe
+        </span>
+      </figure>
     </section>
 
     <section>
@@ -23,10 +24,12 @@
           <label for="plan">Select a plan</label>
           <select name="plan" id="plan" data-recurly="plan"></select>
         </div>
+
         <div class="items">
           <div class="label">Select items</div>
           <div class="items-select"></div>
         </div>
+
         <div>
           <label for="first_name">First Name</label>
           <input type="text" data-recurly="first_name" id="first_name" name="first-name">
@@ -36,8 +39,23 @@
           <label for="last_name">Last Name</label>
           <input type="text" data-recurly="last_name" id="last_name" name="last-name">
         </div>
+
         <div>
           <div data-recurly="card"></div>
+        </div>
+
+        <div>
+          <div class="label">Total</div>
+          <div class="subtotal">
+            <div>
+              Due now <span class="float-right">
+                <span data-recurly="currency_symbol"></span><span data-recurly="total_now"></span>
+              </span>
+            </div>
+            <div class="text-muted">
+              <span data-recurly="currency_symbol"></span><span data-recurly="total_next"></span> due next month.
+            </div>
+          </div>
         </div>
 
         <button id="subscribe">Subscribe</button>
@@ -78,14 +96,12 @@
         // to tokenize the credit card information, then injects the token into the
         // data-recurly="token" field above
         recurly.token(form, function (err, token) {
-          console.log({form})
 
           // send any errors to the error function below
           if (err) throw err;
 
           // Otherwise we continue with the form submission
           else form.submit();
-
         });
       });
 
@@ -98,30 +114,31 @@
 
       // Render items
       let itemsEl = ''
-      for (const item of items) {
-        itemsEl += `
-          <div class="item">
-            <input
-              type="checkbox"
-              data-recurly="adjustment"
-              data-recurly-adjustment-item-code="${item.code}"
-              id="${item.code}"
-              name="items[]"
-              value="${item.code}"
-            >
-            <label for="${item.code}">${item.name}</label>
-          </div>
-        `
-      }
-      itemsSelect.innerHTML = itemsEl;
 
-      // Configure pricing
-      const checkoutPricing = recurly.Pricing.Checkout();
-      checkoutPricing.attach(form);
-      checkoutPricing.on('change', price => {
-        const priceEl = document.querySelector('.price');
-        priceEl.textContent = price.now.subtotal;
-      });
+      const itemPromises = items.map(item => window.recurly.item({itemCode: item.code}));
+
+      Promise.all(itemPromises).then(items => {
+        for (const item of items) {
+          const { unit_amount, currency_symbol } = item.currencies.find(cur => cur.currency_code === 'USD');
+          itemsEl += `
+            <div class="item">
+              <input
+                type="checkbox"
+                data-recurly="adjustment"
+                data-recurly-adjustment-item-code="${item.code}"
+                id="${item.code}"
+                name="items[]"
+                value="${item.code}"
+              >
+              <label for="${item.code}">${item.name} <span class="float-right">${currency_symbol}${unit_amount}</span></label>
+            </div>
+          `
+        }
+        itemsSelect.innerHTML = itemsEl;
+      }).then(() => {
+        const checkoutPricing = recurly.Pricing.Checkout();
+        checkoutPricing.attach(form);
+      })
     </script>
   </body>
 </html>

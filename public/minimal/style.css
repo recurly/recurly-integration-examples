@@ -222,7 +222,6 @@ figure.success {
 }
 
 .item {
-  margin-left: 15px;
   text-align: left;
 }
 
@@ -233,4 +232,22 @@ figure.success {
 
 .items {
   margin-bottom: 15px;
+}
+
+.float-right {
+  float: right;
+}
+
+.subtotal {
+  text-align: left;
+}
+
+.subtotal > div {
+  margin: 7px 0;
+}
+
+.text-muted {
+  color: gray;
+  font-size: 12px;
+  margin: 5px 0;
 }
