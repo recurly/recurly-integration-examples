@@ -72,12 +72,13 @@
         event.preventDefault();
 
         // Disable the submit button
-        button.setAttribute('disabled', true);
+        // button.setAttribute('disabled', true);
 
         // Now we call recurly.token with the form. It goes to Recurly servers
         // to tokenize the credit card information, then injects the token into the
         // data-recurly="token" field above
         recurly.token(form, function (err, token) {
+          console.log({form})
 
           // send any errors to the error function below
           if (err) throw err;
@@ -91,7 +92,7 @@
       // Render plans
       let plansEl = ''
       for (const plan of plans) {
-        plansEl += `<option value="${plan}">${plan}</option>`
+        plansEl += `<option value="${plan.code}">${plan.code}</option>`
       }
       plan.innerHTML = plansEl;
 
@@ -101,12 +102,13 @@
         itemsEl += `
           <div class="item">
             <input
-            type="checkbox"
-            data-recurly="adjustment"
-            data-recurly-adjustment-item-code="${item}"
-            id="${item}"
+              type="checkbox"
+              data-recurly="adjustment"
+              data-recurly-adjustment-item-code="${item.code}"
+              id="${item.code}"
+              value="1"
             >
-            <label for="${item}">${item}</label>
+            <label for="${item.code}">${item.code}</label>
           </div>
         `
       }
