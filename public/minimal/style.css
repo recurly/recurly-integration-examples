@@ -38,7 +38,7 @@ section.errors {
 form {
 }
 
-label {
+label, .label {
   display: block;
   text-align: left;
   width: 100%;
@@ -50,7 +50,7 @@ label {
   clear: left;
 }
 
-input[input="text"], select {
+input[type="text"], select {
   position: relative;
   width: 100%;
   border: 2px solid #c2c2c2;
@@ -222,12 +222,13 @@ figure.success {
 }
 
 .item {
-  margin-left: 10px;
+  margin-left: 15px;
   text-align: left;
 }
 
 .item > label {
   display: inline;
+  text-transform: none;
 }
 
 .items {
