@@ -17,7 +17,7 @@ Recurly.subdomain = ENV['RECURLY_SUBDOMAIN']
 Recurly.api_key = ENV['RECURLY_PRIVATE_KEY']
 
 set :port, ENV['PORT']
-set :public_folder, ENV['RECURLY_PUBLIC'] || 'public'
+set :public_folder, ENV['PUBLIC_PATH'] || 'public'
 
 enable :static
 enable :logging
@@ -67,15 +67,11 @@ end
 
 # POST route to handle purchases from our checkout form
 post '/api/purchses/new' do
-  # We'll wrap this in a begin-rescue to catch any API
-  # errors that may occur
   begin
-    # This is not a good idea in production but helpful for debugging
-    # These params may contain sensitive information you don't want logged
     logger.info params
 
     purchase = Recurly::Purchase.new(
-      currency: params['currency'] || 'USD',
+      currency: 'USD',
       account: {
         first_name: params['first-name'],
         last_name: params['last-name'],
@@ -84,16 +80,19 @@ post '/api/purchses/new' do
           token_id: params['recurly-token']
         }
       },
-      subscriptions: [
-        { plan_code: params['plan'] }
-      ],
-      adjustments: params['items']&.map do |item_param|
-        { item_code: item_param }
+      subscriptions: params['subscriptions']&.map do |sub_params|
+        if !sub_params['plan-code'].empty?
+          { plan_code: sub_params['plan-code'] }
+        else
+          nil
+        end
+      end.compact,
+      adjustments: params['items']&.map do |item_params|
+        { item_code: item_params['item-code'] }
       end
     )
-    collection = Recurly::Purchase.invoice!(purchase)
+    collection = Recurly::Purchase.invoice! purchase
     redirect success_url
-
   rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
     error e
   end
