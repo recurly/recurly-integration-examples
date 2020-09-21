@@ -1,5 +1,5 @@
 <a href="https://heroku.com/deploy?template=https://github.com/recurly/recurly-js-examples/tree/main"><img align="right" src="https://www.herokucdn.com/deploy/button.png"></a>
-Recurly.js examples
+Recurly integration examples
 ===================
 <p align="center">
   <img src="http://i.imgur.com/hu8hAqs.png" align="center">
@@ -7,8 +7,7 @@ Recurly.js examples
 
 This repository contains a set of example implementations of
 [recurly.js][recurly-js] using html, css, and JavaScript, and a set of API usage
-examples to demonstrate a few common use-cases for collecting and using
-recurly.js tokens.
+examples to demonstrate a few common use-cases for integrating with Recurly.
 
 Please note that these examples are not meant to be set onto a web server and
 forgotten. They are intended to act as a suggestion, wherein your custom needs
