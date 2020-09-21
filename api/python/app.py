@@ -20,7 +20,8 @@ RECURLY_PUBLIC_KEY = os.environ['RECURLY_PUBLIC_KEY']
 SUCCESS_URL = os.environ['SUCCESS_URL']
 ERROR_URL = os.environ['ERROR_URL']
 
-app = Flask(__name__, static_folder='../../public', static_url_path='')
+PUBLIC_DIR_PATH = os.getenv('PUBLIC_DIR_PATH', '../../public')
+app = Flask(__name__, static_folder=PUBLIC_DIR_PATH, static_url_path='')
 
 # GET route to show the list of options
 @app.route("/", methods=['GET'])
