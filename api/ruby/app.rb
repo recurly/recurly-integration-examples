@@ -12,7 +12,8 @@ Recurly.subdomain = ENV['RECURLY_SUBDOMAIN']
 Recurly.api_key = ENV['RECURLY_API_KEY']
 
 set :port, 9001
-set :public_folder, '../../public'
+set :bind, '0.0.0.0'
+set :public_folder, ENV['PUBLIC_DIR_PATH'] || '../../public'
 enable :logging
 
 success_url = ENV['SUCCESS_URL']
