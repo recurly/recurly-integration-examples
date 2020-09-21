@@ -2,7 +2,7 @@
 Recurly integration examples
 ===================
 <p align="center">
-  <img src="http://i.imgur.com/hu8hAqs.png" align="center">
+  <img src="https://i.imgur.com/irVHiPO.png" align="center">
 </p>
 
 This repository contains a set of example implementations of
