@@ -18,7 +18,8 @@ const {
   RECURLY_API_KEY,
   RECURLY_PUBLIC_KEY,
   SUCCESS_URL,
-  ERROR_URL
+  ERROR_URL,
+  PUBLIC_DIR_PATH
 } = process.env;
 
 // Instantiate a configured recurly client
@@ -109,7 +110,9 @@ app.get('/config', function (req, res) {
 });
 
 // Mounts express.static to render example forms
-app.use(express.static(__dirname + '/../../public'));
+const pubDirPath = PUBLIC_DIR_PATH || '/../../public';
+
+app.use(express.static(__dirname + pubDirPath));
 
 // Start the server
 app.listen(9001, function () {
