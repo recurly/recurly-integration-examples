@@ -21,6 +21,18 @@ within another application framework altogether.
 
 ### Use
 
+#### Docker
+
+1. If you haven't already, [install docker](https://www.docker.com/get-started).
+
+2. Update the values in docker.env at the (root of the repo)[https://github.com/recurly/recurly-integration-examples/blob/main/docker.env]
+
+3. Run `docker-compose up --build`
+
+4. Open [http://localhost:9001](http://localhost:9001)
+
+#### Local
+
 1. Install dependencies
 
 The Recurly Java library is distributed via [Maven Central](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.ning.billing%22%20AND%20a%3A%22recurly-java-library%22):
