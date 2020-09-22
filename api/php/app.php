@@ -5,7 +5,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 // This halts execution if a static file is found, allowing it to render instead
 if (PHP_SAPI == 'cli-server') {
   $url  = parse_url($_SERVER['REQUEST_URI']);
-  $file = __DIR__ . "/../../public/$url[path]";
+  $path = $url['path'] == '/' ? 'index.html' : $url['path'];
+  $file = __DIR__ . "/public/$path";
   if (is_file($file)) return false;
 }
 
