@@ -1,0 +1,10 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ../..
+      dockerfile: ./api/php/Dockerfile
+    ports:
+      - "9001:9001"
+    env_file:
+      - ../../docker.env
