@@ -25,16 +25,14 @@ public class App {
     String successUrl = System.getenv("SUCCESS_URL");
     String errorUrl = System.getenv("ERROR_URL");
     String publicDirPath = System.getenv("PUBLIC_DIR_PATH");
-    if (publicDirPath == null) {
-      publicDirPath = "src/main/resources/public";
-    }
-
-    System.out.println("api key: " + apiKey);
-    System.out.println("subdomain: " + subdomain);
 
     RecurlyClient recurlyClient = new RecurlyClient(apiKey, subdomain);
     setPort(9001);
-    externalStaticFileLocation(publicDirPath);
+    if (publicDirPath == null) {
+      externalStaticFileLocation("../../public");
+    } else {
+      staticFiles.location("/public");
+    }
 
     /* POST route to handle a new subscription form */
     post("/api/subscriptions/new", (req, res) -> {

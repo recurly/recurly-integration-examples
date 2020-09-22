@@ -10,4 +10,3 @@ services:
       - ../../docker.env
     environment:
       - PUBLIC_DIR_PATH=/public
-    command: "/bin/sh"
