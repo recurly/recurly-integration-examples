@@ -44,7 +44,7 @@ You should adjust the code to fit your specific redirection and error handling n
 
 Each example includes a Dockerfile and a docker-compose.yml file to allow them to be run through [Docker](https://docs.docker.com/).
 
-To run any of the examples through Docker, clone this repository, update the [docker.env file at the root of level of the project](https://github.com/recurly/recurly-integration-examples/blob/main/docker.env) with values corresponding to your recurly site, and run `docker-compose up` inside the directory of any of the examples.
+To run any of the examples through Docker, clone this repository, update the [docker.env file at the root of level of the project](https://github.com/recurly/recurly-integration-examples/blob/main/docker.env) with values corresponding to your Recurly site, and run `docker-compose up` inside the directory of any of the examples.
 
 #### Local
 
