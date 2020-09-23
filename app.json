@@ -4,7 +4,7 @@
   "repository": "https://github.com/recurly/recurly-integration-examples",
   "keywords": ["recurly", "ruby", "payments", "subscriptions"],
   "env": {
-    "RECURLY_PRIVATE_KEY": {
+    "RECURLY_API_KEY": {
       "description": "The PRIVATE key from at https://app.recurly.com/go/integrations/api_keys",
       "required": true
     },

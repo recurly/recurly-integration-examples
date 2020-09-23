@@ -6,7 +6,7 @@ form submissions and use the tokens to create and update customer billing
 information without having to handle credit card data.
 
 This example makes use of the official Recurly [Ruby client library][client]
-for API v2.
+for API v3.
 
 Note that it is not necessary to use the Sinatra framework. In this example it is
 used to organize various API actions into distinct application routes, but one
@@ -15,9 +15,10 @@ application framework.
 
 ### Routes
 
-- `POST` [/api/subscriptions/new](app.rb#L10-35)
-- `POST` [/api/accounts/new](app.rb#L38-46)
-- `PUT` [/api/accounts/:account_code](app.rb#L49-58)
+- `POST` [/api/subscriptions/new](app.rb#L37-41)
+- `POST` [/api/purchases/new](app.rb#L44-105)
+- `POST` [/api/accounts/new](app.rb#L108-120)
+- `PUT` [/api/accounts/:account_code](app.rb#L123-136)
 
 ### Local Development
 

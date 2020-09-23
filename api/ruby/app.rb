@@ -20,7 +20,7 @@ enable :logging
 
 success_url = ENV['SUCCESS_URL']
 
-client = Recurly::Client.new(api_key: ENV['RECURLY_PRIVATE_KEY'])
+client = Recurly::Client.new(api_key: ENV['RECURLY_API_KEY'])
 
 # Generic error handling
 # Here we log the API error and send the
@@ -35,54 +35,71 @@ end
 
 # POST route to handle a new subscription form
 post '/api/subscriptions/new' do
+  logger.info params
+  # DEPRECATED: use /api/purchases/new and specify the subscriptions[][plan-code]
+  redirect '/api/purchases/new?subscriptions[][plan-code]=basic', 307
+end
 
-  # We'll wrap this in a begin-rescue to catch any API
-  # errors that may occur
-  begin
+# POST route to handle a new purchase form
+post '/api/purchases/new' do
+  # This is not a good idea in production but helpful for debugging
+  # These params may contain sensitive information you don't want logged
+  logger.info params
 
-    # This is not a good idea in production but helpful for debugging
-    # These params may contain sensitive information you don't want logged
-    logger.info params
+  recurly_account_code = params['recurly-account-code'] || SecureRandom.uuid
 
-    # Build our billing info hash
-    recurly_token_id = params['recurly-token']
-    recurly_account_code = params['recurly-account-code'] || SecureRandom.uuid
-    billing_info = { token_id: recurly_token_id }
+  recurly_token_id = params['recurly-token']
+  billing_info = { token_id: recurly_token_id }
+  # Optionally add a 3D Secure token if one is present. You only need to do this
+  # if you are integrating with Recurly's 3D Secure support
+  unless params.fetch('three-d-secure-token', '').empty?
+    billing_info['three_d_secure_action_result_token_id'] = params['three-d-secure-token']
+  end
 
-    # Optionally add a 3D Secure token if one is present. You only need to do this
-    # if you are integrating with Recurly's 3D Secure support
-    unless params.fetch('three-d-secure-token', '').empty?
-      billing_info['three_d_secure_action_result_token_id'] = params['three-d-secure-token']
+  purchase_create = {
+    currency: "USD",
+    # This can be an existing account or a new acocunt
+    account: {
+      code: recurly_account_code,
+      first_name: params['first-name'],
+      last_name: params['last-name'],
+      billing_info: billing_info
+    }
+  }
+
+  subscriptions = params['subscriptions']&.map do |sub_params|
+    if !sub_params['plan-code'].empty?
+      { plan_code: sub_params['plan-code'] }
+    else
+      nil
     end
+  end.compact
+  # Add subscriptions to the request if there are any
+  purchase_create[:subscriptions] = subscriptions if subscriptions&.any?
 
-    # Create the subscription using minimal
-    # information: plan_code, account_code, and
-    # the token we generated on the frontend
-    subscription = client.create_purchase(body: {
-      currency: "USD",
-      # This can be an existing account or
-      # a new acocunt
-      account: {
-        code: recurly_account_code,
-        first_name: params['first-name'],
-        last_name: params['last-name'],
-        billing_info: billing_info,
-      },
-      subscriptions: [
-        { plan_code: 'basic' }
-      ]
-    })
+  line_items = params['items']&.map do |item_params|
+    {
+      item_code: item_params['item-code'],
+      revenue_schedule_type: 'at_invoice'
+    }
+  end
+  # Add line_items to the request if there are any
+  purchase_create[:line_items] = line_items if line_items&.any?
 
-    # The subscription has been created and we can redirect
-    # to a confirmation page
+  begin
+    purchase = client.create_purchase(body: purchase_create)
+
     redirect success_url
   rescue Recurly::Errors::TransactionError => e
     txn_error = e.recurly_error.transaction_error
-    redirect "/3d-secure/authenticate.html#token_id=#{recurly_token_id}&action_token_id=#{txn_error.three_d_secure_action_token_id}&account_code=#{recurly_account_code}"
+    hash_params = {
+      token_id: recurly_token_id,
+      action_token_id: txn_error.three_d_secure_action_token_id,
+      account_code: recurly_account_code
+    }.map { |k, v| "#{k}=#{v}" }.join('&')
+    redirect "/3d-secure/authenticate.html##{hash_params}"
   rescue Recurly::Errors::APIError => e
-    # Here we may wish to log the API error and send the
-    # customer to an appropriate URL, perhaps including
-    # an error message
+    # Here we may wish to log the API error and send the customer to an appropriate URL, perhaps including an error message
     handle_error e
   end
 end
