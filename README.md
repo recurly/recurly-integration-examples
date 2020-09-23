@@ -32,21 +32,25 @@ If you choose to do this, feel free to delete the other language backends from y
 - [PHP](api/php)
 - [Java](api/java)
 
-### Running locally
+### How to run
 
-These examples are meant to be run locally, allowing you to easily experiment with
-modifications and get running quickly.
+Each example can be run either locally or through [Docker](https://docs.docker.com/), allowing you to easily experiment with modifications and get running quickly.
 
-Simply clone this repository, read through the simple application code to
+You should adjust the code to fit your specific redirection and error handling needs, but the example applications are designed to perform essential API functions on first boot.
+
+**Note**: These examples are purely for demonstration purposes and we do not recommend using them as the foundation of a production system.
+
+#### Docker
+
+Each example includes a Dockerfile and a docker-compose.yml file to allow them to be run through [Docker](https://docs.docker.com/).
+
+To run any of the examples through Docker, clone this repository, update the [docker.env file at the root of level of the project](https://github.com/recurly/recurly-integration-examples/blob/main/docker.env) with values corresponding to your recurly site, and run `docker-compose up` inside the directory of any of the examples.
+
+#### Local
+
+To run locally, simply clone this repository, read through the simple application code to
 familiarize yourself, and follow the startup instructions in one of the [API
 token usage examples](api) above.
-
-You'll want to adjust the code to fit your specific redirection and error
-handling needs, but the example applications are designed to perform essential
-API functions on first boot.
-
-**Note**: These examples are purely for demonstration purposes and we do not recommend
-using them as the foundation of a production system.
 
 #### Configuring the examples
 
