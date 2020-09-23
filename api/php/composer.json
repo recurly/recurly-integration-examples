@@ -1,6 +1,7 @@
 {
   "require": {
-    "slim/slim": "3.*",
-    "recurly/recurly-client": "2.12.*"
+    "slim/slim": "^4",
+    "recurly/recurly-client": "^3",
+    "slim/psr7": "^1.2"
   }
 }
