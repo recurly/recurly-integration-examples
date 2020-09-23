@@ -4,10 +4,10 @@
   "description": "A simple web server to make recurly API requests",
   "main": "app.js",
   "dependencies": {
-    "node-recurly": "umayr/recurly-js",
-    "express": "^4.3.2",
     "body-parser": "^1.2.2",
-    "node-uuid": "^1.4.1"
+    "express": "^4.3.2",
+    "node-uuid": "^1.4.1",
+    "recurly": "^3.13.0"
   },
   "license": "MIT"
 }
