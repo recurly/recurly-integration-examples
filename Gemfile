@@ -1,1 +1,1 @@
-./api/ruby-heroku/Gemfile
+./api/ruby/Gemfile

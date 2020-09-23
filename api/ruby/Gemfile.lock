@@ -1,17 +1,18 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    dotenv (2.7.6)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     rack (2.2.3)
-    rack-protection (2.0.8.1)
+    rack-protection (2.1.0)
       rack
-    recurly (2.17.11)
+    recurly (3.13.0)
     ruby2_keywords (0.0.2)
-    sinatra (2.0.8.1)
+    sinatra (2.1.0)
       mustermann (~> 1.0)
-      rack (~> 2.0)
-      rack-protection (= 2.0.8.1)
+      rack (~> 2.2)
+      rack-protection (= 2.1.0)
       tilt (~> 2.0)
     tilt (2.0.10)
 
@@ -19,8 +20,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  recurly (= 2.17.11)
+  dotenv
+  recurly (~> 3.0)
   sinatra (~> 2.0, >= 2.0.2)
 
 BUNDLED WITH
-   1.17.3
+   2.0.2
