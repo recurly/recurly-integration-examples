@@ -1,1 +1,0 @@
-web: bundle exec ruby api/ruby-heroku/app.rb -p $PORT

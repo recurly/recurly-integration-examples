@@ -76,9 +76,6 @@ post '/api/subscriptions/new' do
     # The subscription has been created and we can redirect
     # to a confirmation page
     redirect success_url
-  rescue Recurly::Errors::ValidationError => e
-    # Should we be handling validation errors?
-    handle_error e
   rescue Recurly::Errors::TransactionError => e
     txn_error = e.recurly_error.transaction_error
     redirect "/3d-secure/authenticate.html#token_id=#{recurly_token_id}&action_token_id=#{txn_error.three_d_secure_action_token_id}&account_code=#{recurly_account_code}"

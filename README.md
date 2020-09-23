@@ -1,4 +1,4 @@
-<a href="https://heroku.com/deploy?template=https://github.com/recurly/recurly-js-examples/tree/update-ruby"><img align="right" src="https://www.herokucdn.com/deploy/button.png"></a>
+<a href="https://heroku.com/deploy?template=https://github.com/recurly/recurly-js-examples/tree/main"><img align="right" src="https://www.herokucdn.com/deploy/button.png"></a>
 Recurly integration examples
 ===================
 <p align="center">
