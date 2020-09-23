@@ -1,13 +1,9 @@
 {
   "name": "Recurly.js Backend Example",
   "description": "For quickly getting started with a Recurly integration.",
-  "repository": "https://github.com/recurly/recurly-js-examples",
+  "repository": "https://github.com/recurly/recurly-integration-examples",
   "keywords": ["recurly", "ruby", "payments", "subscriptions"],
   "env": {
-    "RECURLY_SUBDOMAIN": {
-      "description": "The subdomain of your Recurly site",
-      "required": true
-    },
     "RECURLY_PRIVATE_KEY": {
       "description": "The PRIVATE key from at https://app.recurly.com/go/integrations/api_keys",
       "required": true

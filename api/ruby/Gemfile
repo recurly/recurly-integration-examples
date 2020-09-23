@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
 
 gem 'sinatra', '~> 2.0', '>= 2.0.2'
-gem 'recurly', '2.17.11'
+gem 'recurly', '~> 3.0'
+gem 'dotenv'

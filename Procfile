@@ -1,1 +1,1 @@
-./api/ruby-heroku/Procfile
+./api/ruby/Procfile
