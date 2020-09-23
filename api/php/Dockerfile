@@ -1,10 +1,8 @@
-FROM php:7.4-cli
+FROM composer:2
 
 WORKDIR /usr/src/app
 
 COPY ./api/php .
-
-RUN curl -sS https://getcomposer.org/installer | php
 
 RUN php composer.phar install
 
