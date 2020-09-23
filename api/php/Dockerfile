@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY ./api/php .
 
-RUN php composer.phar install
+RUN composer install
 
 COPY ./public ./public
 
