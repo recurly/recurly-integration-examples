@@ -24,7 +24,7 @@ If you choose to do this, feel free to delete the other language backends from y
 
 - [Payment form examples][examples]
 
-### API token usage examples
+### API usage examples
 
 - [Ruby](api/ruby)
 - [Node](api/node)
