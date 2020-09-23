@@ -6,7 +6,7 @@ form submissions and use the tokens to create and update customer billing
 information without having to handle credit card data.
 
 This example makes use of the official Recurly [Python client library][client]
-for API v2.
+for API v3.
 
 Note that it is not necessary to use the Flask framework. In this example it is
 used to organize various API actions into distinct application routes, but one
@@ -15,9 +15,9 @@ framework.
 
 ### Routes
 
-- `POST` [/api/subscriptions/new](app.py#L17-L47)
-- `POST` [/api/accounts/new](app.py#L50-L62)
-- `PUT` [/api/accounts/:account_code](app.py#L65-L77)
+- `POST` [/api/subscriptions/new](app.py#L29-L68)
+- `POST` [/api/accounts/new](app.py#L84-L103)
+- `PUT` [/api/accounts/:account_code](app.py#L106-L118)
 
 ### Use
 
