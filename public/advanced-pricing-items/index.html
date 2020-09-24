@@ -21,7 +21,7 @@
     <section id="errors" class="errors"></section>
 
     <section>
-      <form method="post" action="/api/purchases/new">
+      <form method="post" action="/api/subscriptions/new">
         <div>
           <label for="plan">Select a plan</label>
           <select name="subscriptions[][plan-code]" class="js-plan-select" id="plan"></select>
@@ -43,7 +43,7 @@
         </div>
 
         <div>
-          <div data-recurly="card"></div>
+          <div data-my-js-ref="recurly-element-card"></div>
         </div>
 
         <div>
@@ -77,16 +77,23 @@
       const itemsSelect = document.querySelector('.js-items-select');
 
       // Configure recurly.js
-      recurly.configure({
-        publicKey, // Set this to your own public key
+      recurly.configure(window.recurlyConfig.publicKey);
+
+      // Create a CardElement
+      var elements = recurly.Elements();
+      var cardElement = elements.CardElement({
         style: {
-          all: {
-            fontFamily: 'Open Sans',
-            fontSize: '1rem',
-            fontWeight: 'bold',
-            fontColor: '#2c0730'
-          }
+          fontFamily: 'Open Sans',
+          fontSize: '1rem',
+          fontWeight: 'bold',
+          fontColor: '#2c0730'
         }
+      });
+      cardElement.attach('[data-my-js-ref="recurly-element-card"]');
+
+      // When a customer hits their 'enter' key while using the card element
+      cardElement.on('submit', function (event) {
+        $('form').submit();
       });
 
       // Configure form submission
