@@ -4,6 +4,9 @@ services:
     build:
       context: ../..
       dockerfile: ./api/python/Dockerfile
+    volumes:
+      - .:/usr/src/app/ruby
+      - ../../public:/usr/src/app/public
     ports:
       - "9001:9001"
     env_file:

@@ -2,12 +2,12 @@ FROM node:12
 
 WORKDIR /usr/src/app
 
-COPY ./api/node .
+COPY ./api/node ./node
 
-RUN npm install
+RUN cd ./node && npm install
 
 COPY ./public ./public
 
 EXPOSE 9001
 
-CMD node app.js
+CMD node node/app.js

@@ -2,12 +2,12 @@ FROM ruby:2
 
 WORKDIR /usr/src/app
 
-COPY ./api/ruby .
+COPY ./api/ruby ./ruby
 
-RUN bundle install
+RUN cd ruby && bundle install
 
 COPY ./public ./public
 
 EXPOSE 9001
 
-CMD ruby app.rb
+CMD ruby ruby/app.rb

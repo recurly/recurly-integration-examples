@@ -8,3 +8,5 @@ services:
       - "9001:9001"
     env_file:
       - ../../docker.env
+    environment:
+      - PUBLIC_DIR_PATH=/public
