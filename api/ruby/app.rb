@@ -15,7 +15,9 @@ Dotenv.load
 set :port, ENV['PORT'] || 9001
 set :public_folder, ENV['PUBLIC_PATH'] || 'public'
 
-enable :static
+set :port, 9001
+set :bind, '0.0.0.0'
+set :public_folder, ENV['PUBLIC_DIR_PATH'] || '../../public'
 enable :logging
 
 success_url = ENV['SUCCESS_URL']
