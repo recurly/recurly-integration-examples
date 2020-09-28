@@ -31,7 +31,7 @@ public class App {
     if (publicDirPath == null) {
       externalStaticFileLocation("../../public");
     } else {
-      staticFiles.location("/public");
+      staticFiles.location(publicDirPath);
     }
 
     /* POST route to handle a new subscription form */
