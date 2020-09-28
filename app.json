@@ -1,5 +1,5 @@
 {
-  "name": "Recurly.js Backend Example",
+  "name": "Recurly Integration Examples",
   "description": "For quickly getting started with a Recurly integration.",
   "repository": "https://github.com/recurly/recurly-integration-examples",
   "keywords": ["recurly", "ruby", "payments", "subscriptions"],
