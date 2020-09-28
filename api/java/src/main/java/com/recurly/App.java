@@ -24,14 +24,14 @@ public class App {
     String publicKey = System.getenv("RECURLY_PUBLIC_KEY");
     String successUrl = System.getenv("SUCCESS_URL");
     String errorUrl = System.getenv("ERROR_URL");
-    String publicDirPath = System.getenv("PUBLIC_DIR_PATH");
+    String publicDir = System.getenv("PUBLIC_DIR_PATH");
 
     RecurlyClient recurlyClient = new RecurlyClient(apiKey, subdomain);
     setPort(9001);
-    if (publicDirPath == null) {
-      externalStaticFileLocation("../../public");
+    if (publicDir != null) {
+      staticFiles.externalLocation(publicDir);
     } else {
-      staticFiles.location(publicDirPath);
+      externalStaticFileLocation("../../public");
     }
 
     /* POST route to handle a new subscription form */

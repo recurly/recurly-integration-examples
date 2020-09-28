@@ -6,10 +6,10 @@ services:
       dockerfile: ./api/java/Dockerfile
     volumes:
       - .:/usr/src/app/java
-      - ../../public:/usr/src/main/resources/public
+      - ../../public:/usr/src/app/src/main/resources/public
     ports:
       - "9001:9001"
     env_file:
       - ../../docker.env
     environment:
-      - PUBLIC_DIR_PATH=/public
+      - PUBLIC_DIR_PATH=/usr/src/app/src/main/resources/public

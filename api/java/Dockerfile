@@ -8,8 +8,6 @@ COPY ./api/java ./java
 # For more info, see http://sparkjava.com/documentation#static-files
 COPY ./public ./src/main/resources/public
 
-RUN cd java && mvn clean compile
-
 EXPOSE 9001
 
-CMD cd java && mvn exec:java -Dexec.mainClass="com.recurly.examples.App"
+CMD cd java && mvn clean compile && mvn exec:java -Dexec.mainClass="com.recurly.examples.App"
