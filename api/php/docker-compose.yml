@@ -4,6 +4,9 @@ services:
     build:
       context: ../..
       dockerfile: ./api/php/Dockerfile
+    volumes:
+      - .:/usr/src/app/php
+      - ../../public:/usr/src/app/public
     ports:
       - "9001:9001"
     env_file:

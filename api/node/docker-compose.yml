@@ -5,7 +5,7 @@ services:
       context: ../..
       dockerfile: ./api/node/Dockerfile
     volumes:
-      - .:/usr/src/app/ruby
+      - .:/usr/src/app/node
       - ../../public:/usr/src/app/public
     ports:
       - "9001:9001"
