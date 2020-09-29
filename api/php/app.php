@@ -155,6 +155,12 @@ $app->put('/api/accounts/{account_code}', function (Request $request, Response $
 });
 
 // This endpoint provides configuration to recurly.js
+$app->get('/doug', function (Request $request, Response $response, array $args) {
+  $response->getBody()->write(phpinfo());
+  return $response->withHeader('Content-Type', 'application/javascript');
+});
+
+// This endpoint provides configuration to recurly.js
 $app->get('/config', function (Request $request, Response $response, array $args) {
   $response->getBody()->write("window.recurlyConfig = { publicKey: '$_ENV[RECURLY_PUBLIC_KEY]' }");
   return $response->withHeader('Content-Type', 'application/javascript');
