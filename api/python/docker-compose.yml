@@ -1,0 +1,15 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ../..
+      dockerfile: ./api/python/Dockerfile
+    volumes:
+      - .:/usr/src/app/python
+      - ../../public:/usr/src/app/public
+    ports:
+      - "9001:9001"
+    env_file:
+      - ../../docker.env
+    environment:
+      - PUBLIC_DIR_PATH=./public

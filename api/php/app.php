@@ -7,7 +7,8 @@ use Slim\Factory\AppFactory;
 if (PHP_SAPI == 'cli-server') {
   $url  = parse_url($_SERVER['REQUEST_URI']);
   $path = $url['path'] == '/' ? 'index.html' : $url['path'];
-  $file = __DIR__ . "/../../public/$path";
+  $public_dir = getenv('PUBLIC_DIR_PATH') ? getenv('PUBLIC_DIR_PATH') : '/../../public';
+  $file = __DIR__ . "$public_dir/$path";
   if (is_file($file)) return false;
 }
 
@@ -15,7 +16,7 @@ require 'vendor/autoload.php';
 
 // Configure the client with your API Key. We're using ENV vars here,
 // but you may wish to store them elsewhere
-$recurly_client = new \Recurly\Client($_ENV['RECURLY_API_KEY']);
+$recurly_client = new \Recurly\Client(getenv('RECURLY_API_KEY'));
 
 $app = AppFactory::create();
 
@@ -156,7 +157,8 @@ $app->put('/api/accounts/{account_code}', function (Request $request, Response $
 
 // This endpoint provides configuration to recurly.js
 $app->get('/config', function (Request $request, Response $response, array $args) {
-  $response->getBody()->write("window.recurlyConfig = { publicKey: '$_ENV[RECURLY_PUBLIC_KEY]' }");
+  $PUBLIC_KEY = getenv('RECURLY_PUBLIC_KEY');
+  $response->getBody()->write("window.recurlyConfig = { publicKey: '$PUBLIC_KEY' }");
   return $response->withHeader('Content-Type', 'application/javascript');
 });
 

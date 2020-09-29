@@ -20,7 +20,19 @@ application framework.
 - `POST` [/api/accounts/new](app.rb#L108-120)
 - `PUT` [/api/accounts/:account_code](app.rb#L123-136)
 
-### Local Development
+### Use
+
+#### Docker
+
+1. If you haven't already, [install docker](https://www.docker.com/get-started).
+
+2. Update the values in docker.env at the (root of the repo)[https://github.com/recurly/recurly-integration-examples/blob/main/docker.env]
+
+3. Run `docker-compose up --build`
+
+4. Open [http://localhost:9001](http://localhost:9001)
+
+#### Local
 
 1. Start the server
 
