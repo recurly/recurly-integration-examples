@@ -55,8 +55,6 @@ def new_purchase():
         "currency": "USD",
         "account": {
             "code": recurly_account_code,
-            "first_name": request.form['first-name'],
-            "last_name": request.form['last-name'],
             "billing_info": billing_info,
         },
         "subscriptions": [{"plan_code": "basic"}],
