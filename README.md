@@ -65,6 +65,12 @@ them to quickly configure the example to connect to your Recurly site.
 | SUCCESS_URL | A URL to redirect to when an action suceeds |
 | ERROR_URL | A URL to redirect to when an error occurs |
 
+### Looking for React?
+
+If you plan to use React on your frontend, check out our [react-recurly][react-recurly-repo] library.
+We maintain an example integration of `react-recurly` in the documentation for that library. Be sure
+to read through the [documentation][react-recurly-docs] as you explore the [examples][react-recurly-demo].
+
 ### Contributing
 
 [See CONTRIBUTING file](CONTRIBUTING.md).
@@ -76,3 +82,6 @@ them to quickly configure the example to connect to your Recurly site.
 [recurly-js]: https://github.com/recurly/recurly-js
 [examples]: public
 [api-keys]: https://app.recurly.com/go/integrations/api_keys
+[react-recurly-repo]: https://github.com/recurly/react-recurly
+[react-recurly-docs]: https://recurly.github.io/react-recurly
+[react-recurly-demo]: https://recurly.github.io/react-recurly/?path=/docs/introduction-interactive-demo--page
