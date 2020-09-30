@@ -1,0 +1,5 @@
+github.com/google/uuid v1.1.2 h1:EVhdT+1Kseyi1/pUmXKaFxYsDNy9RQYkMWRH68J/W7Y=
+github.com/google/uuid v1.1.2/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/recurly/recurly-client-go v0.0.0-20200518190456-e30417f663e1 h1:rgArsvQso1sbE8tvBVpa9mKE3vdFqAtzbt9V3AV85z4=
+github.com/recurly/recurly-client-go/v3 v3.8.0 h1:khCnexPoqNvYy4kkfvq1hvuyntHndFUvCyecs63NAv0=
+github.com/recurly/recurly-client-go/v3 v3.8.0/go.mod h1:4qKAuNK6JbnLwhd7M3ZcD6Jbniq9M1ESBwSxbLaS9eQ=
