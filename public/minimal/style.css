@@ -82,7 +82,7 @@ input.error {
   border-color: #e43c29;
 }
 
-div.error .recurly-hosted-field {
+div.recurly-element-invalid {
   border: 2px solid #e43c29;
 }
 
@@ -192,13 +192,12 @@ figure.success {
   }
 }
 
-.recurly-hosted-field {
+.recurly-element {
   position: relative;
   width: 100%;
   height: 42px;
   border: 2px solid #c2c2c2;
   background: transparent;
-  padding: 0.5rem;
   margin: 0 0 1rem;
   outline: none;
   font-family: 'Open Sans', Helvetica, sans-serif;
@@ -215,7 +214,7 @@ figure.success {
   transition: border-color 0.3s;
 }
 
-.recurly-hosted-field-focus {
+.recurly-element-focus {
   border-color: #2c0730;
   color: #2c0730;
   z-index: 10;

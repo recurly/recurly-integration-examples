@@ -27,7 +27,7 @@
     <section>
       <form method="post" action="/api/subscriptions/new">
         <div>
-          <div data-recurly="card"></div>
+          <div data-my-js-ref="recurly-element-card"></div>
         </div>
 
         <div>
@@ -69,18 +69,23 @@
 
           // Configure recurly.js with the Braintree deviceData
           recurly.configure({
-            publicKey: window.recurlyConfig.publicKey, // Set this to your own public key
-            style: {
-              all: {
-                fontFamily: 'Open Sans',
-                fontSize: '1rem',
-                fontWeight: 'bold',
-                fontColor: '#2c0730'
-              }
-            },
+            // Set this to your own public key
+            publicKey: window.recurlyConfig.publicKey,
             // If you are using Braintree's fraud management integration, set the following
             fraud: { braintree: { deviceData: deviceData } }
           });
+
+          // Create a CardElement
+          var elements = recurly.Elements();
+          var cardElement = elements.CardElement({
+            style: {
+              fontFamily: 'Open Sans',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              fontColor: '#2c0730'
+            }
+          });
+          cardElement.attach('[data-my-js-ref="recurly-element-card"]');
 
           // On form submit, we stop submission to go get the token
           $('form').on('submit', function (event) {
@@ -100,7 +105,7 @@
             // Now we call recurly.token with the form. It goes to Recurly servers
             // to tokenize the credit card information, then injects the token into the
             // data-recurly="token" field above
-            recurly.token(form, function (err, token) {
+            recurly.token(elements, form, function (err, token) {
 
               // send any errors to the error function below
               if (err) error(err);

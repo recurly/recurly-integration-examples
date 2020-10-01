@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Recurly.js Example: Advanced Pricing</title>
-    <script src="https://js.lvh.me:8020/build/recurly.js"></script>
+    <script src="https://js.recurly.com/v4/recurly.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/config"></script>
     <link href="/js/favicon.png" rel="shortcut icon" type="image/png">
@@ -141,8 +141,8 @@
       <input type="hidden" data-recurly="token" name="recurly-token">
     </form>
     <script>
-      // Configure recurly.js
-      recurly.configure({api: "https://api.lvh.me:3000/js/v1", publicKey: "dev-LvCTlJaL5bKTD6pEtar7Bx"}); // Set this to your own public key
+      // Configure recurly.js -- set this to your own public key
+      recurly.configure(window.recurlyConfig.publicKey);
 
       // On form submit, we stop submission to go get the token
       $('form').on('submit', function (event) {
@@ -160,7 +160,7 @@
         var form = this;
 
         // Now we call recurly.token with the form. It goes to Recurly servers
-        // to tokenize the credit card information, then injects the token into the
+        // to tokenize the bank account information, then injects the token into the
         // data-recurly="token" field above
         recurly.bankAccount.token(this, function (err, token) {
 

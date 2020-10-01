@@ -23,7 +23,7 @@
     <section>
       <form method="post" action="/api/subscriptions/new">
         <div>
-          <div data-recurly="card"></div>
+          <div data-my-js-ref="recurly-element-card"></div>
         </div>
         <div>
           <label for="first_name">First Name</label>
@@ -40,17 +40,18 @@
       </form>
     </section>
     <script>
-      recurly.configure({
-        publicKey: window.recurlyConfig.publicKey,
+      recurly.configure(window.recurlyConfig.publicKey);
+
+      var elements = recurly.Elements();
+      var cardElement = elements.CardElement({
         style: {
-          all: {
-            fontFamily: 'Open Sans',
-            fontSize: '1rem',
-            fontWeight: 'bold',
-            fontColor: '#2c0730'
-          }
+          fontFamily: 'Open Sans',
+          fontSize: '1rem',
+          fontWeight: 'bold',
+          fontColor: '#2c0730'
         }
       });
+      cardElement.attach('[data-my-js-ref="recurly-element-card"]');
 
       $('form').on('submit', function (event) {
         event.preventDefault();
@@ -60,7 +61,7 @@
         $('button').prop('disabled', true);
 
         var form = this;
-        recurly.token(form, function (err, token) {
+        recurly.token(elements, form, function (err, token) {
           if (err) error(err);
           else form.submit();
         });

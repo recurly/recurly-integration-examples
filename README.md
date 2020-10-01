@@ -74,6 +74,12 @@ backends from your clone.
 
 [![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
 
+### Looking for React?
+
+If you plan to use React on your frontend, check out our [react-recurly][react-recurly-repo] library.
+We maintain an example integration of `react-recurly` in the documentation for that library. Be sure
+to read through the [documentation][react-recurly-docs] as you explore the [examples][react-recurly-demo].
+
 ### Contributing
 
 [See CONTRIBUTING file](CONTRIBUTING.md).
@@ -85,3 +91,6 @@ backends from your clone.
 [recurly-js]: https://github.com/recurly/recurly-js
 [examples]: public
 [api-keys]: https://app.recurly.com/go/integrations/api_keys
+[react-recurly-repo]: https://github.com/recurly/react-recurly
+[react-recurly-docs]: https://recurly.github.io/react-recurly
+[react-recurly-demo]: https://recurly.github.io/react-recurly/?path=/docs/introduction-interactive-demo--page

@@ -22,12 +22,14 @@
     <script>
       var form = $('form');
 
-      // Configure recurly.js
+      // Configure recurly.js -- set this to your own public key
       recurly.configure(window.recurlyConfig.publicKey);
 
       // Create a recurly.PayPal instance. The `displayName` is displayed to the customer in the PayPal flow window
       var paypal = recurly.PayPal({
-        display: { displayName: 'My product' }
+        display: {
+          displayName: 'My product'
+        }
       });
 
       // Handle any errors that occur during the paypal checkout

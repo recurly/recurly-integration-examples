@@ -3,9 +3,9 @@ services:
   app:
     build:
       context: ../..
-      dockerfile: ./api/python/Dockerfile
+      dockerfile: ./api/go/Dockerfile
     volumes:
-      - .:/usr/src/app/python
+      - .:/usr/src/app/go
       - ../../public:/usr/src/app/public
     ports:
       - "9001:9001"
