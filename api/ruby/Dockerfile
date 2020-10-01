@@ -1,13 +1,15 @@
 FROM ruby:2
 
+ENV PORT 9001
+ENV PUBLIC_DIR_PATH public
+
 WORKDIR /usr/src/app
 
-COPY ./api/ruby ./ruby
-
-RUN cd ruby && bundle install
-
+COPY ./api/ruby ./api/ruby
 COPY ./public ./public
 
-EXPOSE 9001
+RUN cd api/ruby && bundle install
 
-CMD ruby ruby/app.rb
+EXPOSE $PORT
+
+CMD ruby api/ruby/app.rb -p $PORT
