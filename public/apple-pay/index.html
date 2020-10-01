@@ -78,8 +78,8 @@
       </form>
     </section>
     <script>
-      // Configure recurly.js
-      recurly.configure(window.recurlyConfig.publicKey); // Set this to your own public key
+      // Configure recurly.js -- set this to your own public key
+      recurly.configure(window.recurlyConfig.publicKey);
 
       recurly.ready(function () {
         var button = document.querySelector('#apple-pay')
