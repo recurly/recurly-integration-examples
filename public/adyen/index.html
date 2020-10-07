@@ -27,12 +27,12 @@
       adyen.on('error', console.error);
 
       // Adds an event listener to the button to call `adyen.start` with payload
-      document.querySelector('button').addEventListener("click", function () {
+      document.querySelector('button').addEventListener('click', function () {
         var payload = {
-          invoiceUuid: "aasdf1234",
-          skinCode: "1234asdf",
-          countryCode: "PL",
-          shopperLocale: "en_PL"
+          invoiceUuid: 'aasdf1234',
+          skinCode: '1234asdf',
+          countryCode: 'PL',
+          shopperLocale: 'en_PL'
         }
 
         adyen.start(payload);
