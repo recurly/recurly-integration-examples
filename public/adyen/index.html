@@ -12,10 +12,10 @@
     <button style="background: green; color: #fff; font-size: 19px;"  id="adyen-subscribe">Subscribe With Adyen</button>
     <script>
       // Configure recurly.js -- set this to your own public key
-      recurly.configure(window.recurlyConfig.publicKey)
+      recurly.configure(window.recurlyConfig.publicKey);
 
       // Create Adyen instance
-      const adyen = recurly.Adyen();
+      var adyen = recurly.Adyen();
 
       // Listen for successful token event and log response
       adyen.on('token', function (response) {
@@ -24,16 +24,16 @@
       });
 
       // If an error occurs, log it
-      adyen.on('error', console.error)
+      adyen.on('error', console.error);
 
       // Adds an event listener to the button to call `adyen.start` with payload
-      document.querySelector('button').addEventListener("click", () => {
-        const payload = {
+      document.querySelector('button').addEventListener("click", function () {
+        var payload = {
           invoiceUuid: "aasdf1234",
           skinCode: "1234asdf",
           countryCode: "PL",
           shopperLocale: "en_PL"
-        };
+        }
 
         adyen.start(payload);
       });
