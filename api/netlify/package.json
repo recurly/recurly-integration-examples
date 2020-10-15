@@ -1,0 +1,22 @@
+{
+  "name": "recurly-netlify-example",
+  "version": "1.0.0",
+  "description": "An integration example of Recurly with Netlify'",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/recurly/recurly-js-examples.git"
+  },
+  "author": "Dave Brudner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/recurly/recurly-js-examples/issues"
+  },
+  "homepage": "https://github.com/recurly/recurly-js-examples#readme",
+  "dependencies": {
+    "node-uuid": "^1.4.1",
+    "recurly": "^3.14.1"
+  }
+}
