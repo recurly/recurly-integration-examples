@@ -73,26 +73,27 @@
 
         mounted: function () {
           // Set this to your public key
-          window.recurly.configure(window.recurlyConfig.publicKey);
+          recurly.configure(recurlyConfig.publicKey);
 
-          this.elements = window.recurly.Elements();
+          this.elements = recurly.Elements();
           this.cardElement = this.elements.CardElement();
           this.cardElement.attach(this.$refs['card-element']);
         },
 
         methods: {
-          submit() {
-            window.recurly.token(
+          submit: function() {
+            var self = this;
+            recurly.token(
               this.elements,
               this.$refs.form,
-              (err, token) => {
+              function (err, token) {
                 if (err) {
                   // Sets the error on data so we can display them to the user
-                  this.error = err;
+                  self.error = err;
                 } else {
                   // We're submitting the form to our server to create a purchase here.
                   // It's also feasible to send the token to the server through XHR to complete the purchase
-                  this.$refs.form.submit();
+                  self.$refs.form.submit();
                 }
               }
             );
