@@ -28,6 +28,7 @@ may fill in any implementaiton gaps.
 - [Python](api/python)
 - [PHP](api/php)
 - [Java](api/java)
+- [C#, ASP.NET Core](api/dotnet)
 
 #### Configuring the examples
 

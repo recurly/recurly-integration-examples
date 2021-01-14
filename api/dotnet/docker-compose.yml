@@ -1,0 +1,17 @@
+version: '3'
+services:
+  app:
+    build:
+      context: ../..
+      dockerfile: ./api/dotnet/Dockerfile
+    volumes:
+      - .:/usr/src/app/api/dotnet
+      - ../../public:/usr/src/app/api/dotnet/wwwroot
+    ports:
+      - "9001:9001"
+    env_file:
+      - ../../docker.env
+    environment:
+      - PUBLIC_DIR_PATH=/usr/src/app/api/dotnet/wwwroot
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:9001

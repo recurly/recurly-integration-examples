@@ -1,6 +1,13 @@
 /api/php/vendor/
 /api/netlify/node_modules/
 /api/node/node_modules/
+/api/dotnet/[Dd]ebug/
+/api/dotnet/[Rr]elease/
+/api/dotnet/x64/
+/api/dotnet/[Bb]in/
+/api/dotnet/[Oo]bj/
+/api/dotnet/.vscode/
+/api/dotnet/wwwroot
 /api/php/composer.phar
 /api/java/.java-version
 /api/java/target
