@@ -1,145 +1,139 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Recurly.js Example: Advanced Pricing</title>
     <script src="https://js.recurly.com/v4/recurly.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/config"></script>
-    <link href="/js/favicon.png" rel="shortcut icon" type="image/png">
-    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
-    <style>
-      body {width:25em; margin:2em auto;}
-      label, select, input { display: inline-block; }
-      input[type=radio] { display: inline; }
-      ul {list-style: none; padding-left: 0;}
-      li {padding-bottom: 0.5em;}
-      ul ul {list-style: disc; padding-left: 1em;}
-      ul ul li {padding-bottom: 0;}
-      label {width: 10em; padding-right: 1em}
-    </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link href="/style.css" rel="stylesheet" />
   </head>
   <body>
-    <form method="post" action="/api/subscriptions/new">
-      <input type="hidden" value="USD" name="currency" data-recurly="currency" id="currency-USD">
-      <ul>
-        <li>
-          <label for="plan">Plan</label>
-          <select id="plan" data-recurly="plan">
-            <option value="simpleplan" selected>Simple Plan</option>
-            <option value="complexplan">Complex Plan</option>
-          </select>
-        </li>
-        <li>
-          <label for="plan-quantity">Quantity</label>
-          <input type="text" data-recurly="plan_quantity" id="plan-quantity" value="2">
-        </li>
-        <li>
-          <label for="routing_number">Routing Number</label>
-          <input type="text" data-recurly="routing_number" id="routing_number">
-        </li>
-        <li>
-          <label for="account_number">Account Number</label>
-          <input type="text" data-recurly="account_number" id="account_number">
-        </li>
-        <li>
-          <label for="account_number_confirmation">Confirm Account Number</label>
-          <input type="text" data-recurly="account_number_confirmation" id="account_number_confirmation">
-        </li>
-        <li>
-          <label for="name_on_account">Name On Account</label>
-          <input type="text" data-recurly="name_on_account" id="name_on_account">
-        </li>
-        <li>
-          <input type="radio" value="checking" name="account_type" data-recurly="account_type" id="account_type_checking" checked>
-          <label for="account_type_checking">Checking</label>
-          <input type="radio" value="savings" name="account_type" data-recurly="account_type" id="account_type_savings">
-          <label for="account_type_savings">Savings</label>
-        </li>
-        <li>
-          <label for="country">Country</label>
-          <select id="country" data-recurly="country">
-            <option value="US">United States</option>
-            <option value="GB">Great Britain</option>
-          </select>
-        </li>
-        <li>
-          <label for="postal_code">Postal Code</label>
-          <input type="text" data-recurly="postal_code" id="postal_code">
-        </li>
-        <li>
-          <p id="addons-title">Add-ons</p>
-          <p id="addons"></p>
-        </li>
-        <li>
-          <label for="coupon">Coupon</label>
-          <input type="text" data-recurly="coupon">
-        </li>
-        <li>
-          <p>
-            Due now
-          </p>
-          <ul>
-            <li>
-              Discount:
-              <span data-recurly="currency_symbol"></span>
-              <span data-recurly="discount_now"></span>
-            </li>
-            <li>
-              Subtotal:
-              <span data-recurly="currency_symbol"></span>
-              <span data-recurly="subtotal_now"></span>
-            </li>
-            <li>
-              Tax:
-              <span data-recurly="currency_symbol"></span>
-              <span data-recurly="tax_now"></span>
-            </li>
-            <li>----</li>
-            <li>
-              Total:
-              <span data-recurly="currency_symbol"></span>
-              <span data-recurly="total_now"></span>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <p>
-            Due later
-          </p>
-          <ul>
-            <li>
-              Discount:
-              <span data-recurly="currency_symbol"></span>
-              <span data-recurly="discount_next"></span>
-            </li>
-            <li>
-              Subtotal:
-              <span data-recurly="currency_symbol"></span>
-              <span data-recurly="subtotal_next"></span>
-            </li>
-            <li>
-              Tax:
-              <span data-recurly="currency_symbol"></span>
-              <span data-recurly="tax_next"></span>
-            </li>
-            <li>----</li>
-            <li>
-              Total:
-              <span data-recurly="currency_symbol"></span>
-              <span data-recurly="total_next"></span>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <button id="subscribe">Subscribe</button>
-        </li>
-      </ul>
-      <div id="errors"></div>
+    <main>
+      <form method="post" action="/api/subscriptions/new">
+        <input type="hidden" value="USD" name="currency" data-recurly="currency" id="currency-USD">
+        <ul>
+          <li>
+            <label for="plan">Plan</label>
+            <select id="plan" data-recurly="plan">
+              <option value="simpleplan" selected>Simple Plan</option>
+              <option value="complexplan">Complex Plan</option>
+            </select>
+          </li>
+          <li>
+            <label for="plan-quantity">Quantity</label>
+            <input type="text" data-recurly="plan_quantity" id="plan-quantity" value="2">
+          </li>
+          <li>
+            <label for="routing_number">Routing Number</label>
+            <input type="text" data-recurly="routing_number" id="routing_number">
+          </li>
+          <li>
+            <label for="account_number">Account Number</label>
+            <input type="text" data-recurly="account_number" id="account_number">
+          </li>
+          <li>
+            <label for="account_number_confirmation">Confirm Account Number</label>
+            <input type="text" data-recurly="account_number_confirmation" id="account_number_confirmation">
+          </li>
+          <li>
+            <label for="name_on_account">Name On Account</label>
+            <input type="text" data-recurly="name_on_account" id="name_on_account">
+          </li>
+          <li>
+            <input type="radio" value="checking" name="account_type" data-recurly="account_type" id="account_type_checking" checked>
+            <label for="account_type_checking">Checking</label>
+            <input type="radio" value="savings" name="account_type" data-recurly="account_type" id="account_type_savings">
+            <label for="account_type_savings">Savings</label>
+          </li>
+          <li>
+            <label for="country">Country</label>
+            <select id="country" data-recurly="country">
+              <option value="US">United States</option>
+              <option value="GB">Great Britain</option>
+            </select>
+          </li>
+          <li>
+            <label for="postal_code">Postal Code</label>
+            <input type="text" data-recurly="postal_code" id="postal_code">
+          </li>
+          <li>
+            <p id="addons-title">Add-ons</p>
+            <p id="addons"></p>
+          </li>
+          <li>
+            <label for="coupon">Coupon</label>
+            <input type="text" data-recurly="coupon">
+          </li>
+          <li>
+            <p>
+              Due now
+            </p>
+            <ul>
+              <li>
+                Discount:
+                <span data-recurly="currency_symbol"></span>
+                <span data-recurly="discount_now"></span>
+              </li>
+              <li>
+                Subtotal:
+                <span data-recurly="currency_symbol"></span>
+                <span data-recurly="subtotal_now"></span>
+              </li>
+              <li>
+                Tax:
+                <span data-recurly="currency_symbol"></span>
+                <span data-recurly="tax_now"></span>
+              </li>
+              <li>----</li>
+              <li>
+                Total:
+                <span data-recurly="currency_symbol"></span>
+                <span data-recurly="total_now"></span>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p>
+              Due later
+            </p>
+            <ul>
+              <li>
+                Discount:
+                <span data-recurly="currency_symbol"></span>
+                <span data-recurly="discount_next"></span>
+              </li>
+              <li>
+                Subtotal:
+                <span data-recurly="currency_symbol"></span>
+                <span data-recurly="subtotal_next"></span>
+              </li>
+              <li>
+                Tax:
+                <span data-recurly="currency_symbol"></span>
+                <span data-recurly="tax_next"></span>
+              </li>
+              <li>----</li>
+              <li>
+                Total:
+                <span data-recurly="currency_symbol"></span>
+                <span data-recurly="total_next"></span>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <button id="subscribe">Subscribe</button>
+          </li>
+        </ul>
+        <div id="errors"></div>
 
-      <input type="hidden" data-recurly="token" name="recurly-token">
-    </form>
+        <input type="hidden" data-recurly="token" name="recurly-token">
+      </form>
+    </main>
+
     <script>
       // Configure recurly.js -- set this to your own public key
       recurly.configure(window.recurlyConfig.publicKey);

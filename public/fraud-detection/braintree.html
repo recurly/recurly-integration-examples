@@ -1,50 +1,54 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Recurly.js Example: Minimal Billing Information</title>
     <script src="https://js.recurly.com/v4/recurly.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/config"></script>
-    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
-    <link href="/minimal/style.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link href="/style.css" rel="stylesheet" />
 
     <!-- Braintree libraries for collecting fraud device data -->
     <script src="https://js.braintreegateway.com/web/3.28.0/js/client.min.js"></script>
     <script src="https://js.braintreegateway.com/web/3.28.0/js/data-collector.min.js"></script>
   </head>
   <body>
-    <section>
-      <figure class="logo">
-        <span class="price">$10</span>
-        <span class="term">monthly</span>
-      </figure>
-    </section>
+    <main>
+      <section>
+        <h1 class="logo">
+          <span class="price">$10</span>
+          <span class="term">monthly</span>
+        </h1>
+      </section>
 
-    <section id="errors"></section>
+      <section id="errors"></section>
 
-    <section>
-      <form method="post" action="/api/subscriptions/new">
-        <div>
-          <div data-my-js-ref="recurly-element-card"></div>
-        </div>
+      <section>
+        <form method="post" action="/api/subscriptions/new">
+          <div>
+            <div data-my-js-ref="recurly-element-card"></div>
+          </div>
 
-        <div>
-          <label for="first_name">First Name</label>
-          <input type="text" data-recurly="first_name" id="first_name" name="first-name">
-        </div>
+          <div>
+            <label for="first_name">First Name</label>
+            <input type="text" data-recurly="first_name" id="first_name" name="first-name">
+          </div>
 
-        <div>
-          <label for="last_name">Last Name</label>
-          <input type="text" data-recurly="last_name" id="last_name" name="last-name">
-        </div>
+          <div>
+            <label for="last_name">Last Name</label>
+            <input type="text" data-recurly="last_name" id="last_name" name="last-name">
+          </div>
 
-        <button id="subscribe">Subscribe</button>
+          <button id="subscribe">Subscribe</button>
 
-        <input type="hidden" data-recurly="token" name="recurly-token">
-      </form>
-    </section>
+          <input type="hidden" data-recurly="token" name="recurly-token">
+        </form>
+      </section>
+    </main>
+
     <script>
 
       // Collect device data using braintree.js

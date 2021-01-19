@@ -1,74 +1,79 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Recurly.js Example: Advanced Pricing Items</title>
     <script src="https://js.recurly.com/v4/recurly.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/config"></script>
-    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
-    <link href="/minimal/style.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link href="/style.css" rel="stylesheet" />
   </head>
   <body>
-    <section>
-      <figure class="logo">
-        <span>
-          Subscribe
-        </span>
-      </figure>
-    </section>
+    <main>
+      <section>
+        <h1 class="logo">
+          <span>
+            Subscribe
+          </span>
+        </h1>
+      </section>
 
-    <section id="errors" class="errors"></section>
+      <section id="errors" class="errors"></section>
 
-    <section>
-      <form method="post" action="/api/purchases/new">
-        <div>
-          <label for="plan">Select a plan</label>
-          <select name="subscriptions[][plan-code]" class="js-plan-select" id="plan"></select>
-        </div>
+      <section>
+        <form method="post" action="/api/purchases/new">
+          <div>
+            <label for="plan">Select a plan</label>
+            <select name="subscriptions[][plan-code]" class="js-plan-select" id="plan"></select>
+          </div>
 
-        <div class="items">
-          <div class="label">Select items</div>
-          <div class="js-items-select"></div>
-        </div>
+          <div class="items">
+            <div class="label">Select items</div>
+            <div class="js-items-select"></div>
+          </div>
 
-        <div>
-          <label for="first-name">First Name</label>
-          <input type="text" data-recurly="first_name" name="first-name" id="first-name">
-        </div>
+          <div>
+            <label for="first-name">First Name</label>
+            <input type="text" data-recurly="first_name" name="first-name" id="first-name">
+          </div>
 
-        <div>
-          <label for="last-name">Last Name</label>
-          <input type="text" data-recurly="last_name" name="last-name" id="last-name">
-        </div>
+          <div>
+            <label for="last-name">Last Name</label>
+            <input type="text" data-recurly="last_name" name="last-name" id="last-name">
+          </div>
 
-        <div>
-          <div data-my-js-ref="recurly-element-card"></div>
-        </div>
+          <div>
+            <div data-my-js-ref="recurly-element-card"></div>
+          </div>
 
-        <div>
-          <div class="label">Total</div>
-          <div class="subtotal">
-            <div>
-              Due now
-              <span class="float-right">
+          <div>
+            <div class="label">Total</div>
+            <div class="subtotal">
+              <div>
+                Due now
+                <span class="float-right">
+                  <span data-recurly="currency_symbol"></span>
+                  <span data-recurly="total_now"></span>
+                </span>
+              </div>
+              <div class="text-muted">
                 <span data-recurly="currency_symbol"></span>
-                <span data-recurly="total_now"></span>
-              </span>
-            </div>
-            <div class="text-muted">
-              <span data-recurly="currency_symbol"></span>
-              <span data-recurly="total_next"></span>
-              due next month.
+                <span data-recurly="total_next"></span>
+                due next month.
+              </div>
             </div>
           </div>
-        </div>
 
-        <button>Subscribe</button>
+          <button>Subscribe</button>
 
-        <input type="hidden" data-recurly="token" name="recurly-token">
-      </form>
-    </section>
+          <input type="hidden" data-recurly="token" name="recurly-token">
+        </form>
+      </section>
+    </main>
+
     <script>
       const { publicKey, plans, items } = window.recurlyConfig;
       const form = document.querySelector('form');
