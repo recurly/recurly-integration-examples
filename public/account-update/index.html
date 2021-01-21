@@ -1,83 +1,104 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Recurly.js Example: Account Update</title>
     <script src="https://js.recurly.com/v4/recurly.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/config"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
-    <link href="/account-update/style.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link href="/style.css" rel="stylesheet" />
+    <style>
+      .submit-text {
+        height: 1.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .submit-text.done::after {
+        content: '';
+        background-image: url('./done-white-18dp.svg');
+        background-repeat: no-repeat;
+        background-size: 100%;
+        height: 1.75rem;
+        width: 1.75rem;
+        display: inline-block;
+      }
+    </style>
   </head>
   <body>
-    <section>
-      <figure class="logo">
-        <span class="price">$10</span>
-        <span class="term">monthly</span>
-      </figure>
-    </section>
+    <main>
+      <section>
+        <figure class="logo">
+          <span class="price">$10</span>
+          <span class="term">monthly</span>
+        </figure>
+      </section>
 
-    <p>Update an account by entering its account code below.</p>
+      <section id="errors" class="errors"></section>
 
-    <section id="errors" class="errors"></section>
+      <section>
+        <p>Update an account by using the form below.</p>
 
-    <section>
-      <form method="post" action="/api/accounts">
-        <div>
-          <div data-my-js-ref="recurly-element-card"></div>
-        </div>
+        <form method="post" action="/api/accounts">
+          <div>
+            <div data-my-js-ref="recurly-element-card"></div>
+          </div>
 
-        <div>
-          <label for="account_code">Account Code</label>
-          <input type="text" data-recurly="account_code" id="account_code" name="account-code" required>
-        </div>
+          <div>
+            <label for="account_code">Account Code</label>
+            <input type="text" data-recurly="account_code" id="account_code" name="account-code" required>
+          </div>
 
-        <div>
-          <label for="first_name">First Name</label>
-          <input type="text" data-recurly="first_name" id="first_name" name="first-name">
-        </div>
+          <div>
+            <label for="first_name">First Name</label>
+            <input type="text" data-recurly="first_name" id="first_name" name="first-name">
+          </div>
 
-        <div>
-          <label for="last_name">Last Name</label>
-          <input type="text" data-recurly="last_name" id="last_name" name="last-name">
-        </div>
+          <div>
+            <label for="last_name">Last Name</label>
+            <input type="text" data-recurly="last_name" id="last_name" name="last-name">
+          </div>
 
-        <div>
-          <label for="address1">Address</label>
-          <input type="text" data-recurly="address1" id="address1" name="address1">
-        </div>
+          <div>
+            <label for="address1">Address</label>
+            <input type="text" data-recurly="address1" id="address1" name="address1">
+          </div>
 
-        <div>
-          <label for="city">City</label>
-          <input type="text" data-recurly="city" id="city" name="city">
-        </div>
-        
-        <div>
-          <label for="state">State</label>
-          <input type="text" data-recurly="state" id="state" name="state">
-        </div>
+          <div>
+            <label for="city">City</label>
+            <input type="text" data-recurly="city" id="city" name="city">
+          </div>
+          
+          <div>
+            <label for="state">State</label>
+            <input type="text" data-recurly="state" id="state" name="state">
+          </div>
 
-        <div>
-          <label for="country">Country</label>
-          <input type="text" data-recurly="country" id="country" name="country">
-        </div>
+          <div>
+            <label for="country">Country</label>
+            <input type="text" data-recurly="country" id="country" name="country">
+          </div>
 
-        <div>
-          <label for="postal_code">Postal Code</label>
-          <input type="text" data-recurly="postal_code" id="postal_code" name="postal-code">
-        </div>
+          <div>
+            <label for="postal_code">Postal Code</label>
+            <input type="text" data-recurly="postal_code" id="postal_code" name="postal-code">
+          </div>
 
-        <button type="submit">
-          <span class="submit-text">Update</span>
-        </button>
+          <button type="submit">
+            <span class="submit-text">Update</span>
+          </button>
 
-        <input type="hidden" data-recurly="token" name="recurly-token">
-      </form>
+          <input type="hidden" data-recurly="token" name="recurly-token">
+        </form>
 
-      <p>*Be sure to include actual user authentication in a real-world implementation!</p>
-    </section>
+        <p>*Be sure to include actual user authentication in a real-world implementation!</p>
+      </section>
+    </main>
+
     <script>
       // Configure recurly.js -- set this to your own public key
       recurly.configure(window.recurlyConfig.publicKey);

@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Recurly.js Example: Minimal Billing Information</title>
     <script src="https://js.recurly.com/v4/recurly.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/config"></script>
-    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
-    <link href="/minimal/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link href="/style.css" rel="stylesheet" />
     <style type="text/css">
+      main {
+        max-width: 30rem;
+      }
+
       /* Apple Pay button styles */
       @supports (-webkit-appearance: -apple-pay-button) {
         .apple-pay-button {
@@ -59,24 +65,26 @@
         display: none;
       }
     </style>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <section>
-      <figure class="logo">
-        <span class="price">$10</span>
-        <span class="term">monthly</span>
-      </figure>
-    </section>
+    <main>
+      <section>
+        <h1 class="logo">
+          <span class="price">$10</span>
+          <span class="term">monthly</span>
+        </h1>
+      </section>
 
-    <section id="errors"></section>
+      <section id="errors"></section>
 
-    <section>
-      <form method="post" action="/api/subscriptions/new">
-        <div id="apple-pay" class="apple-pay-button apple-pay-button-white apple-pay-button-hidden"></div>
-        <input type="hidden" data-recurly="token" name="recurly-token">
-      </form>
-    </section>
+      <section>
+        <form method="post" action="/api/subscriptions/new">
+          <div id="apple-pay" class="apple-pay-button apple-pay-button-white apple-pay-button-hidden"></div>
+          <input type="hidden" data-recurly="token" name="recurly-token">
+        </form>
+      </section>
+    </main>
+
     <script>
       // Configure recurly.js -- set this to your own public key
       recurly.configure(window.recurlyConfig.publicKey);

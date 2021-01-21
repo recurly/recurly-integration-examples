@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Recurly.js Example: Minimal Billing Information</title>
+    <script src="https://js.recurly.com/v4/recurly.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/config"></script>
-    <script src="https://js.recurly.com/v4/recurly.js"></script>
-    <link href="/js/favicon.png" rel="shortcut icon" type="image/png">
-    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link href="/style.css" rel="stylesheet" />
   </head>
   <body>
-    <figure>$29/month</figure>
-    <section id="errors" class="errors"></section>
-    <section>
-      <form method="post" action="/api/subscriptions/new">
-        <button id="subscribe">Subscribe with PayPal</button>
-        <input type="hidden" id="recurly-token" name="recurly-token">
-      </form>
-    </section>
+    <main>
+      <h1 class="logo">$29/month</h1>
+      <section id="errors" class="errors"></section>
+      <section>
+        <form method="post" action="/api/subscriptions/new">
+          <button id="subscribe">Subscribe with PayPal</button>
+          <input type="hidden" id="recurly-token" name="recurly-token">
+        </form>
+      </section>
+    </main>
+
     <script>
       var form = $('form');
 
