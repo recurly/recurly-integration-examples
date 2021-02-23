@@ -112,7 +112,7 @@ app.get('/config', function (req, res) {
 // Mounts express.static to render example forms
 const pubDirPath = PUBLIC_DIR_PATH || '/../../public';
 
-app.use(express.static(__dirname + pubDirPath));
+app.use(express.static(pubDirPath));
 
 // Start the server
 app.listen(9001, function () {

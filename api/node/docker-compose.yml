@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
   app:
     build:
@@ -12,4 +12,4 @@ services:
     env_file:
       - ../../docker.env
     environment:
-      - PUBLIC_DIR_PATH=/public
+      - PUBLIC_DIR_PATH=/usr/src/app/public
