@@ -1,0 +1,246 @@
+body {
+  background: rgb(26, 29, 41);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-1-1 {
+  flex: 1 1 0%;
+}
+
+.flex-column-reverse {
+  flex-direction: column-reverse;
+}
+
+.logo {
+  margin: 0px auto;
+  max-width: 148px;
+  padding-top: 36px;
+  width: auto;
+}
+
+@media (min-width: 480px) {
+  .logo {
+    max-width: 172px;
+    padding-top: 40px;
+  }
+}
+
+.wrapper {
+  color: rgb(249, 249, 249);
+  margin: 25px auto 40px;
+  max-width: initial;
+  padding: 0px;
+}
+
+.wrapper fieldset {
+  outline: none;
+}
+
+@media (min-width: 375px) {
+  .wrapper {
+    padding: 0px;
+  }
+}
+
+@media (min-width: 480px) {
+  .wrapper {
+    max-width: 374px;
+  }
+}
+
+.step {
+  cursor: inherit;
+  font-size: 10px;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: 1.25px;
+  line-height: 1.5;
+  margin: 0px;
+}
+
+.header {
+  cursor: inherit;
+  font-family: Avenir-Heavy, sans-serif;
+  font-size: 24px;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  line-height: 1.17;
+}
+
+.subcopy {
+  cursor: inherit;
+  font-size: 12px;
+  font-stretch: normal;
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: normal;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+.input-label {
+  color: rgb(202, 202, 202);
+  font-size: 10px;
+  letter-spacing: 1.25px;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.plans {
+  border: none;
+  margin: 28px 0px 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+.plans > div, .payment-types > div {
+  display: flex;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.plan {
+  display: flex;
+  -webkit-box-flex: 0;
+  flex: 0 0 calc((100% - 8px) / 2);
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+}
+
+.plan-select {
+  display: none;
+}
+
+.plan-select + label {
+  -webkit-box-align: center;
+  align-items: center;
+  background-color: rgb(49, 52, 62);
+  border-radius: 4px;
+  border: 1.5px solid rgba(0, 0, 0, 0);
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  height: 100%;
+  margin: 0px;
+  padding: 10.5px 12px;
+  width: 100%;
+}
+
+.plan-select:checked + label {
+  background: rgba(4, 131, 238, 0.2);
+  border: 1.5px solid rgb(4, 131, 238);
+}
+
+.plan-select:checked + label .radio-check {
+  background-color: rgb(0, 114, 210);
+}
+
+.plan-select:checked + label .radio-check {
+  border-color: rgb(0, 114, 210);
+}
+.radio-check {
+  border-radius: 50%;
+  border: 2px solid rgb(109, 117, 130);
+  height: 20px;
+  width: 20px;
+}
+
+.fine-print {
+  cursor: inherit;
+  font-size: 12px;
+  font-stretch: normal;
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: normal;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+.payment-types {
+  margin: 16px 0px 0px;
+  padding: 0px;
+  border-width: 0px 0px 1px;
+  border-top-style: initial;
+  border-right-style: initial;
+  border-left-style: initial;
+  border-top-color: initial;
+  border-right-color: initial;
+  border-left-color: initial;
+  border-image: initial;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(249, 249, 249, 0.2);
+  width: 100%;
+}
+
+.payment-type {
+  display: flex;
+  padding: 0px;
+  margin: 0px;
+  -webkit-box-flex: 0;
+  flex: 0 0 calc((100% - 0px) / 2);
+}
+
+.payment-type-select {
+  display: none;
+}
+
+.payment-type-select:checked + label, .payment-type-select + label:hover {
+  opacity: 1;
+  transition: all 0.2s ease 0s;
+}
+
+.payment-type-select + label {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 15px 0px 16px;
+  opacity: 0.8;
+}
+
+.payment-type-select + label span {
+  text-align: center;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-direction: row;
+  margin-bottom: 6px;
+}
+
+@media (min-width: 480px) {
+  .payment-type-select + label span {
+    margin-bottom: 0px;
+  }
+}
+
+.payment-type-select + label span .icon {
+  width: 32px;
+  height: 32px;
+  margin: 0px 8px 0px 0px;
+  padding: 0px;
+}
+
+.payment-type-select.credit-card + * .icon {
+  background: url(credit-card.png) center center / contain no-repeat;
+}
+
+.payment-type-select.paypal + * .icon {
+  background: url(paypal.png) center center / contain no-repeat;
+}
+
+.billing-form > * {
+  margin-top: 16px;
+  width: 100%;
+}
+
+.csc-container.show-billing {
+    margin: 0px 0px 0px 10px;
+}
