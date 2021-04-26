@@ -152,8 +152,9 @@ body {
   width: 20px;
 }
 
-.fine-print {
+.fine-print, .input-label, .subcopy {
   cursor: inherit;
+  font-family: Avenir, sans-serif;;
   font-size: 12px;
   font-stretch: normal;
   font-style: normal;
