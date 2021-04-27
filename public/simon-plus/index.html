@@ -81,9 +81,13 @@
         <div>
           <div>
             <form class="billing-form billing-form--credit" novalidate="">
-              <fieldset class="bElFpM">
+              <fieldset class="w100-no-border">
                 <div class="flex flex-column-reverse">
-                  <input aria-label="Name on card" id="billing-card-name" maxlength="1000" name="CARD_NAME" placeholder="" type="text" class="DDynN jtWwTT" value="" style="background-image: none; background-repeat: initial; background-attachment: initial; background-size: initial; background-position: initial; cursor: auto;">
+                  <div class="flex">
+                    <input type="text" class="billing-field flex flex-1-1" placeholder="FIRST NAME" data-recurly="first_name">
+                    <input type="text" class="billing-field flex flex-1-1" placeholder="LAST NAME" data-recurly="last_name">
+                  </div>
+                  <!-- <input aria-label="Name on card" id="billing-card-name" maxlength="1000" name="CARD_NAME" placeholder="" tautoype="ext" class="DDynN jtWwTT" value="" style="background-image: none; background-repeat: initial; background-attachment: initial; background-size: initial; background-position: initial; cursor: auto;"> -->
                   <div class="hZVhZH input-label" for="billing-card-name">NAME ON CARD</div>
                 </div>
               </fieldset>
@@ -94,9 +98,9 @@
                   <div class="hZVhZH input-label" for="billing-card-number">CARD DETAILS</div>
                 </div>
               </fieldset>
-              <fieldset class="bElFpM">
+              <fieldset class="w100-no-border">
                 <div class="flex flex-column-reverse">
-                  <input autocapitalize="none" autocomplete="off" autocorrect="off" id="zip-code-dropdown-input" data-recurly="postal_code" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" aria-label="Zip Code" pattern="[0-9]*" inputmode="numeric" value="">
+                  <input autocapitalize="none" autocomplete="off" autocorrect="off" id="zip-code-dropdown-input" data-recurly="postal_code" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" aria-label="Zip Code" pattern="[0-9]*" inputmode="numeric" value="" class="billing-field">
                   <div class="hZVhZH input-label" for="zip-code-dropdown-input">ZIP CODE</div>
                 </div>
               </fieldset>

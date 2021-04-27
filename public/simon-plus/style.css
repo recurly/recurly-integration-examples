@@ -39,6 +39,14 @@ body {
   outline: none;
 }
 
+.w100-no-border {
+  border: none;
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+  width: 100%;
+}
+
 @media (min-width: 375px) {
   .wrapper {
     padding: 0px;
@@ -49,6 +57,27 @@ body {
   .wrapper {
     max-width: 374px;
   }
+}
+
+.billing-field {
+    backdrop-filter: blur(50px);
+    background-color: rgb(49, 52, 62);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    caret-color: rgb(2, 231, 245);
+    color: rgb(249, 249, 249);
+    font-size: 15px;
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: normal;
+    height: 48px;
+    letter-spacing: normal;
+    line-height: 1.53;
+    margin: 0px;
+    outline: none;
+    padding: 7px 12px;
+    transition: all 0.1s ease 0s;
+    width: 100%;
 }
 
 .step {
