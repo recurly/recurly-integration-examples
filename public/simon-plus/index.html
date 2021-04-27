@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Recurly.js Example: Minimal Billing Information</title>
+  <title>Simon+</title>
   <script src="https://js.recurly.com/v4/recurly.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <!-- <script src="/config"></script> -->
@@ -30,7 +30,7 @@
           <fieldset class="plans">
             <div>
               <div tabindex="0" class="plan sc-dphlzf dHbCjA">
-                <input id="MONTH-0" type="radio" aria-checked="false" name="subscribeOptions" role="radio" class="plan-select sc-epGmkI gXkExL" value="MONTH" checked="">
+                <input id="MONTH-0" type="radio" aria-checked="false" name="subscribeOptions" role="radio" class="plan-select sc-epGmkI gXkExL" value="monthly" checked="">
                 <label aria-labelledby="MONTH-0" for="MONTH-0" class="sc-bJHhxl vVxKs">
                   <span><p class="sc-gzVnrw cSBsCl" style="color: rgb(249, 249, 249); letter-spacing: initial; line-height: 1.53; font-family: Avenir-Heavy, sans-serif; font-size: 15px; margin: 0px; max-width: inherit;">Monthly</p>
                     <div color="grey7" class="sc-dnqmqq fine-print" style="color: rgb(202, 202, 202); margin: 0px;">$7.99</div>
@@ -45,7 +45,7 @@
                 </label>
               </div>
               <div tabindex="0" class="plan sc-dphlzf dHbCjA">
-                <input id="YEAR-1" type="radio" aria-checked="true" name="subscribeOptions" role="radio" class="plan-select sc-epGmkI gXkExL" value="YEAR">
+                <input id="YEAR-1" type="radio" aria-checked="true" name="subscribeOptions" role="radio" class="plan-select sc-epGmkI gXkExL" value="yearly">
                 <label aria-labelledby="YEAR-1" for="YEAR-1" class="sc-bJHhxl vVxKs">
                   <span><p class="sc-gzVnrw cSBsCl" style="color: rgb(249, 249, 249); letter-spacing: initial; line-height: 1.53; font-family: Avenir-Heavy, sans-serif; font-size: 15px; margin: 0px; max-width: inherit;">Annual</p>
                     <div color="grey7" class="sc-dnqmqq fine-print" style="color: rgb(202, 202, 202); margin: 0px;">$79.99</div>
@@ -64,13 +64,17 @@
           <fieldset class="payment-types">
             <div class="fine-print">
               <div aria-label="Credit Card" role="radio" aria-checked="true" tabindex="0" class="payment-type">
-              <input id="credit-radio-icon" type="radio" aria-checked="true" name="paymentOptions" role="radio" class="payment-type-select credit-card" value="CREDIT" checked="">
+                <input id="credit-radio-icon" type="radio" aria-checked="true" name="paymentOptions" role="radio" class="payment-type-select credit-card" value="CREDIT" checked="">
                 <label aria-labelledby="credit-radio-icon" for="credit-radio-icon" class="sc-bSbAYC hyOFEv">
                   <span><i class="icon" role="img"></i>Credit Card</span>
                 </label>
               </div>
               <div aria-label="PayPal" role="radio" aria-checked="false" tabindex="0" class="payment-type">
-              <input id="paypal-radio-icon" type="radio" aria-checked="false" name="paymentOptions" role="radio" class="payment-type-select paypal" value="PAYPAL"><label aria-labelledby="paypal-radio-icon" for="paypal-radio-icon" class="sc-bSbAYC hyOFEv"><span><i class="icon" role="img"></i>PayPal</span></label></div>
+                <input id="paypal-radio-icon" type="radio" aria-checked="false" name="paymentOptions" role="radio" class="payment-type-select paypal" value="PAYPAL">
+                <label aria-labelledby="paypal-radio-icon" for="paypal-radio-icon" class="sc-bSbAYC hyOFEv">
+                  <span><i class="icon" role="img"></i>PayPal</span>
+                </label>
+              </div>
             </div>
           </fieldset>
         </div>
@@ -78,7 +82,8 @@
           <div>
             <form class="billing-form billing-form--credit" novalidate="">
               <fieldset class="sc-fMiknA bElFpM">
-                <div class="sc-caSCKo flex flex-column-reverse"><input aria-label="Name on card" id="billing-card-name" maxlength="1000" name="CARD_NAME" placeholder="" type="text" class="sc-fBuWsC DDynN sc-fAjcbJ jtWwTT" value="" style="background-image: none; background-repeat: initial; background-attachment: initial; background-size: initial; background-position: initial; cursor: auto;">
+                <div class="sc-caSCKo flex flex-column-reverse">
+                  <input aria-label="Name on card" id="billing-card-name" maxlength="1000" name="CARD_NAME" placeholder="" type="text" class="sc-fBuWsC DDynN sc-fAjcbJ jtWwTT" value="" style="background-image: none; background-repeat: initial; background-attachment: initial; background-size: initial; background-position: initial; cursor: auto;">
                   <div class="sc-kjoXOD hZVhZH input-label" for="billing-card-name">NAME ON CARD</div>
                 </div>
               </fieldset>
@@ -104,21 +109,44 @@
                       <div id="billing-card-csc"></div>
                       <div class="sc-kjoXOD hZVhZH input-label" for="billing-card-CSC">SECURITY CODE</div>
                     </div>
-                </fieldset></div>
+                  </fieldset>
+                </div>
               </div>
               <fieldset class="sc-fMiknA bElFpM">
                 <div class="sc-caSCKo flex flex-column-reverse">
                   <input autocapitalize="none" autocomplete="off" autocorrect="off" id="zip-code-dropdown-input" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" aria-label="Zip Code" pattern="[0-9]*" inputmode="numeric" value="">
                   <div class="sc-kjoXOD hZVhZH input-label" for="zip-code-dropdown-input">ZIP CODE</div>
                 </div>
-            </fieldset>
+              </fieldset>
               <div class="sc-fgrSAo iMfAiE">
                 <div class="sc-dwztqd ilOIDs">
-                  <div color="#cacaca" font-size="12px" class="sc-dnqmqq fine-print" style="color: rgb(202, 202, 202); margin: 0px; padding: 0px 30px 0px 0px;">Store my payment information for use across the Simon Family of Companies. <span style="white-space: nowrap;"><button aria-label="Learn more" color="secondary" font-size="inherit" font-weight="inherit" type="button" class="sc-cHGsZl cPGVxs">Learn more</button></span></div>
-                  <div><label aria-label="Store my payment information for use across the Simon Family of Companies." aria-pressed="false" for="savePayment" tabindex="0" class="sc-FQuPU hTgTPB" style="flex-direction: row-reverse; justify-content: flex-end; margin: 0px auto;"><div class="sc-iuDHTM gINlXg"><div><input aria-checked="false" id="savePayment" role="switch" type="checkbox" class="sc-erNlkL jQZSb" value=""><span for="savePayment" class="sc-lnmtFM kUsoKK"></span></div></div></label></div>
+                  <div color="#cacaca" font-size="12px" class="sc-dnqmqq fine-print" style="color: rgb(202, 202, 202); margin: 0px; padding: 0px 30px 0px 0px;">Store my payment information for use across the Simon Family of Companies. 
+                    <span style="white-space: nowrap;">
+                      <button aria-label="Learn more" color="secondary" font-size="inherit" font-weight="inherit" type="button" class="sc-cHGsZl cPGVxs">Learn more</button>
+                    </span>
+                  </div>
+                  <div>
+                    <label aria-label="Store my payment information for use across the Simon Family of Companies." aria-pressed="false" for="savePayment" tabindex="0" class="sc-FQuPU hTgTPB" style="flex-direction: row-reverse; justify-content: flex-end; margin: 0px auto;">
+                      <div class="sc-iuDHTM gINlXg">
+                        <div><input aria-checked="false" id="savePayment" role="switch" type="checkbox" class="sc-erNlkL jQZSb" value="">
+                          <span for="savePayment" class="sc-lnmtFM kUsoKK"></span>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
                 </div>
               </div>
-              <div class="sc-dnqmqq fine-print terms-text" style="color: rgb(249, 249, 249); margin: 0px;"><span><p display="inline" color="inherit" font-size="inherit" font-weight="inherit" class="sc-gzVnrw cSBsCl" style="color: inherit; display: inline; letter-spacing: initial; line-height: 1.53; font-family: inherit; font-size: inherit; margin: 0px; text-align: left; max-width: inherit;">By clicking "Agree &amp; Subscribe," you are enrolling in automatic payments of $79.99/year (plus tax where applicable) that will continue until you cancel. You can cancel at any time, effective at the end of the billing period. There are no refunds or credits for partial months or years.</p></span></div><button aria-label="AGREE &amp; SUBSCRIBE" role="button" kind="primary" class="sc-Rmtcm jxaNdu submit-button" id="credit-submit-button" type="submit" value="submit"><span>AGREE &amp; SUBSCRIBE</span></button></form>
+              <div class="sc-dnqmqq fine-print terms-text" style="color: rgb(249, 249, 249); margin: 0px;">
+                <span>
+                  <p display="inline" color="inherit" font-size="inherit" font-weight="inherit" class="sc-gzVnrw cSBsCl" style="color: inherit; display: inline; letter-spacing: initial; line-height: 1.53; font-family: inherit; font-size: inherit; margin: 0px; text-align: left; max-width: inherit;">
+                    By clicking "Agree &amp; Subscribe," you are enrolling in automatic payments of $79.99/year (plus tax where applicable) that will continue until you cancel. You can cancel at any time, effective at the end of the billing period. There are no refunds or credits for partial months or years.
+                  </p>
+                </span>
+              </div>
+              <button aria-label="AGREE &amp; SUBSCRIBE" role="button" kind="primary" class="sc-Rmtcm jxaNdu submit-button" id="credit-submit-button" type="submit" value="submit">
+                <span>AGREE &amp; SUBSCRIBE</span>
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -131,23 +159,23 @@
 
     // Create a CardElement
     var elements = recurly.Elements();
-      var cardElement = elements.CardNumberElement({
-        style: {
-          fontFamily: 'Open Sans',
-          fontSize: '1rem',
-          fontWeight: 'bold',
-          fontColor: '#2c0730'
-        }
-      });
-      cardElement.attach('#billing-card-number');
+    var cardElement = elements.CardNumberElement({
+      style: {
+        fontFamily: 'Open Sans',
+        fontSize: '1rem',
+        fontWeight: 'bold',
+        fontColor: '#2c0730'
+      }
+    });
+    cardElement.attach('#billing-card-number');
 
-var ccvElement = elements.CardCvvElement({
-  style: {
-    placeholder: {
-      content: 'CVV'
-    }
-  }
-});
+    var ccvElement = elements.CardCvvElement({
+      style: {
+        placeholder: {
+          content: 'CVV'
+        }
+      }
+    });
     ccvElement.attach('#billing-card-csc');
   </script>
 
