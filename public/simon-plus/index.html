@@ -91,7 +91,7 @@
                   <div class="hZVhZH input-label" for="billing-card-name">NAME ON CARD</div>
                 </div>
               </fieldset>
-              <fieldset class="gDMtlg fIrAoy">
+              <fieldset class="gDMtlg fIrAoy w100-no-border">
                 <div id="recurly-elements" class="flex flex-column-reverse">
                   <!-- <input aria-label="Card number" id="billing-card-number" maxlength="19" name="CARD_NUMBER" placeholder="" type="text" pattern="[0-9]*" class="DDynN jFnYbg" value=""> -->
                   <div id="billing-card-number"></div>
@@ -100,6 +100,7 @@
               </fieldset>
               <fieldset class="w100-no-border">
                 <div class="flex flex-column-reverse">
+                  <!-- <input autocapitalize="none" autocomplete="off" autocorrect="off" id="zip-code-dropdown-input" data-recurly="postal_code" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" aria-label="Zip Code" pattern="[0-9]*" inputmode="numeric" data-testid="zip-code-input" value="" style="box-sizing: content-box; width: 2px; background: 0px center; border: 0px; font-size: inherit; opacity: 1; outline: 0px; padding: 0px; color: inherit;" data-gv2elementkey="zip_code" class="billing-field"> -->
                   <input autocapitalize="none" autocomplete="off" autocorrect="off" id="zip-code-dropdown-input" data-recurly="postal_code" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" aria-label="Zip Code" pattern="[0-9]*" inputmode="numeric" value="" class="billing-field">
                   <div class="hZVhZH input-label" for="zip-code-dropdown-input">ZIP CODE</div>
                 </div>
@@ -148,14 +149,7 @@
 
     // Create a CardElement
     var elements = recurly.Elements();
-    var cardElement = elements.CardElement({
-      style: {
-        fontFamily: 'Open Sans',
-        fontSize: '1rem',
-        fontWeight: 'bold',
-        fontColor: '#2c0730'
-      }
-    });
+    var cardElement = elements.CardElement();
     cardElement.attach('#billing-card-number');
   </script>
 

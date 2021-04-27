@@ -59,7 +59,7 @@ body {
   }
 }
 
-.billing-field {
+.billing-field, .recurly-element {
     backdrop-filter: blur(50px);
     background-color: rgb(49, 52, 62);
     border: 1px solid transparent;
