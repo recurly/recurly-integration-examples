@@ -245,3 +245,33 @@ body {
 .csc-container.show-billing {
     margin: 0px 0px 0px 10px;
 }
+
+.submit-button {
+    background: rgb(0, 114, 210);
+    border: none;
+    border-radius: 4px;
+    color: rgb(249, 249, 249);
+    font-size: 15px;
+    padding: 0px 24px;
+    text-transform: uppercase;
+    -webkit-box-align: center;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    font-family: Avenir-Heavy, sans-serif;
+    font-stretch: normal;
+    font-style: normal;
+    height: 48px;
+    -webkit-box-pack: center;
+    justify-content: center;
+    letter-spacing: 1.5px;
+    line-height: 1.5;
+    margin: 16px 0px;
+    overflow: hidden;
+    text-align: center;
+    transition: all 0.2s ease-in-out 0s;
+    width: 100%;
+    -webkit-font-smoothing: antialiased;
+    opacity: 1;
+    visibility: visible;
+}
