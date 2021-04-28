@@ -27,75 +27,75 @@
           </div>
         </div>
         <div>
-          <fieldset class="plans">
-            <div>
-              <div tabindex="0" class="plan dHbCjA">
-                <input id="MONTH-0" type="radio" aria-checked="false" name="subscribeOptions" role="radio" class="plan-select gXkExL" value="monthly" checked="">
-                <label aria-labelledby="MONTH-0" for="MONTH-0" class="vVxKs">
-                  <span><p class="cSBsCl" style="color: rgb(249, 249, 249); letter-spacing: initial; line-height: 1.53; font-family: Avenir-Heavy, sans-serif; font-size: 15px; margin: 0px; max-width: inherit;">Monthly</p>
-                    <div color="grey7" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px;">$7.99</div>
-                  </span>
-                  <div class="radio-check">
-                    <div class="hvCPQO">
-                      <svg alt="" aria-hidden="true" aria-label="radioCheck" color="white" role="img" version="1.1" viewBox="2 2 20 20" xmlns="http://www.w3.org/2000/svg" class="sFNPE" style="height: 20px; min-width: 20px; width: 20px; z-index: auto;">
-                        <path d="M8.861 14.443a.962.962 0 0 1-.687-.289l-2.566-2.622a.962.962 0 0 1 1.375-1.346l1.783 1.822 4.17-5.708a.962.962 0 1 1 1.537 1.158L9.63 14.06a.962.962 0 0 1-.769.383z" class="dGwULW"></path>
-                      </svg>
-                    </div>
-                  </div>
-                </label>
-              </div>
-              <div tabindex="0" class="plan dHbCjA">
-                <input id="YEAR-1" type="radio" aria-checked="true" name="subscribeOptions" role="radio" class="plan-select gXkExL" value="yearly">
-                <label aria-labelledby="YEAR-1" for="YEAR-1" class="vVxKs">
-                  <span><p class="cSBsCl" style="color: rgb(249, 249, 249); letter-spacing: initial; line-height: 1.53; font-family: Avenir-Heavy, sans-serif; font-size: 15px; margin: 0px; max-width: inherit;">Annual</p>
-                    <div color="grey7" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px;">$79.99</div>
-                  </span>
-                  <div class="radio-check">
-                    <div class="hvCPQO">
-                      <svg alt="" aria-hidden="true" aria-label="radioCheck" color="white" role="img" version="1.1" viewBox="2 2 20 20" xmlns="http://www.w3.org/2000/svg" class="sFNPE" style="height: 20px; min-width: 20px; width: 20px; z-index: auto;">
-                        <path d="M8.861 14.443a.962.962 0 0 1-.687-.289l-2.566-2.622a.962.962 0 0 1 1.375-1.346l1.783 1.822 4.17-5.708a.962.962 0 1 1 1.537 1.158L9.63 14.06a.962.962 0 0 1-.769.383z" class="dGwULW"></path>
-                      </svg>
-                    </div>
-                  </div>
-                </label>
-              </div>
-            </div>
-          </fieldset>
-          <fieldset class="payment-types">
-            <div class="fine-print">
-              <div aria-label="Credit Card" role="radio" aria-checked="true" tabindex="0" class="payment-type">
-                <input id="credit-radio-icon" type="radio" aria-checked="true" name="paymentOptions" role="radio" class="payment-type-select credit-card" value="CREDIT" checked="">
-                <label aria-labelledby="credit-radio-icon" for="credit-radio-icon" class="hyOFEv">
-                  <span><i class="icon" role="img"></i>Credit Card</span>
-                </label>
-              </div>
-              <div aria-label="PayPal" role="radio" aria-checked="false" tabindex="0" class="payment-type">
-                <input id="paypal-radio-icon" type="radio" aria-checked="false" name="paymentOptions" role="radio" class="payment-type-select paypal" value="PAYPAL">
-                <label aria-labelledby="paypal-radio-icon" for="paypal-radio-icon" class="hyOFEv">
-                  <span><i class="icon" role="img"></i>PayPal</span>
-                </label>
-              </div>
-            </div>
-          </fieldset>
-        </div>
-        <div>
           <div>
-            <form class="billing-form billing-form--credit" novalidate="">
+            <form method="post" action="/api/subscriptions/new" class="billing-form billing-form--credit" novalidate="">
+              <div>
+                <fieldset class="plans">
+                  <div>
+                    <div tabindex="0" class="plan">
+                      <input id="MONTH-0" type="radio" aria-checked="false" role="radio" class="plan-select gXkExL" value="monthly" checked="" data-recurly="plan" name="plan-code">
+                      <label aria-labelledby="MONTH-0" for="MONTH-0" class="vVxKs">
+                        <span><p class="" style="color: rgb(249, 249, 249); letter-spacing: initial; line-height: 1.53; font-family: Avenir-Heavy, sans-serif; font-size: 15px; margin: 0px; max-width: inherit;">Monthly</p>
+                          <div color="grey7" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px;">$7.99</div>
+                        </span>
+                        <div class="radio-check">
+                          <div class="">
+                            <svg alt="" aria-hidden="true" aria-label="radioCheck" color="white" role="img" version="1.1" viewBox="2 2 20 20" xmlns="http://www.w3.org/2000/svg" class="" style="height: 20px; min-width: 20px; width: 20px; z-index: auto;">
+                              <path d="M8.861 14.443a.962.962 0 0 1-.687-.289l-2.566-2.622a.962.962 0 0 1 1.375-1.346l1.783 1.822 4.17-5.708a.962.962 0 1 1 1.537 1.158L9.63 14.06a.962.962 0 0 1-.769.383z" class="dGwULW"></path>
+                            </svg>
+                          </div>
+                        </div>
+                      </label>
+                    </div>
+                    <div tabindex="0" class="plan">
+                      <input id="YEAR-1" type="radio" aria-checked="true" role="radio" class="plan-select" value="yearly" data-recurly="plan" name="plan-code">
+                      <label aria-labelledby="YEAR-1" for="YEAR-1" class="">
+                        <span><p class="" style="color: rgb(249, 249, 249); letter-spacing: initial; line-height: 1.53; font-family: Avenir-Heavy, sans-serif; font-size: 15px; margin: 0px; max-width: inherit;">Annual</p>
+                          <div color="grey7" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px;">$79.99</div>
+                        </span>
+                        <div class="radio-check">
+                          <div class="">
+                            <svg alt="" aria-hidden="true" aria-label="radioCheck" color="white" role="img" version="1.1" viewBox="2 2 20 20" xmlns="http://www.w3.org/2000/svg" class="" style="height: 20px; min-width: 20px; width: 20px; z-index: auto;">
+                              <path d="M8.861 14.443a.962.962 0 0 1-.687-.289l-2.566-2.622a.962.962 0 0 1 1.375-1.346l1.783 1.822 4.17-5.708a.962.962 0 1 1 1.537 1.158L9.63 14.06a.962.962 0 0 1-.769.383z" class="dGwULW"></path>
+                            </svg>
+                          </div>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
+                <fieldset class="payment-types">
+                  <div class="fine-print">
+                    <div aria-label="Credit Card" role="radio" aria-checked="true" tabindex="0" class="payment-type">
+                      <input id="credit-radio-icon" type="radio" aria-checked="true" name="paymentOptions" role="radio" class="payment-type-select credit-card" value="CREDIT" checked="">
+                      <label aria-labelledby="credit-radio-icon" for="credit-radio-icon" class="hyOFEv">
+                        <span><i class="icon" role="img"></i>Credit Card</span>
+                      </label>
+                    </div>
+                    <div aria-label="PayPal" role="radio" aria-checked="false" tabindex="0" class="payment-type">
+                      <input id="paypal-radio-icon" type="radio" aria-checked="false" name="paymentOptions" role="radio" class="payment-type-select paypal" value="PAYPAL">
+                      <label aria-labelledby="paypal-radio-icon" for="paypal-radio-icon" class="hyOFEv">
+                        <span><i class="icon" role="img"></i>PayPal</span>
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
+              </div>
               <fieldset class="w100-no-border">
                 <div class="flex flex-column-reverse">
                   <div class="flex">
-                    <input type="text" class="billing-field flex flex-1-1" placeholder="FIRST NAME" data-recurly="first_name">
-                    <input type="text" class="billing-field flex flex-1-1" placeholder="LAST NAME" data-recurly="last_name">
+                    <input type="text" class="billing-field flex flex-1-1" placeholder="FIRST NAME" data-recurly="first_name" name="first-name">
+                    <input type="text" class="billing-field flex flex-1-1" placeholder="LAST NAME" data-recurly="last_name" name="last-name">
                   </div>
                   <!-- <input aria-label="Name on card" id="billing-card-name" maxlength="1000" name="CARD_NAME" placeholder="" tautoype="ext" class="DDynN jtWwTT" value="" style="background-image: none; background-repeat: initial; background-attachment: initial; background-size: initial; background-position: initial; cursor: auto;"> -->
                   <div class="hZVhZH input-label" for="billing-card-name">NAME ON CARD</div>
                 </div>
               </fieldset>
-              <fieldset class="gDMtlg fIrAoy w100-no-border">
+              <fieldset class="w100-no-border">
                 <div id="recurly-elements" class="flex flex-column-reverse">
                   <!-- <input aria-label="Card number" id="billing-card-number" maxlength="19" name="CARD_NUMBER" placeholder="" type="text" pattern="[0-9]*" class="DDynN jFnYbg" value=""> -->
                   <div id="billing-card-number"></div>
-                  <div class="hZVhZH input-label" for="billing-card-number">CARD DETAILS</div>
+                  <div class="input-label" for="billing-card-number">CARD DETAILS</div>
                 </div>
               </fieldset>
               <fieldset class="w100-no-border">
@@ -103,20 +103,22 @@
                   <!-- <input autocapitalize="none" autocomplete="off" autocorrect="off" id="zip-code-dropdown-input" data-recurly="postal_code" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" aria-label="Zip Code" pattern="[0-9]*" inputmode="numeric" data-testid="zip-code-input" value="" style="box-sizing: content-box; width: 2px; background: 0px center; border: 0px; font-size: inherit; opacity: 1; outline: 0px; padding: 0px; color: inherit;" data-gv2elementkey="zip_code" class="billing-field"> -->
                   <input autocapitalize="none" autocomplete="off" autocorrect="off" id="zip-code-dropdown-input" data-recurly="postal_code" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" aria-label="Zip Code" pattern="[0-9]*" inputmode="numeric" value="" class="billing-field">
                   <div class="hZVhZH input-label" for="zip-code-dropdown-input">ZIP CODE</div>
+                  <!-- Recurly.js will update this field automatically -->
+                  <input type="hidden" name="recurly-token" data-recurly="token">
                 </div>
               </fieldset>
-              <div class="iMfAiE">
-                <div class="ilOIDs">
+              <div class="">
+                <div class="">
                   <div color="#cacaca" font-size="12px" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px; padding: 0px 30px 0px 0px;">Store my payment information for use across the Simon Family of Companies. 
                     <span style="white-space: nowrap;">
-                      <button aria-label="Learn more" color="secondary" font-size="inherit" font-weight="inherit" type="button" class="cPGVxs">Learn more</button>
+                      <button aria-label="Learn more" color="secondary" font-size="inherit" font-weight="inherit" type="button" class="">Learn more</button>
                     </span>
                   </div>
                   <div>
-                    <label aria-label="Store my payment information for use across the Simon Family of Companies." aria-pressed="false" for="savePayment" tabindex="0" class="hTgTPB" style="flex-direction: row-reverse; justify-content: flex-end; margin: 0px auto;">
-                      <div class="gINlXg">
+                    <label aria-label="Store my payment information for use across the Simon Family of Companies." aria-pressed="false" for="savePayment" tabindex="0" class="" style="flex-direction: row-reverse; justify-content: flex-end; margin: 0px auto;">
+                      <div class="">
                         <div><input aria-checked="false" id="savePayment" role="switch" type="checkbox" class="jQZSb" value="">
-                          <span for="savePayment" class="kUsoKK"></span>
+                          <span for="savePayment" class=""></span>
                         </div>
                       </div>
                     </label>
@@ -125,17 +127,14 @@
               </div>
               <div class="fine-print terms-text" style="color: rgb(249, 249, 249); margin: 0px;">
                 <span>
-                  <p display="inline" color="inherit" font-size="inherit" font-weight="inherit" class="cSBsCl" style="color: inherit; display: inline; letter-spacing: initial; line-height: 1.53; font-family: inherit; font-size: inherit; margin: 0px; text-align: left; max-width: inherit;">
+                  <p display="inline" color="inherit" font-size="inherit" font-weight="inherit" class="" style="color: inherit; display: inline; letter-spacing: initial; line-height: 1.53; font-family: inherit; font-size: inherit; margin: 0px; text-align: left; max-width: inherit;">
                     By clicking "Agree &amp; Subscribe," you are enrolling in automatic payments of $79.99/year (plus tax where applicable) that will continue until you cancel. You can cancel at any time, effective at the end of the billing period. There are no refunds or credits for partial months or years.
                   </p>
                 </span>
               </div>
-              <button aria-label="AGREE &amp; SUBSCRIBE" role="button" kind="primary" class="jxaNdu submit-button" id="credit-submit-button" type="submit" value="submit">
+              <button aria-label="AGREE &amp; SUBSCRIBE" role="button" kind="primary" class="submit-button" id="credit-submit-button" type="submit" value="submit">
                 <span>AGREE &amp; SUBSCRIBE</span>
               </button>
-
-              <!-- Recurly.js will update this field automatically -->
-              <input type="hidden" name="recurly-token" data-recurly="token">
             </form>
           </div>
         </div>
@@ -145,12 +144,46 @@
   <script>
     // Configure recurly.js -- set this to your own public key
     // recurly.configure(window.recurlyConfig.publicKey);
-    recurly.configure('ewr1-rf33NCvodtk97sXoP09yiB');
+    recurly.configure('ewr1-rdtsqBZmk05pArh5FBrhfJ');
 
     // Create a CardElement
     var elements = recurly.Elements();
     var cardElement = elements.CardElement();
     cardElement.attach('#billing-card-number');
+
+    // When a customer hits their 'enter' key while using the card element
+    cardElement.on('submit', function (event) {
+      $('form').submit();
+    });
+
+    // On form submit, we stop submission to go get the token
+    $('form').on('submit', function (event) {
+
+      // Prevent the form from submitting while we retrieve the token from Recurly
+      event.preventDefault();
+
+      // Reset the errors display
+      // $('#errors').text('');
+      // $('input').removeClass('error');
+
+      // Disable the submit button
+      $('button').prop('disabled', true);
+
+      var form = this;
+
+      // Now we call recurly.token with the form. It goes to Recurly servers
+      // to tokenize the credit card information, then injects the token into the
+      // data-recurly="token" field above
+      recurly.token(elements, this, function (err, token) {
+
+        // send any errors to the error function below
+        // if (err) error(err);
+
+        // Otherwise we continue with the form submission
+        form.submit();
+      });
+    });
+
   </script>
 
 </body>
