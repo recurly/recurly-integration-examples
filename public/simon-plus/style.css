@@ -27,62 +27,6 @@ body {
   padding: 0px;
 }
 
-.wrapper fieldset {
-  outline: none;
-}
-
-/*************/
-/* UTILITIES */
-/*************/
-.hidden {
-  display: none;
-  visibility: hidden;
-}
-
-.margin-0 {
-  margin: 0px !important;
-}
-
-.padding-0 {
-  padding: 0px !important;
-}
-
-.flex {
-  display: flex;
-}
-
-.flex-1 {
-  flex: 1 1 0%;
-}
-
-.flex-align-center {
-  -webkit-box-align: center;
-  align-items: center;
-}
-
-.flex-row {
-  flex-direction: row;
-}
-
-.flex-row-reverse {
-  flex-direction: row-reverse;
-}
-
-.flex-column-reverse {
-  flex-direction: column-reverse;
-}
-
-.w100 {
-  width: 100%;
-}
-
-.no-border {
-  border: none;
-  margin: 0px;
-  padding: 0px;
-  position: relative;
-}
-
 @media (min-width: 375px) {
   .wrapper {
     padding: 0px;
@@ -93,6 +37,10 @@ body {
   .wrapper {
     max-width: 374px;
   }
+}
+
+.wrapper fieldset {
+  outline: none;
 }
 
 .step {
@@ -147,6 +95,67 @@ body {
   text-transform: uppercase;
 }
 
+/*************/
+/* UTILITIES */
+/*************/
+.cursor-ptr {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.focus-alt :focus {
+  outline: none;
+}
+
+
+.margin-0 {
+  margin: 0px !important;
+}
+
+.padding-0 {
+  padding: 0px !important;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.flex-align-center {
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.flex-column-reverse {
+  flex-direction: column-reverse;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.no-border {
+  border: none;
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+}
+
 /******************/
 /* PLAN SELECTION */
 /******************/
@@ -174,11 +183,11 @@ body {
   position: relative;
 }
 
-.plan-select {
+.plan input {
   display: none;
 }
 
-.plan-select + label {
+.plan input + label {
   -webkit-box-align: center;
   align-items: center;
   background-color: rgb(49, 52, 62);
@@ -193,24 +202,37 @@ body {
   width: 100%;
 }
 
-.plan-select:checked + label {
+.plan input + label:hover, .plan input:checked + label {
+    transition: all 0.2s ease 0s;
+}
+
+.plan input:checked + label {
   background: rgba(4, 131, 238, 0.2);
   border: 1.5px solid rgb(4, 131, 238);
 }
 
-.plan-select:checked + label .radio-check {
-  background-color: rgb(0, 114, 210);
-}
-
-.plan-select:checked + label .radio-check {
-  border-color: rgb(0, 114, 210);
-}
-
-.radio-check {
+.plan .radio-check {
   border-radius: 50%;
   border: 2px solid rgb(109, 117, 130);
   height: 20px;
   width: 20px;
+}
+
+.plan .radio-check svg path {
+  fill: rgb(249, 249, 249);
+}
+
+.plan input[role="radio"] + label .radio-check svg {
+    display: none;
+}
+
+.plan input[role="radio"]:checked + label .radio-check {
+  background-color: rgb(0, 114, 210);
+  border-color: rgb(0, 114, 210);
+}
+
+.plan input[role="radio"]:checked + label .radio-check svg {
+    display: block;
 }
 
 /*****************/
@@ -248,9 +270,25 @@ body {
   opacity: 0.8;
 }
 
+.payment-type input:checked + label::after {
+    content: "";
+    width: 100%;
+    height: 3px;
+    background: rgb(249, 249, 249);
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+    display: block;
+    position: relative;
+    bottom: -1px;
+}
+
 .payment-type input:checked + label, .payment-type input + label:hover {
   opacity: 1;
   transition: all 0.2s ease 0s;
+}
+
+.payment-type input:checked + label::after, .payment-type input + label:hover::after {
+    bottom: -17px;
 }
 
 .payment-type input + label span {
@@ -382,4 +420,15 @@ body {
     transition: all 0.2s ease 0s;
     width: 22px;
     top: -4px !important;
+}
+
+input:checked + .toggle {
+    background-color: rgb(0, 114, 210);
+    border: none;
+}
+
+input:checked + .toggle::before {
+    box-shadow: rgb(0 0 0 / 5%) 0px 3px 3px 0px, rgb(0 0 0 / 10%) 0px 2px 2px 0px, rgb(0 0 0 / 5%) 0px 3px 1px 0px;
+    top: 2px;
+    transform: translateX(22px);
 }
