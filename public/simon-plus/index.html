@@ -13,7 +13,7 @@
 </head>
 <body>
   <div class="logo">
-    <img src="logo.svg" id="logo" style="width: 100%; margin: 0px;">
+    <img src="logo.svg" id="logo" class="w100 margin-0">
   </div>
   <main class="onboarding" id="onboarding_index" style="top: 0px;">
     <div class="wrapper">
@@ -67,13 +67,13 @@
                 <fieldset class="payment-types">
                   <div class="fine-print">
                     <div aria-label="Credit Card" role="radio" aria-checked="true" tabindex="0" class="payment-type">
-                      <input id="credit-radio-icon" type="radio" aria-checked="true" name="paymentOptions" role="radio" class="payment-type-select credit-card" value="CREDIT" checked="">
+                      <input id="credit-radio-icon" type="radio" aria-checked="true" name="paymentOptions" role="radio" class="hidden credit-card" value="CREDIT" checked="">
                       <label aria-labelledby="credit-radio-icon" for="credit-radio-icon" class="hyOFEv">
                         <span><i class="icon" role="img"></i>Credit Card</span>
                       </label>
                     </div>
                     <div aria-label="PayPal" role="radio" aria-checked="false" tabindex="0" class="payment-type">
-                      <input id="paypal-radio-icon" type="radio" aria-checked="false" name="paymentOptions" role="radio" class="payment-type-select paypal" value="PAYPAL">
+                      <input id="paypal-radio-icon" type="radio" aria-checked="false" name="paymentOptions" role="radio" class="hidden paypal" value="PAYPAL">
                       <label aria-labelledby="paypal-radio-icon" for="paypal-radio-icon" class="hyOFEv">
                         <span><i class="icon" role="img"></i>PayPal</span>
                       </label>
@@ -81,44 +81,43 @@
                   </div>
                 </fieldset>
               </div>
-              <fieldset class="w100-no-border">
+              <fieldset class="w100 no-border">
                 <div class="flex flex-column-reverse">
                   <div class="flex">
-                    <input type="text" class="billing-field flex flex-1-1" placeholder="FIRST NAME" data-recurly="first_name" name="first-name">
-                    <input type="text" class="billing-field flex flex-1-1" placeholder="LAST NAME" data-recurly="last_name" name="last-name">
+                    <input type="text" class="billing-field flex flex-1" placeholder="FIRST NAME" data-recurly="first_name" name="first-name">
+                    <input type="text" class="billing-field flex flex-1" placeholder="LAST NAME" data-recurly="last_name" name="last-name">
                   </div>
                   <!-- <input aria-label="Name on card" id="billing-card-name" maxlength="1000" name="CARD_NAME" placeholder="" tautoype="ext" class="DDynN jtWwTT" value="" style="background-image: none; background-repeat: initial; background-attachment: initial; background-size: initial; background-position: initial; cursor: auto;"> -->
                   <div class="hZVhZH input-label" for="billing-card-name">NAME ON CARD</div>
                 </div>
               </fieldset>
-              <fieldset class="w100-no-border">
+              <fieldset class="w100 no-border">
                 <div id="recurly-elements" class="flex flex-column-reverse">
                   <!-- <input aria-label="Card number" id="billing-card-number" maxlength="19" name="CARD_NUMBER" placeholder="" type="text" pattern="[0-9]*" class="DDynN jFnYbg" value=""> -->
                   <div id="billing-card-number"></div>
                   <div class="input-label" for="billing-card-number">CARD DETAILS</div>
                 </div>
               </fieldset>
-              <fieldset class="w100-no-border">
+              <fieldset class="w100 no-border">
                 <div class="flex flex-column-reverse">
-                  <!-- <input autocapitalize="none" autocomplete="off" autocorrect="off" id="zip-code-dropdown-input" data-recurly="postal_code" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" aria-label="Zip Code" pattern="[0-9]*" inputmode="numeric" data-testid="zip-code-input" value="" style="box-sizing: content-box; width: 2px; background: 0px center; border: 0px; font-size: inherit; opacity: 1; outline: 0px; padding: 0px; color: inherit;" data-gv2elementkey="zip_code" class="billing-field"> -->
-                  <input autocapitalize="none" autocomplete="off" autocorrect="off" id="zip-code-dropdown-input" data-recurly="postal_code" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" aria-label="Zip Code" pattern="[0-9]*" inputmode="numeric" value="" class="billing-field">
+                  <input autocapitalize="none" autocomplete="off" autocorrect="off" id="zip-code-dropdown-input" data-recurly="postal_code" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" aria-label="Zip Code" pattern="[0-9]*" inputmode="numeric" value="" class="billing-field padding-0">
                   <div class="hZVhZH input-label" for="zip-code-dropdown-input">ZIP CODE</div>
                   <!-- Recurly.js will update this field automatically -->
                   <input type="hidden" name="recurly-token" data-recurly="token">
                 </div>
               </fieldset>
               <div class="">
-                <div class="">
+                <div class="w100 flex flex-align-center flex-row" style="margin: 0px 0px 24px; padding: 8px 0px 0px;">
                   <div color="#cacaca" font-size="12px" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px; padding: 0px 30px 0px 0px;">Store my payment information for use across the Simon Family of Companies. 
                     <span style="white-space: nowrap;">
-                      <button aria-label="Learn more" color="secondary" font-size="inherit" font-weight="inherit" type="button" class="">Learn more</button>
+                      <button aria-label="Learn more" color="secondary" font-size="inherit" font-weight="inherit" type="button" class="button-link">Learn more</button>
                     </span>
                   </div>
                   <div>
-                    <label aria-label="Store my payment information for use across the Simon Family of Companies." aria-pressed="false" for="savePayment" tabindex="0" class="" style="flex-direction: row-reverse; justify-content: flex-end; margin: 0px auto;">
-                      <div class="">
-                        <div><input aria-checked="false" id="savePayment" role="switch" type="checkbox" class="jQZSb" value="">
-                          <span for="savePayment" class=""></span>
+                    <label aria-label="Store my payment information for use across the Simon Family of Companies." aria-pressed="false" for="savePayment" tabindex="0" class="w100 flex flex-align-center flex-row-reverse" style="justify-content: flex-end; margin: 0px auto; padding: 0">
+                      <div class="flex flex-align-center">
+                        <div><input aria-checked="false" id="savePayment" role="switch" type="checkbox" class="hidden" value="">
+                          <span for="savePayment" class="toggle"></span>
                         </div>
                       </div>
                     </label>

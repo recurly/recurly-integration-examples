@@ -1,17 +1,9 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   background: rgb(26, 29, 41);
-}
-
-.flex {
-  display: flex;
-}
-
-.flex-1-1 {
-  flex: 1 1 0%;
-}
-
-.flex-column-reverse {
-  flex-direction: column-reverse;
 }
 
 .logo {
@@ -39,12 +31,56 @@ body {
   outline: none;
 }
 
-.w100-no-border {
+/*************/
+/* UTILITIES */
+/*************/
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.margin-0 {
+  margin: 0px !important;
+}
+
+.padding-0 {
+  padding: 0px !important;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.flex-align-center {
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
+.flex-column-reverse {
+  flex-direction: column-reverse;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.no-border {
   border: none;
   margin: 0px;
   padding: 0px;
   position: relative;
-  width: 100%;
 }
 
 @media (min-width: 375px) {
@@ -57,27 +93,6 @@ body {
   .wrapper {
     max-width: 374px;
   }
-}
-
-.billing-field, .recurly-element {
-    backdrop-filter: blur(50px);
-    background-color: rgb(49, 52, 62);
-    border: 1px solid transparent;
-    border-radius: 4px;
-    caret-color: rgb(2, 231, 245);
-    color: rgb(249, 249, 249);
-    font-size: 15px;
-    font-stretch: normal;
-    font-style: normal;
-    font-weight: normal;
-    height: 48px;
-    letter-spacing: normal;
-    line-height: 1.53;
-    margin: 0px;
-    outline: none;
-    padding: 7px 12px;
-    transition: all 0.1s ease 0s;
-    width: 100%;
 }
 
 .step {
@@ -111,6 +126,19 @@ body {
   text-transform: none;
 }
 
+
+.fine-print, .input-label, .subcopy {
+  cursor: inherit;
+  font-family: Avenir, sans-serif;;
+  font-size: 12px;
+  font-stretch: normal;
+  font-style: normal;
+  font-weight: normal;
+  letter-spacing: normal;
+  line-height: 1.5;
+  text-transform: none;
+}
+
 .input-label {
   color: rgb(202, 202, 202);
   font-size: 10px;
@@ -119,6 +147,9 @@ body {
   text-transform: uppercase;
 }
 
+/******************/
+/* PLAN SELECTION */
+/******************/
 .plans {
   border: none;
   margin: 28px 0px 0px;
@@ -174,6 +205,7 @@ body {
 .plan-select:checked + label .radio-check {
   border-color: rgb(0, 114, 210);
 }
+
 .radio-check {
   border-radius: 50%;
   border: 2px solid rgb(109, 117, 130);
@@ -181,18 +213,9 @@ body {
   width: 20px;
 }
 
-.fine-print, .input-label, .subcopy {
-  cursor: inherit;
-  font-family: Avenir, sans-serif;;
-  font-size: 12px;
-  font-stretch: normal;
-  font-style: normal;
-  font-weight: normal;
-  letter-spacing: normal;
-  line-height: 1.5;
-  text-transform: none;
-}
-
+/*****************/
+/* PAYMENT TYPES */
+/*****************/
 .payment-types {
   margin: 16px 0px 0px;
   padding: 0px;
@@ -217,16 +240,7 @@ body {
   flex: 0 0 calc((100% - 0px) / 2);
 }
 
-.payment-type-select {
-  display: none;
-}
-
-.payment-type-select:checked + label, .payment-type-select + label:hover {
-  opacity: 1;
-  transition: all 0.2s ease 0s;
-}
-
-.payment-type-select + label {
+.payment-type input + label {
   width: 100%;
   height: 100%;
   margin: 0px;
@@ -234,7 +248,12 @@ body {
   opacity: 0.8;
 }
 
-.payment-type-select + label span {
+.payment-type input:checked + label, .payment-type input + label:hover {
+  opacity: 1;
+  transition: all 0.2s ease 0s;
+}
+
+.payment-type input + label span {
   text-align: center;
   display: flex;
   -webkit-box-align: center;
@@ -245,30 +264,54 @@ body {
   margin-bottom: 6px;
 }
 
-@media (min-width: 480px) {
-  .payment-type-select + label span {
-    margin-bottom: 0px;
-  }
-}
-
-.payment-type-select + label span .icon {
+.payment-type .icon {
   width: 32px;
   height: 32px;
   margin: 0px 8px 0px 0px;
   padding: 0px;
 }
 
-.payment-type-select.credit-card + * .icon {
+.payment-type .credit-card + * .icon {
   background: url(credit-card.png) center center / contain no-repeat;
 }
 
-.payment-type-select.paypal + * .icon {
+.payment-type .paypal + * .icon {
   background: url(paypal.png) center center / contain no-repeat;
 }
 
+@media (min-width: 480px) {
+  .payment-type input + label span {
+    margin-bottom: 0px;
+  }
+}
+
+/****************/
+/* BILLING FORM */
+/****************/
 .billing-form > * {
   margin-top: 16px;
   width: 100%;
+}
+
+.billing-field, .recurly-element {
+    backdrop-filter: blur(50px);
+    background-color: rgb(49, 52, 62);
+    border: 1px solid transparent;
+    border-radius: 4px;
+    caret-color: rgb(2, 231, 245);
+    color: rgb(249, 249, 249);
+    font-size: 15px;
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: normal;
+    height: 48px;
+    letter-spacing: normal;
+    line-height: 1.53;
+    margin: 0px;
+    outline: none;
+    padding: 7px 12px;
+    transition: all 0.1s ease 0s;
+    width: 100%;
 }
 
 .csc-container.show-billing {
@@ -303,4 +346,40 @@ body {
     -webkit-font-smoothing: antialiased;
     opacity: 1;
     visibility: visible;
+}
+
+.button-link {
+    background-color: transparent;
+    border: none;
+    color: rgb(103, 189, 255);
+    cursor: pointer;
+    display: inline;
+    font-size: inherit;
+    padding: 0px;
+    text-decoration: none;
+    text-transform: none;
+}
+
+.toggle {
+    background-color: rgb(75, 78, 90);
+    border-radius: 15.5px;
+    cursor: pointer;
+    display: flex;
+    height: 15px;
+    transition: all 0.2s ease 0s;
+    width: 43px;
+}
+
+.toggle::before {
+    background-color: rgb(202, 202, 202);
+    border-radius: 50%;
+    bottom: -0.125em;
+    box-shadow: rgb(0 0 0 / 5%) 0px 3px 3px 0px, rgb(0 0 0 / 10%) 0px 2px 2px 0px, rgb(0 0 0 / 5%) 0px 3px 1px 0px;
+    content: "";
+    display: inline-block;
+    height: 22px;
+    position: relative;
+    transition: all 0.2s ease 0s;
+    width: 22px;
+    top: -4px !important;
 }
