@@ -22,7 +22,7 @@
         <div>
           <h3 class="header" style="color: rgb(249, 249, 249); margin: 0px;"><span><p display="inline" color="inherit" font-size="inherit" font-weight="inherit" class="cSBsCl" style="color: inherit; display: inline; letter-spacing: initial; line-height: 1.53; font-family: inherit; font-size: inherit; margin: 0px; text-align: left; max-width: inherit;">Start streaming today</p></span></h3>
           <div>
-            <div class="subcopy" style="color: rgb(249, 249, 249); margin: 15px 0px 5px;"><span><p display="inline" color="inherit" font-size="inherit" font-weight="inherit" class="cSBsCl" style="color: inherit; display: inline; letter-spacing: initial; line-height: 1.53; font-family: inherit; font-size: inherit; margin: 0px; text-align: left; max-width: inherit;">Endless stories for just $79.99/year.</p></span></div>
+            <div class="subcopy" style="color: rgb(249, 249, 249); margin: 15px 0px 5px;"><span><p display="inline" color="inherit" font-size="inherit" font-weight="inherit" class="cSBsCl" style="color: inherit; display: inline; letter-spacing: initial; line-height: 1.53; font-family: inherit; font-size: inherit; margin: 0px; text-align: left; max-width: inherit;">Endless stories for just <span data-recurly="currency_symbol"></span><span data-recurly="total_now"></span>/<span data-x-recurly="period_now"></span>.</p></span></div>
             <div color="#cacaca" class="subcopy" style="color: rgb(202, 202, 202); margin: 0px;"><span><p display="inline" color="inherit" font-size="inherit" font-weight="inherit" class="cSBsCl" style="color: inherit; display: inline; letter-spacing: initial; line-height: 1.53; font-family: inherit; font-size: inherit; margin: 0px; text-align: left; max-width: inherit;">Cancel anytime, effective at the end of the billing period.</p></span> <span></span></div>
           </div>
         </div>
@@ -124,7 +124,7 @@
               <div class="fine-print terms-text" style="color: rgb(249, 249, 249); margin: 0px;">
                 <span>
                   <p display="inline" color="inherit" font-size="inherit" font-weight="inherit" class="" style="color: inherit; display: inline; letter-spacing: initial; line-height: 1.53; font-family: inherit; font-size: inherit; margin: 0px; text-align: left; max-width: inherit;">
-                    By clicking "Agree &amp; Subscribe," you are enrolling in automatic payments of $79.99/year (plus tax where applicable) that will continue until you cancel. You can cancel at any time, effective at the end of the billing period. There are no refunds or credits for partial months or years.
+                    By clicking "Agree &amp; Subscribe," you are enrolling in automatic payments of <span data-recurly="currency_symbol"></span><span data-recurly="total_now"></span>/<span data-x-recurly="period_now"></span> (plus tax where applicable) that will continue until you cancel. You can cancel at any time, effective at the end of the billing period. There are no refunds or credits for partial months or years.
                   </p>
                 </span>
               </div>
@@ -180,6 +180,16 @@
       });
     });
 
+    // Now we set up the pricing module
+    var pricing = recurly.Pricing.Checkout();
+
+    pricing.on('set.plan', function ({plan}) {
+      var period = (plan.period.length === 1) ? 'month' : 'year';
+      $('[data-x-recurly="period_now"]').text(period);
+    });
+
+    // Calling .attach will bind the pricing module to the form.
+    pricing.attach('#onboarding_index');
   </script>
 
 </body>
