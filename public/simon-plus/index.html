@@ -80,16 +80,14 @@
               <fieldset class="w100 no-border">
                 <div class="flex flex-column-reverse">
                   <div class="flex">
-                    <input type="text" class="billing-field flex flex-1" placeholder="FIRST NAME" data-recurly="first_name" name="first-name">
-                    <input type="text" class="billing-field flex flex-1" placeholder="LAST NAME" data-recurly="last_name" name="last-name">
+                  <input aria-label="First Name" maxlength="1000" name="first-name" placeholder="FIRST NAME"class="billing-field flex flex-1" data-recurly="first_name" value="" style="background-image: none; background-repeat: initial; background-attachment: initial; background-size: initial; background-position: initial; cursor: auto;">
+                  <input aria-label="Last Name" maxlength="1000" name="last-name" placeholder="LAST NAME"class="billing-field flex flex-1" data-recurly="last_name" value="" style="background-image: none; background-repeat: initial; background-attachment: initial; background-size: initial; background-position: initial; cursor: auto;">
                   </div>
-                  <!-- <input aria-label="Name on card" id="billing-card-name" maxlength="1000" name="CARD_NAME" placeholder="" tautoype="ext" class="DDynN jtWwTT" value="" style="background-image: none; background-repeat: initial; background-attachment: initial; background-size: initial; background-position: initial; cursor: auto;"> -->
-                  <div class="hZVhZH input-label" for="billing-card-name">NAME ON CARD</div>
+                  <div class="input-label" for="billing-card-name">NAME ON CARD</div>
                 </div>
               </fieldset>
               <fieldset class="w100 no-border">
                 <div id="recurly-elements" class="flex flex-column-reverse">
-                  <!-- <input aria-label="Card number" id="billing-card-number" maxlength="19" name="CARD_NUMBER" placeholder="" type="text" pattern="[0-9]*" class="DDynN jFnYbg" value=""> -->
                   <div id="billing-card-number"></div>
                   <div class="input-label" for="billing-card-number">CARD DETAILS</div>
                 </div>
