@@ -4,7 +4,6 @@
   <title>Simon+</title>
   <script src="https://js.recurly.com/v4/recurly.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <!-- <script src="/config"></script> -->
   <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
   <link href="style.css" rel="stylesheet">
@@ -27,110 +26,140 @@
           </div>
         </div>
         <div>
-          <div>
-            <form method="post" action="/api/subscriptions/new" class="billing-form billing-form--credit" novalidate="">
-              <div>
-                <fieldset class="plans">
-                  <div class="focus-alt">
-                    <div tabindex="0" class="plan">
-                      <input id="MONTH-0" type="radio" aria-checked="true" role="radio" value="monthly" checked="" data-recurly="plan" name="plan-code">
-                      <label aria-labelledby="MONTH-0" for="MONTH-0" class="cursor-ptr">
-                        <span><p class="" style="color: rgb(249, 249, 249); letter-spacing: initial; line-height: 1.53; font-family: Avenir-Heavy, sans-serif; font-size: 15px; margin: 0px; max-width: inherit;">Monthly</p>
-                          <div color="grey7" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px;">$7.99</div>
-                        </span>
-                        <div class="radio-check">
-                          <svg alt="" aria-hidden="true" aria-label="radioCheck" color="white" role="img" version="1.1" viewBox="2 2 20 20" xmlns="http://www.w3.org/2000/svg" class="" style="height: 20px; min-width: 20px; width: 20px; z-index: auto;">
-                            <path d="M8.861 14.443a.962.962 0 0 1-.687-.289l-2.566-2.622a.962.962 0 0 1 1.375-1.346l1.783 1.822 4.17-5.708a.962.962 0 1 1 1.537 1.158L9.63 14.06a.962.962 0 0 1-.769.383z" class="dGwULW"></path>
-                          </svg>
-                        </div>
-                      </label>
-                    </div>
-                    <div tabindex="0" class="plan">
-                      <input id="YEAR-1" type="radio" aria-checked="false" role="radio" value="yearly" data-recurly="plan" name="plan-code">
-                      <label aria-labelledby="YEAR-1" for="YEAR-1" class="cursor-ptr">
-                        <span><p class="" style="color: rgb(249, 249, 249); letter-spacing: initial; line-height: 1.53; font-family: Avenir-Heavy, sans-serif; font-size: 15px; margin: 0px; max-width: inherit;">Annual</p>
-                          <div color="grey7" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px;">$79.99</div>
-                        </span>
-                        <div class="radio-check">
-                          <svg alt="" aria-hidden="true" aria-label="radioCheck" color="white" role="img" version="1.1" viewBox="2 2 20 20" xmlns="http://www.w3.org/2000/svg" class="" style="height: 20px; min-width: 20px; width: 20px; z-index: auto;">
-                            <path d="M8.861 14.443a.962.962 0 0 1-.687-.289l-2.566-2.622a.962.962 0 0 1 1.375-1.346l1.783 1.822 4.17-5.708a.962.962 0 1 1 1.537 1.158L9.63 14.06a.962.962 0 0 1-.769.383z" class="dGwULW"></path>
-                          </svg>
-                        </div>
-                      </label>
-                    </div>
+          <fieldset class="plans">
+            <div class="focus-alt">
+              <div tabindex="0" class="plan">
+                <input id="MONTH-0" type="radio" aria-checked="true" role="radio" value="monthly" checked="" data-recurly="plan" name="plan_code">
+                <label aria-labelledby="MONTH-0" for="MONTH-0" class="cursor-ptr">
+                  <span><p class="" style="color: rgb(249, 249, 249); letter-spacing: initial; line-height: 1.53; font-family: sans-serif; font-size: 15px; margin: 0px; max-width: inherit;">Monthly</p>
+                    <div color="grey7" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px;">$7.99</div>
+                  </span>
+                  <div class="radio-check">
+                    <svg alt="" aria-hidden="true" aria-label="radioCheck" color="white" role="img" version="1.1" viewBox="2 2 20 20" xmlns="http://www.w3.org/2000/svg" class="" style="height: 20px; min-width: 20px; width: 20px; z-index: auto;">
+                      <path d="M8.861 14.443a.962.962 0 0 1-.687-.289l-2.566-2.622a.962.962 0 0 1 1.375-1.346l1.783 1.822 4.17-5.708a.962.962 0 1 1 1.537 1.158L9.63 14.06a.962.962 0 0 1-.769.383z" class="dGwULW"></path>
+                    </svg>
                   </div>
-                </fieldset>
-                <fieldset class="payment-types">
-                  <div class="fine-print focus-alt">
-                    <div aria-label="Credit Card" role="radio" aria-checked="true" tabindex="0" class="payment-type">
-                      <input id="credit-radio-icon" type="radio" aria-checked="true" name="paymentOptions" role="radio" class="hidden credit-card" value="CREDIT" checked="">
-                      <label aria-labelledby="credit-radio-icon" for="credit-radio-icon" class="cursor-ptr">
-                        <span><i class="icon" role="img"></i>Credit Card</span>
-                      </label>
-                    </div>
-                    <div aria-label="PayPal" role="radio" aria-checked="false" tabindex="0" class="payment-type">
-                      <input id="paypal-radio-icon" type="radio" aria-checked="false" name="paymentOptions" role="radio" class="hidden paypal" value="PAYPAL">
-                      <label aria-labelledby="paypal-radio-icon" for="paypal-radio-icon" class="cursor-ptr">
-                        <span><i class="icon" role="img"></i>PayPal</span>
-                      </label>
-                    </div>
-                  </div>
-                </fieldset>
+                </label>
               </div>
-              <fieldset class="w100 no-border">
-                <div class="flex flex-column-reverse">
-                  <div class="flex">
-                  <input aria-label="First Name" maxlength="1000" name="first-name" placeholder="FIRST NAME"class="billing-field flex flex-1" data-recurly="first_name" value="" style="background-image: none; background-repeat: initial; background-attachment: initial; background-size: initial; background-position: initial; cursor: auto;">
-                  <input aria-label="Last Name" maxlength="1000" name="last-name" placeholder="LAST NAME"class="billing-field flex flex-1" data-recurly="last_name" value="" style="background-image: none; background-repeat: initial; background-attachment: initial; background-size: initial; background-position: initial; cursor: auto;">
+              <div tabindex="0" class="plan">
+                <input id="YEAR-1" type="radio" aria-checked="false" role="radio" value="yearly" data-recurly="plan" name="plan_code">
+                <label aria-labelledby="YEAR-1" for="YEAR-1" class="cursor-ptr">
+                  <span><p class="" style="color: rgb(249, 249, 249); letter-spacing: initial; line-height: 1.53; font-family: sans-serif; font-size: 15px; margin: 0px; max-width: inherit;">Annual</p>
+                    <div color="grey7" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px;">$79.99</div>
+                  </span>
+                  <div class="radio-check">
+                    <svg alt="" aria-hidden="true" aria-label="radioCheck" color="white" role="img" version="1.1" viewBox="2 2 20 20" xmlns="http://www.w3.org/2000/svg" class="" style="height: 20px; min-width: 20px; width: 20px; z-index: auto;">
+                      <path d="M8.861 14.443a.962.962 0 0 1-.687-.289l-2.566-2.622a.962.962 0 0 1 1.375-1.346l1.783 1.822 4.17-5.708a.962.962 0 1 1 1.537 1.158L9.63 14.06a.962.962 0 0 1-.769.383z" class="dGwULW"></path>
+                    </svg>
                   </div>
-                  <div class="input-label" for="billing-card-name">NAME ON CARD</div>
+                </label>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="payment-types">
+            <div class="fine-print focus-alt">
+              <div aria-label="Credit Card" role="radio" aria-checked="true" tabindex="0" class="payment-type">
+                <input id="credit-radio-icon" type="radio" aria-checked="true" name="paymentOptions" role="radio" class="hidden credit-card" value="CREDIT" checked="">
+                <label aria-labelledby="credit-radio-icon" for="credit-radio-icon" class="cursor-ptr">
+                  <span><i class="icon" role="img"></i>Credit Card</span>
+                </label>
+              </div>
+              <div aria-label="PayPal" role="radio" aria-checked="false" tabindex="0" class="payment-type">
+                <input id="paypal-radio-icon" type="radio" aria-checked="false" name="paymentOptions" role="radio" class="hidden paypal" value="PAYPAL">
+                <label aria-labelledby="paypal-radio-icon" for="paypal-radio-icon" class="cursor-ptr">
+                  <span><i class="icon" role="img"></i>PayPal</span>
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div>
+          <form method="post" action="/api/subscriptions/new" class="billing-form billing-form--credit" novalidate="">
+            <input type="hidden" name="plan-code">
+            <!-- Recurly.js will update this field automatically -->
+            <input type="hidden" name="recurly-token" data-recurly="token">
+
+            <fieldset class="w100 no-border">
+              <div class="flex flex-column-reverse">
+                <div class="flex">
+                <input aria-label="First Name" maxlength="1000" name="first-name" placeholder="FIRST NAME"class="billing-field flex flex-1" data-recurly="first_name" value="" style="background-image: none; background-repeat: initial; background-attachment: initial; background-size: initial; background-position: initial; cursor: auto; margin-right: 8px;">
+                <input aria-label="Last Name" maxlength="1000" name="last-name" placeholder="LAST NAME"class="billing-field flex flex-1" data-recurly="last_name" value="" style="background-image: none; background-repeat: initial; background-attachment: initial; background-size: initial; background-position: initial; cursor: auto;">
                 </div>
-              </fieldset>
-              <fieldset class="w100 no-border">
-                <div id="recurly-elements" class="flex flex-column-reverse">
-                  <div id="billing-card-number"></div>
-                  <div class="input-label" for="billing-card-number">CARD DETAILS</div>
+                <div class="input-label" for="billing-card-name">NAME ON CARD</div>
+              </div>
+            </fieldset>
+            <fieldset class="w100 no-border">
+              <div id="recurly-elements" class="flex flex-column-reverse">
+                <div id="billing-card-number"></div>
+                <div class="input-label" for="billing-card-number">CARD DETAILS</div>
+              </div>
+            </fieldset>
+            <fieldset class="w100 no-border">
+              <div class="flex flex-column-reverse">
+                <input autocapitalize="none" autocomplete="off" autocorrect="off" id="zip-code-dropdown-input" data-recurly="postal_code" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" aria-label="Zip Code" pattern="[0-9]*" inputmode="numeric" value="" class="billing-field padding-0">
+                <div class="hZVhZH input-label" for="zip-code-dropdown-input">ZIP CODE</div>
+              </div>
+            </fieldset>
+            <div class="">
+              <div class="w100 flex flex-align-center flex-row" style="margin: 0px 0px 24px; padding: 8px 0px 0px;">
+                <div color="#cacaca" font-size="12px" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px; padding: 0px 30px 0px 0px;">Store my payment information for use across the Simon Family of Companies. 
+                  <span style="white-space: nowrap;">
+                    <button aria-label="Learn more" color="secondary" font-size="inherit" font-weight="inherit" type="button" class="button-link">Learn more</button>
+                  </span>
                 </div>
-              </fieldset>
-              <fieldset class="w100 no-border">
-                <div class="flex flex-column-reverse">
-                  <input autocapitalize="none" autocomplete="off" autocorrect="off" id="zip-code-dropdown-input" data-recurly="postal_code" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" aria-label="Zip Code" pattern="[0-9]*" inputmode="numeric" value="" class="billing-field padding-0">
-                  <div class="hZVhZH input-label" for="zip-code-dropdown-input">ZIP CODE</div>
-                  <!-- Recurly.js will update this field automatically -->
-                  <input type="hidden" name="recurly-token" data-recurly="token">
-                </div>
-              </fieldset>
-              <div class="">
-                <div class="w100 flex flex-align-center flex-row" style="margin: 0px 0px 24px; padding: 8px 0px 0px;">
-                  <div color="#cacaca" font-size="12px" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px; padding: 0px 30px 0px 0px;">Store my payment information for use across the Simon Family of Companies. 
-                    <span style="white-space: nowrap;">
-                      <button aria-label="Learn more" color="secondary" font-size="inherit" font-weight="inherit" type="button" class="button-link">Learn more</button>
-                    </span>
-                  </div>
-                  <div class="focus-alt">
-                    <label aria-label="Store my payment information for use across the Simon Family of Companies." aria-pressed="false" for="savePayment" tabindex="0" class="w100 flex flex-align-center flex-row-reverse" style="justify-content: flex-end; margin: 0px auto; padding: 0">
-                      <div class="flex flex-align-center">
-                        <div>
-                          <input aria-checked="false" id="savePayment" role="switch" type="checkbox" class="hidden" value="">
-                          <span for="savePayment" class="toggle"></span>
-                        </div>
+                <div class="focus-alt">
+                  <label aria-label="Store my payment information for use across the Simon Family of Companies." aria-pressed="false" for="savePayment" tabindex="0" class="w100 flex flex-align-center flex-row-reverse" style="justify-content: flex-end; margin: 0px auto; padding: 0">
+                    <div class="flex flex-align-center">
+                      <div>
+                        <input aria-checked="false" id="savePayment" role="switch" type="checkbox" class="hidden" value="">
+                        <span for="savePayment" class="toggle"></span>
                       </div>
-                    </label>
-                  </div>
+                    </div>
+                  </label>
                 </div>
               </div>
-              <div class="fine-print terms-text" style="color: rgb(249, 249, 249); margin: 0px;">
-                <span>
-                  <p display="inline" color="inherit" font-size="inherit" font-weight="inherit" class="" style="color: inherit; display: inline; letter-spacing: initial; line-height: 1.53; font-family: inherit; font-size: inherit; margin: 0px; text-align: left; max-width: inherit;">
-                    By clicking "Agree &amp; Subscribe," you are enrolling in automatic payments of <span data-recurly="currency_symbol"></span><span data-recurly="total_now"></span>/<span data-x-recurly="period_now"></span> (plus tax where applicable) that will continue until you cancel. You can cancel at any time, effective at the end of the billing period. There are no refunds or credits for partial months or years.
-                  </p>
+            </div>
+            <div class="fine-print terms-text" style="color: rgb(249, 249, 249); margin: 0px;">
+              <span>
+                <p display="inline" color="inherit" font-size="inherit" font-weight="inherit" class="" style="color: inherit; display: inline; letter-spacing: initial; line-height: 1.53; font-family: inherit; font-size: inherit; margin: 0px; text-align: left; max-width: inherit;">
+                  By clicking "Agree &amp; Subscribe," you are enrolling in automatic payments of <span data-recurly="currency_symbol"></span><span data-recurly="total_now"></span>/<span data-x-recurly="period_now"></span> (plus tax where applicable) that will continue until you cancel. You can cancel at any time, effective at the end of the billing period. There are no refunds or credits for partial months or years.
+                </p>
+              </span>
+            </div>
+            <button aria-label="AGREE &amp; SUBSCRIBE" role="button" kind="primary" class="submit-button" id="credit-submit-button" type="submit" value="submit">
+              <span>AGREE &amp; SUBSCRIBE</span>
+            </button>
+          </form>
+          <form method="post" action="/api/subscriptions/new" class="billing-form billing-form--paypal hidden">
+            <input type="hidden" name="plan-code">
+            <!-- Recurly.js will update this field automatically -->
+            <input type="hidden" name="recurly-token" data-recurly="token">
+
+            <div class="w100 flex flex-align-center flex-row" style="margin: 0px 0px 24px; padding: 8px 0px 0px;">
+              <div color="#cacaca" font-size="12px" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px; padding: 0px 30px 0px 0px;">Store my payment information for use across the Simon Family of Companies. 
+                <span style="white-space: nowrap;">
+                  <button aria-label="Learn more" color="secondary" font-size="inherit" font-weight="inherit" type="button" class="button-link">Learn more</button>
                 </span>
               </div>
-              <button aria-label="AGREE &amp; SUBSCRIBE" role="button" kind="primary" class="submit-button" id="credit-submit-button" type="submit" value="submit">
-                <span>AGREE &amp; SUBSCRIBE</span>
-              </button>
-            </form>
-          </div>
+              <div class="focus-alt">
+                <label aria-label="Store my payment information for use across the Simon Family of Companies." aria-pressed="false" for="savePayment2" tabindex="0" class="w100 flex flex-align-center flex-row-reverse" style="justify-content: flex-end; margin: 0px auto; padding: 0">
+                  <div class="flex flex-align-center">
+                    <div>
+                      <input aria-checked="false" id="savePayment2" role="switch" type="checkbox" class="hidden" value="">
+                      <span for="savePayment2" class="toggle"></span>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+            <div>
+              <div class="sc-dnqmqq eaZKQs terms-text" style="color: rgb(249, 249, 249); margin: 0px;">To finish sign up, click the Pay with PayPal button and log in to PayPal using your email and password. </div>
+              <div class="sc-dnqmqq eaZKQs terms-text" style="color: rgb(249, 249, 249); margin: 0px;"><span><p display="inline" color="inherit" font-size="inherit" font-weight="inherit" class="sc-gzVnrw cSBsCl" style="color: inherit; display: inline; letter-spacing: initial; line-height: 1.53; font-family: inherit; font-size: inherit; margin: 0px; text-align: left; max-width: inherit;">By clicking "Pay with PayPal," you are enrolling in automatic payments of <span data-recurly="currency_symbol"></span><span data-recurly="total_now"></span>/<span data-x-recurly="period_now"></span> (plus tax where applicable) that will continue until you cancel. You can cancel at any time, effective at the end of the billing period. There are no refunds or credits for partial months or years.</p></span></div>
+            </div>
+            <div id="paypal-submit-button">
+              <button id="subscribe">Subscribe with PayPal</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -184,10 +213,21 @@
     pricing.on('set.plan', function ({plan}) {
       var period = (plan.period.length === 1) ? 'month' : 'year';
       $('[data-x-recurly="period_now"]').text(period);
+      $('form input[name="plan-code"]').val(plan.code)
     });
 
     // Calling .attach will bind the pricing module to the form.
     pricing.attach('#onboarding_index');
+
+    // Simple form tabs
+    $('input.credit-card + label').click(function () {
+      $('.billing-form--paypal').hide();
+      $('.billing-form--credit').show();
+    });
+    $('input.paypal + label').click(function () {
+      $('.billing-form--credit').hide();
+      $('.billing-form--paypal').show();
+    });
   </script>
 
 </body>

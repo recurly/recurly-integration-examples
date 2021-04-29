@@ -55,7 +55,7 @@ body {
 
 .header {
   cursor: inherit;
-  font-family: Avenir-Heavy, sans-serif;
+  font-family: sans-serif;
   font-size: 24px;
   font-stretch: normal;
   font-style: normal;
@@ -77,7 +77,7 @@ body {
 
 .fine-print, .input-label, .subcopy {
   cursor: inherit;
-  font-family: Avenir, sans-serif;;
+  font-family: sans-serif;
   font-size: 12px;
   font-stretch: normal;
   font-style: normal;
@@ -104,7 +104,6 @@ body {
 
 .hidden {
   display: none;
-  visibility: hidden;
 }
 
 .focus-alt :focus {
@@ -368,7 +367,7 @@ body {
     align-items: center;
     cursor: pointer;
     display: flex;
-    font-family: Avenir-Heavy, sans-serif;
+    font-family: sans-serif;
     font-stretch: normal;
     font-style: normal;
     height: 48px;
