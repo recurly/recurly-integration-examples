@@ -96,13 +96,13 @@
             </fieldset>
             <fieldset class="w100 no-border">
               <div class="flex flex-column-reverse">
-                <input autocapitalize="none" autocomplete="off" autocorrect="off" id="zip-code-dropdown-input" data-recurly="postal_code" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" aria-label="Zip Code" pattern="[0-9]*" inputmode="numeric" value="" class="billing-field padding-0">
+                <input autocapitalize="none" autocomplete="off" autocorrect="off" id="zip-code-dropdown-input" data-recurly="postal_code" spellcheck="false" tabindex="0" type="text" aria-autocomplete="list" aria-label="Zip Code" pattern="[0-9]*" inputmode="numeric" value="" class="billing-field">
                 <div class="hZVhZH input-label" for="zip-code-dropdown-input">ZIP CODE</div>
               </div>
             </fieldset>
             <div class="">
               <div class="w100 flex flex-align-center flex-row" style="margin: 0px 0px 24px; padding: 8px 0px 0px;">
-                <div color="#cacaca" font-size="12px" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px; padding: 0px 30px 0px 0px;">Store my payment information for use across the Simon Family of Companies. 
+                <div color="#cacaca" font-size="12px" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px; padding: 0px 30px 0px 0px;">Store my payment information for use across the Simon Family of Companies.
                   <span style="white-space: nowrap;">
                     <button aria-label="Learn more" color="secondary" font-size="inherit" font-weight="inherit" type="button" class="button-link">Learn more</button>
                   </span>
@@ -136,7 +136,7 @@
             <input type="hidden" name="recurly-token" data-recurly="token">
 
             <div class="w100 flex flex-align-center flex-row" style="margin: 0px 0px 24px; padding: 8px 0px 0px;">
-              <div color="#cacaca" font-size="12px" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px; padding: 0px 30px 0px 0px;">Store my payment information for use across the Simon Family of Companies. 
+              <div color="#cacaca" font-size="12px" class="fine-print" style="color: rgb(202, 202, 202); margin: 0px; padding: 0px 30px 0px 0px;">Store my payment information for use across the Simon Family of Companies.
                 <span style="white-space: nowrap;">
                   <button aria-label="Learn more" color="secondary" font-size="inherit" font-weight="inherit" type="button" class="button-link">Learn more</button>
                 </span>
@@ -165,61 +165,32 @@
     </div>
   </main>
   <script>
-    // Configure recurly.js -- set this to your own public key
-    // recurly.configure(window.recurlyConfig.publicKey);
     recurly.configure('ewr1-rdtsqBZmk05pArh5FBrhfJ');
 
-    // Create a CardElement
-    var elements = recurly.Elements();
-    var cardElement = elements.CardElement();
+    const elements = recurly.Elements();
+    const cardElement = elements.CardElement({
+      style: {
+        fontColor: 'rgb(249, 249, 249)'
+      }
+    });
     cardElement.attach('#billing-card-number');
 
-    // When a customer hits their 'enter' key while using the card element
-    cardElement.on('submit', function (event) {
-      $('form').submit();
-    });
-
-    // On form submit, we stop submission to go get the token
     $('form').on('submit', function (event) {
-
-      // Prevent the form from submitting while we retrieve the token from Recurly
       event.preventDefault();
-
-      // Reset the errors display
-      // $('#errors').text('');
-      // $('input').removeClass('error');
-
-      // Disable the submit button
-      $('button').prop('disabled', true);
-
-      var form = this;
-
-      // Now we call recurly.token with the form. It goes to Recurly servers
-      // to tokenize the credit card information, then injects the token into the
-      // data-recurly="token" field above
-      recurly.token(elements, this, function (err, token) {
-
-        // send any errors to the error function below
-        // if (err) error(err);
-
-        // Otherwise we continue with the form submission
-        form.submit();
-      });
+      recurly.token(elements, this, (err, token) => this.submit());
     });
-
-    // Now we set up the pricing module
-    var pricing = recurly.Pricing.Checkout();
+  </script>
+  <script>
+    const pricing = recurly.Pricing.Checkout();
 
     pricing.on('set.plan', function ({plan}) {
-      var period = (plan.period.length === 1) ? 'month' : 'year';
+      const period = (plan.period.length === 1) ? 'month' : 'year';
       $('[data-x-recurly="period_now"]').text(period);
       $('form input[name="plan-code"]').val(plan.code)
     });
 
-    // Calling .attach will bind the pricing module to the form.
     pricing.attach('#onboarding_index');
 
-    // Simple form tabs
     $('input.credit-card + label').click(function () {
       $('.billing-form--paypal').hide();
       $('.billing-form--credit').show();
