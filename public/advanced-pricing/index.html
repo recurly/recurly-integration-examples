@@ -182,7 +182,7 @@
       }
 
       // Calling .attach will bind the pricing module to the form.
-      pricing.attach(form);
+      pricing.attach('form');
 
       // Now for dynamic addon selection. Depending on the plan selected, we
       // want to switch out which addons the customer can select.
@@ -192,8 +192,8 @@
       pricing.on('set.plan', function (plan) {
         var buffer = '';
 
-        if (plan.addons) {
-          buffer = $.map(plan.addons, function (addon) {
+        if (plan.plan.addons) {
+          buffer = $.map(plan.plan.addons, function (addon) {
             // usage add-ons need to be displayed separately
             if (addon.add_on_type === 'usage') return;
             return '<label for="addon-' + addon.code + '">' + addon.name + ' ('
@@ -208,7 +208,7 @@
         $('#addons').html(buffer);
         $('#addons-title')[buffer ? 'show' : 'hide']();
 
-        pricing.attach(form);
+        pricing.attach('form');
       });
 
       // A simple error handling function to expose errors to the customer
