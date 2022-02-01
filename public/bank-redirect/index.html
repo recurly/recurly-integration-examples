@@ -6,31 +6,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <script src="https://js.recurly.com/v4/recurly.js"></script>
-  <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 </head>
 
 <body>
   <h1>Bank Redirect</h1>
-
-  <form onsubmit="return false;" style="display: none;">
+  <form onsubmit="return false;">
     <div>
-      <p>Amount:</p>
-      <input type="number" id="amount" name="amount" placeholder="Amount">
-    </div>
-
-    <div>
-      <p>Payment Method Type:</p>
+      Payment Method Type:
       <select id="payment_method_type" name="payment_method_type">
         <option value="ideal">ideal</option>
       </select>
     </div>
 
     <div>
-      <p>Bank:</p>
+      Invoice UUID:
+      <input id="invoice_uuid" name="invoice_uuid">
+    </div>
+
+    <div>
+      Bank:
       <select id="bank" name="bank"></select>
     </div>
 
-    <button onclick="purchase()">Purchase</button>
+    <button onclick="start()">Start</button>
   </form>
 
   <script>
@@ -40,40 +38,31 @@
     // Create BankRedirect instance
     var bankRedirect = recurly.BankRedirect();
 
-    // Listen for successful token event and log response
-    bankRedirect.on('token', function (response) {
-      console.log('TOKEN: ', response);
-      alert(`TOKEN: ${response}`);
-    });
-
     // If an error occurs, log it
     bankRedirect.on('error', function (error) {
-      console.log('ERROR: ', error);
-      alert(`ERROR: ${error}`);
+      console.error('ERROR: ', error);
     });
 
     // Listen for successful banks response
-    bankRedirect.on('banks', function ({ banks }) {
-      console.log('BANKS: ', banks);
-      document.querySelector('form').style.display = 'block';
+    bankRedirect.on('banks', function (response) {
+      console.log('BANKS: ', response.banks);
     });
 
     // If an error occurs loading the banks, log it
     bankRedirect.on('banks-error', function (error) {
-      console.log('Banks ERROR: ', error);
-      alert(`Banks ERROR: ${error}`);
+      console.error('Banks ERROR: ', error);
     });
 
-    // load banks
+    // load banks on the #bank selector
     bankRedirect.loadBanks({
       payment_method_type: document.querySelector('#payment_method_type').value
     }, '#bank')
 
-    // Purchase
-   function purchase() {
-    bankRedirect.start({
-      amount: document.querySelector('#amount').value,
+    // Start
+   function start() {
+    const iframe = bankRedirect.start({
       payment_method_type: document.querySelector('#payment_method_type').value,
+      invoice_uuid: document.querySelector('#invoice_uuid').value,
       issuer_id: document.querySelector('#bank').value
     });
    }
