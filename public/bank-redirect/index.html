@@ -34,7 +34,7 @@
 
   <script>
     // Configure recurly.js -- set this to your own public key
-    recurly.configure(window.recurlyConfig.publicKey);
+    recurly.configure(window.recurlyConfig);
 
     // Create BankRedirect instance
     var bankRedirect = recurly.BankRedirect();
@@ -45,8 +45,8 @@
     });
 
     // Listen for successful banks response
-    bankRedirect.on('banks', function (banks) {
-      console.log('BANKS: ', banks);
+    bankRedirect.on('banks', function (response) {
+      console.log('BANKS: ', response.banks);
     });
 
     // If an error occurs loading the banks, log it
