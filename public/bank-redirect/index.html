@@ -5,6 +5,7 @@
   <title>Bank Redirect Example</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  <!-- <script src="https://js.recurly.com/v4/recurly.js"></script> -->
   <script src="https://js.recurly.com/v4/recurly.js"></script>
   <script src="/config"></script>
 </head>
@@ -15,6 +16,8 @@
     <div>
       Payment Method Type:
       <select id="payment_method_type" name="payment_method_type">
+        <option hidden disabled selected></option>
+        <option value="sofort">sofort</option>
         <option value="ideal">ideal</option>
       </select>
     </div>
@@ -24,7 +27,12 @@
       <input id="invoice_uuid" name="invoice_uuid">
     </div>
 
-    <div>
+    <div id="country_el" style="display: none">
+      Country:
+      <select id="country" name="country"></select>
+    </div>
+
+    <div id="bank_el" style="display: none">
       Bank:
       <select id="bank" name="bank"></select>
     </div>
@@ -37,11 +45,38 @@
     recurly.configure(window.recurlyConfig.publicKey);
 
     // Create BankRedirect instance
-    var bankRedirect = recurly.BankRedirect();
+    const bankRedirect = recurly.BankRedirect();
+
+    const paymentMethod = document.getElementById('payment_method_type');
+
+    const country = document.getElementById('country_el');
+
+    const bank = document.getElementById('bank_el');
+
+    paymentMethod.addEventListener('change', () => {
+      if (event.target.value === 'sofort') {
+        country.style.display = 'block';
+        bank.style.display = 'none';
+        bankRedirect.loadCountries({
+          payment_method_type: document.querySelector('#payment_method_type').value
+        }, '#country');
+      } else if (event.target.value === 'ideal') {
+        country.style.display = 'none';
+        bank.style.display = 'block';
+        bankRedirect.loadBanks({
+          payment_method_type: document.querySelector('#payment_method_type').value
+        }, '#bank');
+      }
+    })
 
     // If an error occurs, log it
     bankRedirect.on('error', function (error) {
       console.error('ERROR: ', error);
+    });
+
+    // Listen for successful countries response
+    bankRedirect.on('countries', function (countries) {
+      console.log('COUNTRIES: ', countries);
     });
 
     // Listen for successful banks response
@@ -54,17 +89,19 @@
       console.error('Banks ERROR: ', error);
     });
 
-    // load banks on the #bank selector
-    bankRedirect.loadBanks({
-      payment_method_type: document.querySelector('#payment_method_type').value
-    }, '#bank')
-
     // Start
    function start() {
+    let payment_type = document.querySelector('#payment_method_type').value;
+
+    let isIdeal = payment_type === 'ideal';
+
+    let isSofort = payment_type === 'sofort';
+
     const iframe = bankRedirect.start({
       payment_method_type: document.querySelector('#payment_method_type').value,
       invoice_uuid: document.querySelector('#invoice_uuid').value,
-      issuer_id: document.querySelector('#bank').value
+      ...(isIdeal && { issuer_id: document.querySelector('#bank').value }),
+      ...(isSofort && { country_code: document.querySelector('#country').value })
     });
    }
   </script>
