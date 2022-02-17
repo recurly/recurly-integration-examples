@@ -95,14 +95,16 @@
 
     let isIdeal = payment_type === 'ideal';
 
-    let isSofort = payment_type === 'sofort';
-
-    const iframe = bankRedirect.start({
+    const payload = {
       payment_method_type: document.querySelector('#payment_method_type').value,
       invoice_uuid: document.querySelector('#invoice_uuid').value,
-      ...(isIdeal && { issuer_id: document.querySelector('#bank').value }),
-      ...(isSofort && { country_code: document.querySelector('#country').value })
-    });
+    }
+
+    const addDetails = isIdeal ?
+                       { issuer_id: document.querySelector('#bank').value } :
+                       { country_code: document.querySelector('#country').value };
+
+    const iframe = bankRedirect.start(Object.assign(payload, addDetails));
    }
   </script>
 </body>
