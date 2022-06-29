@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Recurly.js Google Pay</title>
+
+    <script src="https://js.recurly.com/v4/recurly.js"></script>
+    <script src="/config"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link href="/style.css" rel="stylesheet" />
+    <style type="text/css">
+      main {
+        max-width: 30rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section>
+        <h1 class="logo">
+          <span class="price">$10</span>
+          <span class="term">Purchase</span>
+        </h1>
+      </section>
+
+      <section id="errors"></section>
+
+      <section>
+        <form method="post" action="/api/subscriptions/new">
+          <input type="hidden" data-recurly="token" id="recurly-token" name="recurly-token">
+          <div id="google-pay-container"></div>
+        </form>
+      </section>
+    </main>
+
+    <script>
+      // Configure recurly.js -- set this to your own public key
+      recurly.configure(window.recurlyConfig.publicKey);
+
+      recurly.ready(function () {
+        var googlePayContainer = document.querySelector('#google-pay-container')
+
+        var googlePay = recurly.GooglePay({
+          currency: 'USD',
+          country: 'US',
+          total: '10',
+          googleMerchantId: 'my merchant id',
+          environment: 'TEST',
+          requireBillingAddress: true,
+        });
+
+        googlePay.on('ready', function (button) {
+          // Show the Google Pay button
+          var googlePayContainer = document.querySelector('#google-pay-container')
+          googlePayContainer.appendChild(button);
+        });
+
+        googlePay.on('error', function (err) {
+          const mapErrorToMsg = {
+            'google-pay-config-missing': 'Missing Internal Configuration',
+            'google-pay-not-configured': 'There is no gateway to support the Payment with Google',
+            'google-pay-init-error': 'Failed to load the Google Pay library',
+            'google-pay-not-available': 'Your device or browser is not compatible with Google Pay',
+            'google-pay-payment-failure': 'Failed to get your Google payment details',
+            'api-error': 'There was an error communicating with Recurly',
+          }
+
+          const errMessageToDisplay = mapErrorToMsg[err.code] || 'Opps, something was wrong';
+          document.querySelector('#errors').innerHTML = errMessageToDisplay;
+
+          console.error('Google Pay error', err);
+        });
+
+        googlePay.on('token', function (token) {
+          document.querySelector('#recurly-token').value = token.id;
+          document.querySelector('form').submit();
+        });
+      });
+    </script>
+  </body>
+</html>
