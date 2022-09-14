@@ -2,22 +2,22 @@ GEM
   remote: https://rubygems.org/
   specs:
     dotenv (2.7.6)
-    mustermann (1.1.1)
+    mustermann (1.1.2)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.5.8)
     puma (5.6.2)
       nio4r (~> 2.0)
-    rack (2.2.3)
-    rack-protection (2.1.0)
+    rack (2.2.4)
+    rack-protection (2.2.0)
       rack
     recurly (3.21.0)
-    ruby2_keywords (0.0.2)
-    sinatra (2.1.0)
+    ruby2_keywords (0.0.5)
+    sinatra (2.2.0)
       mustermann (~> 1.0)
       rack (~> 2.2)
-      rack-protection (= 2.1.0)
+      rack-protection (= 2.2.0)
       tilt (~> 2.0)
-    tilt (2.0.10)
+    tilt (2.0.11)
 
 PLATFORMS
   ruby
@@ -26,7 +26,7 @@ DEPENDENCIES
   dotenv
   puma
   recurly (~> 3.0)
-  sinatra (~> 2.0, >= 2.0.2)
+  sinatra (~> 2.2)
 
 BUNDLED WITH
    2.0.2
