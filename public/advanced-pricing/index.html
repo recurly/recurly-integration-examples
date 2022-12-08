@@ -200,7 +200,8 @@
                  + '<span data-recurly="currency_symbol"></span>'
                  + '<span data-recurly="addon_price" data-recurly-addon="' + addon.code + '"></span>'
                  + ')</label>'
-                 + '<input type="text" data-recurly="addon" data-recurly-addon="' + addon.code + '" value="0" id="addon-' + addon.code + '">';
+                 + '<input type="text" data-recurly="addon" data-recurly-addon="' + addon.code + '" value="0" id="addon-' + addon.code
+                 + '" data-recurly-subscription="' + plan.subscription.id + '">';
           }).join('');
         }
 
