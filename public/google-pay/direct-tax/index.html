@@ -42,13 +42,68 @@
       recurly.ready(function () {
         var googlePayContainer = document.querySelector('#google-pay-container')
 
+        const transactionInfo = {
+          currencyCode: 'USD',
+          countryCode: 'US',
+          totalPrice: '10',
+          totalPriceLabel: 'Total',
+          totalPriceStatus: 'FINAL',
+          displayItems: [{
+            type: 'TAX',
+            label: 'Tax',
+            price: '0',
+          }],
+        };
         var googlePay = recurly.GooglePay({
-          currency: 'USD',
-          country: 'US',
-          total: '10',
           googleMerchantId: 'my merchant id',
           environment: 'TEST',
           billingAddressRequired: true,
+          paymentDataRequest: {
+            emailRequired: true,
+            shippingAddressRequired: true,
+            shippingAddressParameters: { phoneNumberRequired: true },
+            transactionInfo,
+          },
+          callbacks: {
+            onPaymentDataChanged: async function({ callbackTrigger, shippingAddress }) {
+              console.log(callbackTrigger, shippingAddress);
+              if (!shippingAddress) { return {}; }
+
+              const { postalCode: postal_code, countryCode: country } = shippingAddress;
+              const response = await fetch('/tax', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                  postal_code,
+                  country,
+                }),
+              })
+              const { rate } = await response.json();
+              if (rate === 0) {
+                return {};
+              }
+
+              const tax = transactionInfo.totalPrice * rate;
+              const newPrice = Number(transactionInfo.totalPrice) + tax;
+              return {
+                newTransactionInfo: {
+                  ...transactionInfo,
+                  totalPrice: newPrice.toString(),
+                  displayItems: [{
+                    ...transactionInfo.displayItems[0],
+                    price: tax.toString(),
+                  }],
+                },
+              };
+            },
+            onPaymentAuthorized: function({ recurlyToken: token }) {
+              document.querySelector('#recurly-token').value = token.id;
+              document.querySelector('form').submit();
+            },
+          },
         });
 
         googlePay.on('ready', function (button) {
@@ -71,11 +126,6 @@
           document.querySelector('#errors').innerHTML = errMessageToDisplay;
 
           console.error('Google Pay error', err);
-        });
-
-        googlePay.on('token', function (token) {
-          document.querySelector('#recurly-token').value = token.id;
-          document.querySelector('form').submit();
         });
       });
     </script>

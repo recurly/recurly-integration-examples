@@ -43,7 +43,7 @@ input[type='radio'] + label {
   display: inline-block;
 }
 
-input[type="text"], select {
+input[type="text"], input[type="email"], select {
   transition: border-color 0.3s;
   -webkit-appearance: none;
   appearance: none;
