@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Recurly.js Example: Minimal Billing Information</title>
+    <title>Recurly.js Example: Apple Pay Direct Tax</title>
     <script src="https://js.recurly.com/v4/recurly.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/config"></script>
@@ -77,12 +77,38 @@
 
       <section id="errors"></section>
 
-      <section>
-        <form method="post" action="/api/subscriptions/new">
-          <div id="apple-pay" class="apple-pay-button apple-pay-button-white apple-pay-button-hidden"></div>
-          <input type="hidden" data-recurly="token" name="recurly-token">
-        </form>
-      </section>
+      <form method="post" action="/api/subscriptions/new">
+          <div>
+            <label for="first_name">First Name</label>
+            <input type="text" data-recurly="first_name" id="first_name" name="first_name" value="Bob">
+          </div>
+          <div>
+            <label for="last_name">Last Name</label>
+            <input type="text" data-recurly="last_name" id="last_name" name="last_name" value="Smith">
+          </div>
+          <div>
+            <label for="address1">Address 1</label>
+            <input type="text" data-recurly="address1" id="address1" name="address1" value="123 Fake St">
+          </div>
+          <div>
+            <label for="city">City</label>
+            <input type="text" data-recurly="city" id="city" name="city" value="Somewhere">
+          </div>
+          <div>
+            <label for="state">State</label>
+            <input type="text" data-recurly="state" id="state" name="state" value="CA">
+          </div>
+          <div>
+            <label for="postal_code">Postal Code</label>
+            <input type="text" data-recurly="postal_code" id="postal_code" name="postal_code" value="12345">
+          </div>
+          <div>
+            <label for="country">Country</label>
+            <input type="text" data-recurly="country" id="country" name="country" value="US">
+          </div>
+        <div id="apple-pay" class="apple-pay-button apple-pay-button-white apple-pay-button-hidden"></div>
+        <input type="hidden" data-recurly="token" name="recurly-token">
+      </form>
     </main>
 
     <script>
@@ -98,11 +124,42 @@
           return;
         }
 
-        var applePay = recurly.ApplePay({
+        var $email = document.querySelector('#email');
+        const total = { label: 'Apple pay via recurly', amount: '10', paymentTiming: 'recurring' };
+        const applePay = recurly.ApplePay({
           country: 'US',
           currency: 'USD',
-          label: "Apple pay via recurly",
-          total: '10'
+          form: document.querySelector('form'),
+          paymentRequest: {
+            total,
+          },
+          callbacks: {
+            onPaymentMethodSelected: async function({ paymentMethod: { billingContact } }) {
+              const { postalCode: postal_code, countryCode: country } = billingContact;
+
+              const response = await fetch('/tax', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                  postal_code,
+                  country,
+                }),
+              })
+              const { rate } = await response.json();
+              if (rate > 0) {
+                const tax = total.amount * rate;
+                const newAmount = Number(total.amount) + tax;
+                const newTotal = { ...total, amount: newAmount.toString() };
+                return {
+                  newTotal,
+                  newLineItems: [{ label: 'Tax', paymentTiming: 'recurring', amount: tax.toString() }],
+                };
+              }
+            },
+          },
         });
 
         applePay.ready(function () {

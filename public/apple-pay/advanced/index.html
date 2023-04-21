@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Recurly.js Example: Minimal Billing Information</title>
+    <title>Recurly.js Example: Advanced Apple Pay</title>
     <script src="https://js.recurly.com/v4/recurly.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/config"></script>
@@ -73,6 +73,10 @@
           <span class="price">$10</span>
           <span class="term">monthly</span>
         </h1>
+        <div class="logo">
+          <span class="price">$5</span>
+          <span class="term">week trial</span>
+        </div>
       </section>
 
       <section id="errors"></section>
@@ -98,11 +102,35 @@
           return;
         }
 
-        var applePay = recurly.ApplePay({
+        const endOfTrial = new Date();
+        endOfTrial.setDate(endOfTrial.getDate() + 7);
+        const billingInterval = {
+          paymentTiming: 'recurring',
+          recurringPaymentStartDate: endOfTrial,
+          recurringPaymentIntervalUnit: 'month',
+          recurringPaymentIntervalCount: 3,
+        };
+        const trialInterval = {
+          paymentTiming: 'recurring',
+          recurringPaymentIntervalUnit: 'day',
+          recurringPaymentIntervalCount: 7,
+          recurringPaymentEndDate: endOfTrial,
+        };
+        const applePay = recurly.ApplePay({
           country: 'US',
           currency: 'USD',
-          label: "Apple pay via recurly",
-          total: '10'
+          paymentRequest: {
+            total: { label: 'Trial', amount: '5.00' },
+            lineItems: [
+              { label: 'Add On 1', amount: '6.00', ...billingInterval },
+              { label: 'Add On 2', amount: '4.00', ...billingInterval },
+            ],
+            recurringPaymentRequest: {
+              paymentDescription: 'Apple Pay via Recurly',
+              regularBilling: { label: 'Apple Pay via Recurly', amount: '10.00', ...billingInterval },
+              trialBilling: { label: 'Trial', amount: '5.00', ...trialInterval },
+            },
+          },
         });
 
         applePay.ready(function () {

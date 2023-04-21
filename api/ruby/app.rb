@@ -131,15 +131,18 @@ post '/api/accounts/:account_code' do
   end
 end
 
+post '/tax' do
+  { rate: 0.05 }.to_json
+end
+
 # This endpoint provides configuration to recurly.js
 get '/config' do
   items = [].tap do |items|
-    client.list_items(limit: 200, state: 'active').each do |item|
+    client.list_items(params: { limit: 200, state: 'active' }).each do |item|
       items << { code: item.code, name: item.name }
     end
   end
-  plans = [].tap do |plans|
-    client.list_plans(limit: 200, state: 'active').each do |plan|
+  plans = [].tap do |plans| client.list_plans(params: { limit: 200, state: 'active' }).each do |plan|
       plans << { code: plan.code, name: plan.name }
     end
   end

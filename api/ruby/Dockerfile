@@ -1,4 +1,4 @@
-FROM ruby:2
+FROM ruby:3
 
 ENV PORT 9001
 ENV PUBLIC_DIR_PATH public

@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Recurly.js Example: Minimal Billing Information</title>
+    <title>Recurly.js Example: Apple Pay Shipping Validation</title>
     <script src="https://js.recurly.com/v4/recurly.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/config"></script>
@@ -77,12 +77,14 @@
 
       <section id="errors"></section>
 
-      <section>
-        <form method="post" action="/api/subscriptions/new">
-          <div id="apple-pay" class="apple-pay-button apple-pay-button-white apple-pay-button-hidden"></div>
-          <input type="hidden" data-recurly="token" name="recurly-token">
-        </form>
-      </section>
+      <form method="post" action="/api/subscriptions/new">
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" value="invalid@example.com" />
+        </div>
+        <div id="apple-pay" class="apple-pay-button apple-pay-button-white apple-pay-button-hidden"></div>
+        <input type="hidden" data-recurly="token" name="recurly-token">
+      </form>
     </main>
 
     <script>
@@ -98,11 +100,30 @@
           return;
         }
 
-        var applePay = recurly.ApplePay({
+        var $email = document.querySelector('#email');
+        const applePay = recurly.ApplePay({
           country: 'US',
           currency: 'USD',
           label: "Apple pay via recurly",
-          total: '10'
+          total: '10',
+          recurring: true,
+          paymentRequest: {
+            requiredShippingContactFields: ['email', 'phone', 'postalAddress'],
+            shippingContact: {
+              emailAddress: $email.value,
+            },
+          },
+          callbacks: {
+            onPaymentAuthorized: function({ payment: { shippingContact: { emailAddress: email } } = {} }) {
+              if (email === 'invalid@example.com') {
+                return {
+                  errors: [
+                    { code: 'shippingContactInvalid', contactField: 'emailAddress', message: 'is invalid!' },
+                  ],
+                };
+              }
+            },
+          },
         });
 
         applePay.ready(function () {
