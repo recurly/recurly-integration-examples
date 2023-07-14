@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Recurly.js Example: Minimal Billing Information</title>
+    <script src="https://js.recurly.com/v4/recurly.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/config"></script>
+    <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link href="/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main>
+      <h1 class="logo">$29/month</h1>
+      <section id="errors" class="errors"></section>
+      <section>
+        <form method="post" action="/api/subscriptions/new">
+          <button disabled id="subscribe">Subscribe with Venmo</button>
+          <input type="hidden" id="recurly-token" name="recurly-token">
+          <input type="hidden" id="first_name" name="first_name" value="Testy">
+          <input type="hidden" id="last_name" name="last_name" value="Testerson">
+        </form>
+      </section>
+      <section id="braintree-config">
+        <label for="braintree-client-auth">Braintree Tokenization Key</label>
+        <input id="braintree-client-auth" name="braintree-client-auth">
+      </section>
+    </main>
+
+    <script>
+      var form = $('form');
+
+      $('#braintree-client-auth').on('change', function(event) {
+        venmo = recurly.Venmo({
+          display: {
+            displayName: 'My product',
+            amount: '14.34',
+            currency: 'USD',
+            locals: 'en_US',
+          },
+          braintree: { clientAuthorization: event.target.value },
+          form,
+        });
+        $('#subscribe').prop('disabled', false);
+      });
+
+      // Configure recurly.js -- set this to your own public key
+      recurly.configure({
+        publicKey: window.recurlyConfig.publicKey,
+        api: 'https://api.qa2.recurlyqa.com/js/v1',
+      });
+      // recurly.configure(window.recurlyConfig.publicKey);
+
+      // Create a recurly.venmo instance. The `displayName` is displayed to the customer in the Venmo flow window
+      var venmo;
+
+      // Handle any errors that occur during the venmo checkout
+      venmo.on('error', error);
+      // Handle token generation. This event fires once the customer has finished the Venmo flow
+      venmo.on('token', function (token) {
+        console.log('success!', token)
+        // Update the token hidden field
+        // $('#recurly-token').val(token.id);
+
+        // Now we submit the form directly, bypassing the jQuery listener below
+        // form[0].submit();
+      });
+
+      // On form submit, we stop submission to go get the token
+      form.on('submit', function (event) {
+        event.preventDefault();
+
+        // Reset the errors display
+        $('#errors').text('');
+        $('input').removeClass('error');
+
+        // Disable the submit button
+        $('button').prop('disabled', true);
+
+        // Start the venmo checkout flow
+        venmo.start();
+      });
+
+      // A simple error handling function to expose errors to the customer
+      function error (err) {
+        console && console.error(err);
+        $('#errors').text('There was a problem intializing the Venmo transaction! Please try again in a few moments.');
+        $('button').prop('disabled', false);
+      }
+    </script>
+  </body>
+</html>
