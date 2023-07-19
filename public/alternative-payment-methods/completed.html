@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Recurly.js Example: Alternative Payment Methods - iDEAL</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+  <link href="/style.css" rel="stylesheet" />
+</head>
+
+<body>
+  <main>
+    <h2>Thank you</h2>
+
+    <p>Transaction status in Recurly was completed with status "<span id="recurly-status"></span>".</p>
+
+    <a href="/">Back to home</a>
+  </main>
+
+  <script type="text/javascript">
+    const status = new URLSearchParams(location.search).get('status')
+    document.querySelector('#recurly-status').textContent = status
+  </script>
+</body>
+
+</html>

@@ -2,6 +2,7 @@
 require 'sinatra'
 require 'json'
 require 'recurly'
+require 'dotenv/load'
 
 # Used to parse URIs
 require 'uri'
@@ -53,7 +54,7 @@ post '/api/purchases/new' do
   end
 
   purchase_create = {
-    currency: "USD",
+    currency: params.fetch('currency', 'USD'),
     # This can be an existing account or a new acocunt
     account: {
       code: recurly_account_code,
@@ -85,7 +86,22 @@ post '/api/purchases/new' do
   begin
     purchase = client.create_purchase(body: purchase_create)
 
-    redirect success_url
+    transaction = purchase.charge_invoice&.transactions&.first
+    if transaction
+      if transaction.respond_to?(:action_result) # Not yet available in Recurly API
+        action_result = transaction.action_result
+      else
+        action_result = transaction.gateway_response_values['action_result']
+        action_result = JSON.parse(action_result) if action_result.is_a?(String)
+      end
+    end
+
+    if action_result
+      content_type :json
+      { action_result: action_result }.to_json
+    else
+      redirect(success_url)
+    end
   rescue Recurly::Errors::TransactionError => e
     txn_error = e.recurly_error.transaction_error
     hash_params = {
@@ -147,14 +163,19 @@ get '/config' do
     end
   end
 
-  config = {
+  recurly_config = {
     publicKey: ENV['RECURLY_PUBLIC_KEY'],
     items: items,
     plans: plans
   }
 
+  adyen_config = {
+    publicKey: ENV['ADYEN_PUBLIC_KEY'],
+  }
+
   content_type :js
-  "window.recurlyConfig = #{config.to_json}"
+  "window.recurlyConfig = #{recurly_config.to_json};" \
+  "window.adyenConfig = #{adyen_config.to_json}"
 end
 
 # All other routes will be treated as static requests
