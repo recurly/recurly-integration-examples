@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Recurly.js Example: Minimal Billing Information</title>
+  <script src="https://js.recurly.com/v4/recurly.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="/config"></script>
+  <script type="text/javascript" src="./index.js"></script>
+  <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+  <link href="/style.css" rel="stylesheet" />
+</head>
+
+<body>
+  <main>
+    <section>
+      <h1 class="logo">
+        <span class="price">$10</span>
+        <span class="term">monthly</span>
+      </h1>
+    </section>
+
+    <section id="errors" class="errors"></section>
+
+    <section>
+      <form method="post" action="/api/subscriptions/new">
+        <div>
+          <label for="country">Country</label>
+          <select name="country" id="country" data-recurly="country">
+            <option value="NL">Netherlands</option>
+            <option value="DE">Germany</option>
+            <option value="BR">Brazil</option>
+            <option value="CH">Switzerland</option>
+            <option value="GB">United Kingdom</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="currency">Currency</label>
+          <select name="currency" id="currency" data-recurly="currency">
+            <option value="EUR">Euro</option>
+            <option value="BRL">Brazilian Real</option>
+            <option value="GBP">Pound Sterling</option>
+            <option value="CHF">Swiss Franc</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="first_name">First Name</label>
+          <input type="text" data-recurly="first_name" id="first_name" name="first-name">
+        </div>
+
+        <div>
+          <label for="last_name">Last Name</label>
+          <input type="text" data-recurly="last_name" id="last_name" name="last-name">
+        </div>
+
+        <div id="status-message"></div>
+        <div id="payment-methods-container"></div>
+
+        <input type="hidden" data-recurly="token" name="recurly-token">
+
+        <button id="payment-methods-pay">Pay</button>
+      </form>
+    </section>
+  </main>
+</body>
+
+</html>

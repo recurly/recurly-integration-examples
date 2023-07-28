@@ -62,7 +62,7 @@ input[type="text"], input[type="email"], select {
   display: block;
 }
 
-input:focus {
+input:focus, select:focus {
   border-color: currentColor;
   color: #2C0730;
 }
