@@ -2,12 +2,14 @@ package main
 
 // API usage Dependencies
 import (
+	"encoding/json"
 	"fmt"
-	"github.com/google/uuid"
-	"github.com/recurly/recurly-client-go/v3"
 	"net/http"
 	"os"
 	"strings"
+
+	"github.com/google/uuid"
+	"github.com/recurly/recurly-client-go/v3"
 )
 
 // These are the various configuration values used in this example. They are
@@ -35,6 +37,12 @@ func createSubscription(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tokenId := r.FormValue("recurly-token")
+	accountFirstName := r.FormValue("first-name")
+	accountLastName := r.FormValue("last-name")
+	currency := r.FormValue("currency")
+	if currency == "" {
+		currency = "USD"
+	}
 
 	// Build the billing info body
 	billingInfo := &recurly.BillingInfoCreate{
@@ -57,18 +65,19 @@ func createSubscription(w http.ResponseWriter, r *http.Request) {
 	// the token we generated on the frontend
 	purchaseCreate := &recurly.PurchaseCreate{
 		Subscriptions: []recurly.SubscriptionPurchase{{PlanCode: recurly.String("basic")}},
-		Currency:      recurly.String("USD"),
+		Currency:      recurly.String(currency),
 		Account: &recurly.AccountPurchase{
 			Code:        recurly.String(accountCode),
+			FirstName:   recurly.String(accountFirstName),
+			LastName:    recurly.String(accountLastName),
 			BillingInfo: billingInfo,
 		},
 	}
 
-	_, err := client.CreatePurchase(purchaseCreate)
-
+	invoiceCollection, err := client.CreatePurchase(purchaseCreate)
 	if e, ok := err.(*recurly.Error); ok {
 		// Handle 3D Secure required error by redirecting to an authentication page
-		if e.TransactionError.Code == "three_d_secure_action_required" {
+		if e.TransactionError != nil && e.TransactionError.Code == "three_d_secure_action_required" {
 			baseUrl := "/3d-secure/authenticate.html"
 
 			params := fmt.Sprintf(
@@ -89,7 +98,28 @@ func createSubscription(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, errorUrl, 303)
 		}
 	} else {
-		// If no errors occur, redirect to the configured success URL
+		if len(invoiceCollection.ChargeInvoice.Transactions) > 0 {
+
+			// TODO: Change to use invoiceCollection.ChargeInvoice.Transactions[0].ActionResult
+			actionResult := invoiceCollection.ChargeInvoice.Transactions[0].GatewayResponseValues["action_result"]
+
+			if actionResult != nil {
+				type Result struct {
+					ActionResult interface{} `json:"action_result"`
+				}
+
+				response := Result{ActionResult: actionResult}
+				responseStr, err := json.Marshal(response)
+				if err != nil {
+					errorUrl := fmt.Sprintf("%s?error=%s", ERROR_URL, e.Message)
+					http.Redirect(w, r, errorUrl, 303)
+				} else {
+					w.Header().Add("Content-Type", "application/json")
+					fmt.Fprint(w, string(responseStr))
+				}
+				return
+			}
+		}
 		http.Redirect(w, r, SUCCESS_URL, 303)
 	}
 
@@ -153,9 +183,15 @@ func updateAccount(w http.ResponseWriter, r *http.Request) {
 func config(w http.ResponseWriter, req *http.Request) {
 	req.Header.Add("Content-Type", "application/javascript")
 
-	response := fmt.Sprintf("window.recurlyConfig = { publicKey: '%s' }", RECURLY_PUBLIC_KEY)
+	recurlyConfig := fmt.Sprintf("window.recurlyConfig = { publicKey: '%s', api: 'https://api.%s/js/v1'}",
+		RECURLY_PUBLIC_KEY,
+		os.Getenv("RECURLY_API_HOST"),
+	)
+	adyenConfig := fmt.Sprintf("window.adyenConfig = { publicKey: '%s' }", os.Getenv("ADYEN_PUBLIC_KEY"))
 
-	fmt.Fprintf(w, response)
+	response := fmt.Sprintf("%s;\n%s;", recurlyConfig, adyenConfig)
+
+	fmt.Fprint(w, response)
 }
 
 func main() {
