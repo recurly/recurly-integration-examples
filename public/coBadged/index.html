@@ -4,7 +4,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Recurly.js Example: Co-Badged Support</title>
     <script src="https://js.recurly.com/v4/recurly.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/config"></script>
     <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
@@ -66,10 +65,10 @@
         // coBadgeSupport: boolean
         // supportedBrands: array of strings (e.g. ['visa', 'cartes_bancaires'])
         let coBadgeBrands = coBadgeResults.supportedBrands;
-        let targetEle = $('#card-element-container');
-        let coBadgeContainer = $('#co-badge-container');
+        let targetEle = document.querySelector('#card-element-container');
+        let coBadgeContainer = document.querySelector('#co-badge-container');
 
-        if (!coBadgeContainer.length) {
+        if (!coBadgeContainer) {
           if (!coBadgeResults.coBadgeSupport) { return; }
           // create the coBadge div if it does not exist and the card has coBadge support
           createCoBadge(coBadgeBrands, targetEle);
@@ -83,34 +82,39 @@
 
       function createCoBadge(coBadgeBrands, target) {
         // create an input for selecting the customer's card brand that is populated with the card's coBadge options
-        const coBadgeContainer = $('<div>').attr('id', 'co-badge-container');
-        const coBadgeRadio = $('<div>').attr('id', 'co-badge-radio');
+        const coBadgeContainer = document.createElement('div');
+        coBadgeContainer.id = 'co-badge-container';
+        const coBadgeRadio = document.createElement('div');
+        coBadgeRadio.id = 'co-badge-radio';
         coBadgeBrands.forEach((brand, idx) => {
-          let brandInput = $('<input>').attr({
-            type: 'radio',
-            value: brand,
-            class: 'co-badge-input',
-            id: `co-badge-input-${idx}`,
-            name: 'co-badge',
-            'data-recurly': 'card_network_preference'
-          });
-          let brandLabel = $('<label>').text(formatBrand(brand)).attr({
-            id: `co-badge-label-${idx}`,
-            class: 'co-badge-label'
-          });
-          coBadgeRadio.append(brandInput, brandLabel);
+          let brandInput = document.createElement('input');
+          brandInput.type = 'radio';
+          brandInput.value = brand;
+          brandInput.className = 'co-badge-input';
+          brandInput.id = `co-badge-input-${idx}`;
+          brandInput.name = 'co-badge';
+          brandInput.setAttribute('data-recurly', 'card_network_preference');
+
+          let brandLabel = document.createElement('label');
+          brandLabel.textContent = formatBrand(brand);
+          brandLabel.id = `co-badge-label-${idx}`;
+          brandLabel.className = 'co-badge-label';
+
+          coBadgeRadio.appendChild(brandInput);
+          coBadgeRadio.appendChild(brandLabel);
         });
-        coBadgeContainer.append(coBadgeRadio);
+        coBadgeContainer.appendChild(coBadgeRadio);
         target.after(coBadgeContainer);
       };
 
       function updateCardBrandOptions(coBadgeBrands) {
         coBadgeBrands.forEach((brand, idx) => {
-          let brandInput = $(`#co-badge-input-${idx}`);
-          brandInput.val(brand);
-          let brandLabel = $(`#co-badge-label-${idx}`);
-          brandLabel.attr('for', brand);
-          brandLabel.text(formatBrand(brand));
+          let brandInput = document.querySelector(`#co-badge-input-${idx}`);
+          brandInput.value = brand;
+
+          let brandLabel = document.querySelector(`#co-badge-label-${idx}`);
+          brandLabel.setAttribute('for', brand);
+          brandLabel.textContent = formatBrand(brand);
         });
       };
 
@@ -120,21 +124,21 @@
 
       // When a customer hits their 'enter' key while using the card element
       cardElement.on('submit', function (event) {
-        $('form').submit();
+        document.querySelector('form').submit();
       });
 
       // On form submit, we stop submission to go get the token
-      $('form').on('submit', function (event) {
+      document.querySelector('form').addEventListener('submit', function (event) {
         console.log('form submit');
         // Prevent the form from submitting while we retrieve the token from Recurly
         event.preventDefault();
 
         // Reset the errors display
-        $('#errors').text('');
-        $('input').removeClass('error');
+        document.querySelector('#errors').textContent = '';
+        document.querySelectorAll('input').forEach(input => input.classList.remove('error'));
 
         // Disable the submit button
-        $('button').prop('disabled', true);
+        document.querySelector('button').disabled = true;
 
         const form = this;
 
@@ -153,15 +157,15 @@
 
       // A simple error handling function to expose errors to the customer
       function error (err) {
-        $('#errors').text('The following fields appear to be invalid: ' + err.fields.join(', '));
-        $('button').prop('disabled', false);
-        $.each(err.fields, function (i, field) {
-            $('[data-recurly=' + field + ']').addClass('error');
+        document.querySelector('#errors').textContent = 'The following fields appear to be invalid: ' + err.fields.join(', ');
+        document.querySelector('button').disabled = false;
+        err.fields.forEach(field => {
+          document.querySelector(`[data-recurly=${field}]`).classList.add('error');
         });
       }
 
       // runs some simple animations for the page
-      $('body').addClass('show');
+      document.querySelector('body').classList.add('show');
     </script>
   </body>
 </html>
