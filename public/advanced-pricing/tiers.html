@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Recurly.js Example: Advanced Pricing</title>
+  <script src="https://js.recurly.com/v4/recurly.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="/config"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="https://js.recurly.com/v4/recurly.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+  <link href="/style.css" rel="stylesheet" />
+  <style>
+    select,
+    input {
+      display: block;
+    }
+
+    input[type=radio] {
+      display: inline;
+    }
+
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <main>
+    <form method="post" action="/api/purchases/new">
+      <h2>This only works on the Ruby box (not the php one)</h2>
+      <label for="plan">Plan</label>
+      <select id="plan" data-recurly="plan">
+        <option value="basic">Basic</option>
+        <option value="freetrial">Free Trial</option>
+        <option value="coffee-monthly">Coffee Monthly</option>
+        <option value="tiered" selected>Tiered</option>
+        <option value="tiered+volume+stair-step">tiered+volume+stair-step (douglaslise)</option>
+        <option value="stairstep">stairstep</option>
+        <option value="plan_tiered_add_on">plan_tiered_add_on</option>
+        <option value="plan-with-volume-add-on">plan-with-volume-add-on</option>
+      </select>
+      <input type="radio" value="USD" name="currency" data-recurly="currency" id="currency-USD" checked>
+      <label for="currency-USD">USD</label>
+      <input type="radio" value="EUR" name="currency" data-recurly="currency" id="currency-EUR">
+      <label for="currency-EUR">EUR</label>
+      <p>Coupon (enter coupon i.e. "test_2, test_3, test_single_fix_2")</p>
+      <input type="text" data-recurly="coupon" name="coupon" value="test_2">
+
+      <label for="plan-quantity">Quantity</label>
+      <input type="text" data-recurly="plan_quantity" id="plan-quantity" value="1">
+
+      <label for="number">Card Number</label>
+      <div data-recurly="number" id="number" value="4111111111111111"></div>
+      <label for="month">Month</label>
+      <div data-recurly="month" id="month" value="12"></div>
+      <label for="year">Year</label>
+      <div data-recurly="year" id="year" value="2034"></div>
+      <label for="cvv" value="333">CVV</label>
+      <div data-recurly="cvv" id="cvv"></div>
+      <label for="first_name" value="space">First Name</label>
+      <input type="text" data-recurly="first_name" id="first_name" name="first-name">
+      <label for="last_name" value="otter">Last Name</label>
+      <input type="text" data-recurly="last_name" id="last_name" name="last-name">
+
+      <label for="country">Country</label>
+      <select id="country" data-recurly="country">
+        <option value="US">United States</option>
+        <option value="CA">Canada</option>
+      </select>
+      <label for="postal_code" value="70117">Postal Code</label>
+      <input type="text" data-recurly="postal_code" id="postal_code">
+
+      <p id="addons-title">Add-ons</p>
+      <p id="addons"></p>
+
+
+
+
+      <input type="hidden" data-recurly="token" name="recurly-token">
+
+      <p>
+        Due now
+      </p>
+      <ul>
+        <li>
+          Discount:
+          <span data-recurly="currency_symbol"></span>
+          <span data-recurly="discount_now"></span>
+        </li>
+        <li>
+          Subtotal:
+          <span data-recurly="currency_symbol"></span>
+          <span data-recurly="subtotal_now"></span>
+        </li>
+        <li>
+          Tax:
+          <span data-recurly="currency_symbol"></span>
+          <span data-recurly="taxes_now"></span>
+        </li>
+        <li>----</li>
+        <li>
+          Total:
+          <span data-recurly="currency_symbol"></span>
+          <span data-recurly="total_now"></span>
+        </li>
+      </ul>
+      <p>
+        Due later
+      </p>
+      <ul>
+        <li>
+          Discount:
+          <span data-recurly="currency_symbol"></span>
+          <span data-recurly="discount_next"></span>
+        </li>
+        <li>
+          Subtotal:
+          <span data-recurly="currency_symbol"></span>
+          <span data-recurly="subtotal_next"></span>
+        </li>
+        <li>
+          Tax:
+          <span data-recurly="currency_symbol"></span>
+          <span data-recurly="taxes_next"></span>
+        </li>
+        <li>----</li>
+        <li>
+          Total:
+          <span data-recurly="currency_symbol"></span>
+          <span data-recurly="total_next"></span>
+        </li>
+      </ul>
+      <button id="subscribe">Subscribe</button>
+      <div id="errors"></div>
+    </form>
+    <script>
+      // Configure recurly.js
+      recurly.configure({
+        fields: {
+          all: {
+            style: {
+              inputType: 'password',
+              fontFamily: 'Open Sans',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              fontColor: '#2c0730'
+            }
+          },
+          number: {
+            style: {
+              fontColor: 'green',
+              placeholder: {
+                content: 'Card number',
+                color: 'orange'
+              }
+            }
+          },
+          month: {
+            selector: '#month',
+            inputType: 'select',
+            style: {
+              placeholder: {
+                content: 'mm'
+              }
+            }
+          },
+          year: {
+            selector: '#year',
+            inputType: 'select',
+            style: {
+              placeholder: {
+                content: 'Year'
+              }
+            }
+          },
+          cvv: {
+            style: {
+              placeholder: {
+                content: 'CVV'
+              }
+            }
+          }
+        }
+      });
+
+
+      // When a customer hits their 'enter' key while in a field
+      recurly.on('field:submit', function (event) {
+        $('form').submit();
+      });
+
+      // On form submit, we stop submission to go get the token
+      $('form').on('submit', function (event) {
+
+        // Prevent the form from submitting while we retrieve the token from Recurly
+        event.preventDefault();
+
+        // Reset the errors display
+        $('#errors').text('');
+        $('input').removeClass('error');
+
+        // Disable the submit button
+        $('button').prop('disabled', true);
+
+        var form = this;
+
+        // Now we call recurly.token with the form. It goes to Recurly servers
+        // to tokenize the credit card information, then injects the token into the
+        // data-recurly="token" field above
+        recurly.token(this, function (err, token) {
+
+          // send any errors to the error function below
+          if (err) error(err);
+
+          // Otherwise we continue with the form submission
+          else form.submit();
+
+        });
+      });
+
+      // Now we set up the pricing module
+      var pricing = recurly.Pricing.Checkout();
+      var form = $('form');
+
+      // For debugging: when pricing changes or emits an error, we'll just send it to the console
+      // This should be disabled or removed for your production environment
+      if (console) {
+        pricing.on('change', function (price) {
+          // console.info(price);
+        });
+        pricing.on('error', function (e) {
+          // console.error(e);
+        });
+      }
+
+      pricing.on('change', function (price) {
+        console.log(price);
+      });
+
+      // Calling .attach will bind the pricing module to the form.
+      // console.log('first')
+      // console.log(form)
+      pricing.attach(form);
+
+      // Now for dynamic addon selection. Depending on the plan selected, we
+      // want to switch out which addons the customer can select.
+
+      // This listens for the plan being set on the pricing module, then loops
+      // over its addons to change which are displayed
+      pricing.on('set.plan', function (plan) {
+        var buffer = '';
+        if (plan.plan.addons) {
+          buffer = $.map(plan.plan.addons, function (addon) {
+            // usage add-ons need to be displayed separately
+            if (addon.add_on_type === 'usage') return;
+
+            const label = `<label for="addon-${addon.code}">
+                            ${addon.name}
+                            (<span data-recurly="currency_symbol"></span>
+                            <span
+                              data-recurly="addon_price"
+                              data-recurly-subscription="${plan.subscription.id}"
+                              data-recurly-addon="${addon.code}"
+                            />)
+                          </label>`;
+            const input = `<input type="text"
+                            data-recurly="addon"
+                            data-recurly-addon="${addon.code}"
+                            data-recurly-subscription="${plan.subscription.id}"
+                            id="addon-${addon.code}"
+                            value="0"
+                          >`;
+
+            return label + input;
+          }).join('');
+        }
+
+        // Populate the addon list and show/hide the addon label accordingly
+        $('#addons').html(buffer);
+        $('#addons-title')[buffer ? 'show' : 'hide']();
+
+        pricing.attach(form);
+      });
+
+      // A simple error handling function to expose errors to the customer
+      function error(err) {
+        console.log('space')
+        console && console.error(err);
+        $('#errors').text(err.message);
+        $('button').prop('disabled', false);
+      }
+    </script>
+  </main>
+</body>
+
+</html>
