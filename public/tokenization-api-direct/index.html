@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tokenization API direct Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/config"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+    <link href="/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <main>
+      <section>
+        <h1 class="logo">
+          <span class="price">$10</span>
+          <span class="term">monthly</span>
+        </h1>
+      </section>
+
+      <section id="errors" class="errors"></section>
+
+      <section>
+        <form method="post" action="/api/subscriptions/new">
+          <div>
+            <label for="number">Card number</label>
+            <input type="text" id="number">
+            <label for="number">Month</label>
+            <input type="text" id="month">
+            <label for="number">Year</label>
+            <input type="text" id="year">
+            <label for="number">CVV</label>
+            <input type="text" id="cvv">
+          </div>
+
+          <div>
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" name="first-name">
+          </div>
+
+          <div>
+            <label for="last_name">Last Name</label>
+            <input type="text" id="last_name" name="last-name">
+          </div>
+
+          <button id="subscribe">Subscribe</button>
+
+          <input type="hidden" name="recurly-token" id="recurly-token">
+        </form>
+      </section>
+    </main>
+
+    <script>
+      // On form submit, we stop submission to go get the token
+      $('form').on('submit', function (event) {
+
+        // Prevent the form from submitting while we retrieve the token from Recurly
+        event.preventDefault();
+
+        // Reset the errors display
+        $('#errors').text('');
+        $('input').removeClass('error');
+
+        // Disable the submit button
+        $('button').prop('disabled', true);
+
+        var form = this;
+        var tokenRequest = new XMLHttpRequest();
+
+        tokenRequest.open('post', 'https://api.recurly.com/js/v1/token');
+        tokenRequest.timeout = 60000;
+        tokenRequest.ontimeout = function () { console.log('timeout'); };
+        tokenRequest.onerror = function () { console.log('api-error'); };
+        tokenRequest.onprogress = function () {};
+        tokenRequest.onload = function () {
+          var tokenResponse;
+          try {
+            if (this.responseText) tokenResponse = JSON.parse(this.responseText);
+          } catch (e) {
+            console.log('error', this.responseText);
+          }
+
+          if (tokenResponse && tokenResponse.error) {
+            // send any errors to the error function below
+            error(tokenResponse.error);
+          } else {
+            // Otherwise we continue with the form submission
+            $('#recurly-token').val(tokenResponse.id);
+            form.submit();
+          }
+        };
+
+        tokenRequest.setRequestHeader('Content-type', 'application/json');
+        tokenRequest.send(JSON.stringify({
+          key: window.recurlyConfig.publicKey, // set this to your public key
+          number: $('#number').val(),
+          month: $('#month').val(),
+          year: $('#year').val(),
+          cvv: $('#cvv').val(),
+          first_name: $('#first_name').val(),
+          last_name: $('#last_name').val(),
+          // Additonal billing info fields accepted:
+          // address1:
+          // address2:
+          // company:
+          // country:
+          // city:
+          // state:
+          // postal_code:
+          // phone:
+        }));
+      });
+
+      // A simple error handling function to expose errors to the customer
+      function error (err) {
+        $('#errors').text('The following fields appear to be invalid: ' + err.fields.join(', '));
+        $('button').prop('disabled', false);
+        $.each(err.fields, function (i, field) {
+          $('[data-recurly=' + field + ']').addClass('error');
+        });
+      }
+
+      // runs some simple animations for the page
+      $('body').addClass('show');
+    </script>
+  </body>
+</html>
