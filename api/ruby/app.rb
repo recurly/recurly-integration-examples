@@ -151,6 +151,18 @@ post '/tax' do
   { rate: 0.05 }.to_json
 end
 
+# Proxy to ip-api.com for client geolocation (avoids mixed-content issues on HTTPS pages)
+# Forwards the real client IP so the lookup reflects the customer, not the server.
+get '/api/geoip' do
+  content_type :json
+  client_ip = params['ip'] || request.env['HTTP_X_FORWARDED_FOR']&.split(',')&.first&.strip || request.ip
+  uri = URI("http://ip-api.com/json/#{client_ip}?fields=status,countryCode,currency")
+  Net::HTTP.get(uri)
+rescue => e
+  logger.error e
+  { status: 'fail' }.to_json
+end
+
 # This endpoint provides configuration to recurly.js
 get '/config' do
   items = [].tap do |items|
